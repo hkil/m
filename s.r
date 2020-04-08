@@ -1,4 +1,4 @@
-## Utility functions for "interrate".
+## Utility functions for "interrate()".
 
 trim <- function(X){
   X <- setNames(X, trimws(names(X)))
