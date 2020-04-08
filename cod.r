@@ -1,6 +1,4 @@
-
-
-#===============================================================================================================================
+## Utility functions for "interrate".
 
 trim <- function(X){
   X <- setNames(X, trimws(names(X)))
@@ -517,7 +515,6 @@ is.unique <- function(X, which){
 
 #===============================================================================================================================
 
-
 interrate <- function(..., nsim = 1e3, level = .95, useNA = "ifany", na.rm = FALSE, digits = 3, common = FALSE, all = TRUE, drop = NULL, plot = TRUE, lwd = 5, lend = 1, show.sa = TRUE, group.level = NULL, study.level = NULL, file.name = NULL, reset = TRUE, rev.page = FALSE, cex.sa = .9)
 {
   
@@ -533,13 +530,11 @@ interrate <- function(..., nsim = 1e3, level = .95, useNA = "ifany", na.rm = FAL
   
   r <- full.clean(r, ar, all)
   
-  r <- lapply(r, function(i) setNames(i, trimws(names(i))))
+  r <- lapply(r, trim)
   
   check <- all(sapply(r, function(i) "study.name" %in% names(i)))
   
   if(!check) stop("Add a new column named 'study.name' to the coding sheet(s).", call. = FALSE)
-  
-  r <- lapply(r, function(i) {i$study.name <- trimws(i$study.name); i})
   
   r <- lapply(r, function(x) do.call(rbind, c(split(x, x$study.name), make.row.names = FALSE)))
   
