@@ -514,7 +514,7 @@ is.unique <- function(X, which){
 
 #===============================================================================================================================
 
-interrate <- function(..., nsim = 1e3, level = .95, useNA = "ifany", na.rm = FALSE, digits = 3, common = FALSE, all = TRUE, drop = NULL, plot = TRUE, lwd = 5, lend = 1, show.sa = TRUE, group.level = NULL, study.level = NULL, file.name = NULL, reset = TRUE, rev.page = FALSE, cex.sa = .9)
+interrate <- function(..., sub.name = "group.name", nsim = 1e3, level = .95, useNA = "ifany", na.rm = FALSE, digits = 3, common = FALSE, all = TRUE, drop = NULL, plot = TRUE, lwd = 5, lend = 1, show.sa = TRUE, group.level = NULL, study.level = NULL, file.name = NULL, reset = TRUE, rev.page = FALSE, cex.sa = .9)
 {
   
   r <- list(...) 
@@ -544,9 +544,14 @@ interrate <- function(..., nsim = 1e3, level = .95, useNA = "ifany", na.rm = FAL
   
   r <- unname(r)
   
-  if(n.df == 1) tbl <- table(names(r[[1]])[!names(r[[1]]) %in% c("study.name", "group.name")])
+  sub.name <- trimws(sub.name)
+  if(n.df == 1) tbl <- table(names(r[[1]])[!names(r[[1]]) %in% c("study.name", sub.name)])
   
   com.names <- if(n.df >= 2) { 
+    
+    ok <- is.constant(sapply(r, nrow))
+    
+    if(!ok) stop("The coding sheets don't have the same number of rows.", call. = FALSE)
     
     if(common) { Reduce(intersect, lapply(r, names)) 
       
@@ -576,7 +581,7 @@ interrate <- function(..., nsim = 1e3, level = .95, useNA = "ifany", na.rm = FAL
     
     r <- do.call(cbind, r)
     
-    tbl <- table(names(r)[!names(r) %in% c("study.name", "group.name")]) 
+    tbl <- table(names(r)[!names(r) %in% c("study.name", sub.name)]) 
     
   } else { r <- r[[1]]
   
@@ -591,19 +596,20 @@ interrate <- function(..., nsim = 1e3, level = .95, useNA = "ifany", na.rm = FAL
     tbl[tbl >= 2]
   }
   
-  st.level <- c(names(Filter(base::all, aggregate(.~study.name, r, is.constant, na.action = na.pass)[-1])), if(is.null(study.level)) study.level else trimws(study.level))
+  i1 <- colnames(r) != 'study.name'
+  st.level <- names(which(sapply(split.default(r[i1], names(r)[i1]), function(x) all(!colSums(!aggregate(.~ study.name, transform(x, study.name = r$study.name), FUN = is.constant)[-1])))))
   
   st.level <- st.level[st.level %in% dot.names]
   
   exclude <- trimws(group.level)
   
-  st.level <- st.level[!st.level %in% exclude]
+  st.level <- st.level[!st.level %in% c(exclude,"study.name", sub.name)]
   
   L <- split.default(r[names(r) %in% dot.names], names(r)[names(r) %in% dot.names])
   
   if(length(st.level) != 0) L[st.level] <- lapply(L[st.level], function(x) x[ave(seq_along(x[[1]]), r$study.name, FUN = seq_along) == 1, ]) 
   
-  L <- drop.inner.list(L, c("study.name", "group.name"))
+  L <- drop.inner.list(L, c("study.name", sub.name))
   
   if(na.rm) L <- lapply(L, na.omit)
   
