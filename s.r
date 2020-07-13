@@ -514,7 +514,7 @@ is.unique <- function(X, which){
 
 #===============================================================================================================================
 
-interrate <- function(..., sub.name = "group.name", nsim = 1e3, level = .95, useNA = "ifany", na.rm = FALSE, digits = 3, common = FALSE, all = TRUE, drop = NULL, plot = TRUE, lwd = 5, lend = 1, show.sa = TRUE, group.level = NULL, study.level = NULL, file.name = NULL, reset = TRUE, rev.page = FALSE, cex.sa = .9)
+interrate <- function(..., sub.name = "group.name", nsim = 1e3, level = .95, useNA = "ifany", type = c("s", "ac"), na.rm = FALSE, digits = 3, common = FALSE, all = TRUE, drop = NULL, plot = TRUE, lwd = 5, lend = 1, show.sa = TRUE, group.level = NULL, study.level = NULL, file.name = NULL, reset = TRUE, rev.page = FALSE, cex.sa = .9)
 {
   
   r <- list(...) 
@@ -613,7 +613,9 @@ interrate <- function(..., sub.name = "group.name", nsim = 1e3, level = .95, use
   
   if(na.rm) L <- lapply(L, na.omit)
   
-  out <- lapply(L, int, nsim = nsim, level = level, digits = digits, useNA = useNA, raw = TRUE)
+  type <- trimws(type)
+  f <- if(type == "s") int else int2
+  out <- lapply(L, f, nsim = nsim, level = level, digits = digits, useNA = useNA, raw = TRUE)
   
   A <- lapply(L, detail, useNA = useNA)
   
@@ -653,7 +655,7 @@ interrate <- function(..., sub.name = "group.name", nsim = 1e3, level = .95, use
   
   return(res)
 }
-
+                                                                              
 #===============================================================================================================================                   
 
 do.factor <- function(data, exclude = NULL, char = TRUE, drop = NULL){
