@@ -1,5 +1,11 @@
 ## Utility functions for "interrate()".
 
+# New R release color compatibility
+
+palette('R3')
+
+#=============================================================================================================================
+
 trim <- function(X){
   X <- setNames(X, trimws(names(X)))
   y <- sapply(names(X), function(x) is.character(as.vector(X[[x]])))
