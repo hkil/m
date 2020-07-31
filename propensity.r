@@ -33,8 +33,6 @@ vars_nums <- c("w3momscr",
 dta %>% mutate(across(all_of(vars_chrs), ~ as.character(to_label(.))), 
          across(all_of(vars_nums), ~ as.numeric(as.character(to_label(.)))))
 
-rlang::last_error()
-
 
 # Select variables of interest
 dta <- dta %>% dplyr::select(one_of(c(vars_chrs, vars_nums)))
