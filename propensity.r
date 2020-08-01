@@ -14,8 +14,7 @@ names(dta) <- tolower(names(dta))
 dta <- sjmisc::trim(dta)
 
 # Convert variables of interest to character/numeric
-vars_chrs <- c("childid","l5cathol","l5public","r5race","w3povrty","w3daded","w3momed",
-               "w3inccat","p5fstamp")
+vars_chrs <- c("childid","l5cathol","l5public","r5race","w3povrty","w3daded","w3momed","w3inccat","p5fstamp")
 
 vars_nums <- c("w3momscr","w3dadscr","p5numpla","p5hmage","p5hdage","c5r2mtsc")
 
@@ -87,27 +86,7 @@ dta <- dta %>% filter(!c5r2mtsc %in% NA)
 
 # Select and rename variables as necessary
 dta <- dta %>%
-  dplyr::select(childid,
-                catholic,
-                race = r5race,
-                race_white,
-                race_black,
-                race_hispanic,
-                race_asian,
-                p5numpla,
-                p5hmage,
-                p5hdage,
-                w3daded,
-                w3momed,
-                w3daded_hsb,
-                w3momed_hsb,
-                w3momscr,
-                w3dadscr,
-                w3inccat,
-                w3income,
-                w3povrty,
-                p5fstamp,
-                c5r2mtsc,
-                c5r2mtsc_std)
+  dplyr::select(childid,catholic,race = r5race, race_white,race_black,race_hispanic,race_asian,p5numpla,p5hmage,p5hdage,w3daded,w3momed,w3daded_hsb,w3momed_hsb,w3momscr,
+                w3dadscr,w3inccat,w3income,w3povrty,p5fstamp,c5r2mtsc,c5r2mtsc_std)
 
 write.csv(dta, 'ecls.csv', row.names = FALSE)
