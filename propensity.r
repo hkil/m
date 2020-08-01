@@ -1,6 +1,6 @@
 
 # Load required packages ('install.packages()' first as necessary)
-library(dplyr)
+library(tidyverse)
 library(haven)
 library(sjmisc)
 library(googledrive)
@@ -11,27 +11,17 @@ dta <- haven::read_por('test.por')
 
 names(dta) <- tolower(names(dta))
 
+dta <- sjmisc::trim(dta)
 
 # Convert variables of interest to character/numeric
-vars_chrs <- c("childid",
-               "l5cathol",
-               "l5public",
-               "r5race",
-               "w3povrty",
-               "w3daded",
-               "w3momed",
-               "w3inccat",
-               "p5fstamp")
+vars_chrs <- c("childid","l5cathol","l5public","r5race","w3povrty","w3daded","w3momed",
+               "w3inccat","p5fstamp")
 
-vars_nums <- c("w3momscr",
-               "w3dadscr",
-               "p5numpla",
-               "p5hmage",
-               "p5hdage",
-               "c5r2mtsc")
+vars_nums <- c("w3momscr","w3dadscr","p5numpla","p5hmage","p5hdage","c5r2mtsc")
 
-dta %>% mutate(across(all_of(vars_chrs), ~ as.character(to_label(.))), 
-         across(all_of(vars_nums), ~ as.numeric(as.character(to_label(.)))))
+dta <- dta %>%
+  mutate_at(vars(one_of(vars_chrs)), funs(as.character(to_label(.)))) %>%
+  mutate_at(vars(one_of(vars_nums)), funs(as.numeric(as.character(to_label(.)))))
 
 
 # Select variables of interest
