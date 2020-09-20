@@ -520,7 +520,7 @@ is.unique <- function(X, which){
 
 #===============================================================================================================================
 
-interrate <- function(..., sub.name = "group.name", nsim = 1e3, level = .95, useNA = "ifany", type = c("s", "ac"), na.rm = FALSE, digits = 3, common = FALSE, all = TRUE, drop = NULL, plot = TRUE, lwd = 5, lend = 1, show.sa = TRUE, group.level = NULL, study.level = NULL, file.name = NULL, reset = TRUE, rev.page = FALSE, cex.sa = .9)
+interrate <- meta_rate <- function(..., sub.name = "group.name", nsim = 1e3, level = .95, useNA = "ifany", type = c("s", "ac"), na.rm = FALSE, digits = 3, common = FALSE, all = TRUE, drop = NULL, plot = TRUE, lwd = 5, lend = 1, show.sa = TRUE, group.level = NULL, study.level = NULL, file.name = NULL, reset = TRUE, rev.page = FALSE, cex.sa = .9)
 {
   
   r <- list(...) 
