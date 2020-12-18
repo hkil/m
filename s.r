@@ -1,4 +1,4 @@
-## Utility functions for "interrate()".
+## Utility functions for "meta_rate()".
 
 # New R release color compatibility
 
