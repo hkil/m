@@ -440,7 +440,7 @@ irr <- int <- function (X, nsim = 1e3, useNA = "ifany", level = .95, digits = 6,
   p <- (1 - level) / 2
   s.boot.ci <- quantile(s.boot, probs = c(p, 1-p), na.rm = TRUE)
   
-  return(round(c(Fleiss_KAPPA = KAPPA, 
+  return(round(c(Fliess_KAPPA = KAPPA, 
                  Sindex = s, 
                  lower = s.boot.ci[[1]], 
                  upper = s.boot.ci[[2]], 
