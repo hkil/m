@@ -951,13 +951,13 @@ irr.diag <- function(X, useNA = "ifany"){
 
 #==========================================================================================================================================
 
-find.irr <- function(X, what){
+find.irr <- function(X, what, sub.name = "group.name"){
   
   if(!inherits(X, "data.frame")) stop("Data must be an Excel CSV file or a 'data.frame'.", call. = FALSE)
   
   s <- as.list(substitute(what))  
   
-  res <- Filter(NROW, X[rowSums(X[grep(as.character(s[[2]]), names(X))] == s[[3]], na.rm = TRUE) > 0,][c("study.name", "group.name")])
+  res <- Filter(NROW, X[rowSums(X[grep(as.character(s[[2]]), names(X))] == s[[3]], na.rm = TRUE) > 0,][c("study.name", sub.name)])
   
   if(length(res) == 0) NULL else res
 }           
@@ -967,13 +967,11 @@ find.irr <- function(X, what){
 table1 <- read.csv("https://raw.githubusercontent.com/hkil/m/master/t1.csv", row.names = 1)
 table2 <- read.csv("https://raw.githubusercontent.com/hkil/m/master/t2.csv", row.names = 1)          
 table3 <- read.csv("https://raw.githubusercontent.com/hkil/m/master/t3.csv", row.names = 1)
+table5 <- read.csv('https://raw.githubusercontent.com/hkil/m/master/t5.csv', row.names = 1)
 c1 <- read.csv("https://raw.githubusercontent.com/hkil/m/master/c1.csv")
 c2 <- read.csv("https://raw.githubusercontent.com/hkil/m/master/c2.csv")
 c3 <- read.csv("https://raw.githubusercontent.com/hkil/m/master/c3.csv")
 c4 <- read.csv("https://raw.githubusercontent.com/hkil/m/master/c4.csv")           
 
 #================================================================================================================================================================
-
-
-options(warn = -1)
 
