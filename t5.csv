@@ -1,0 +1,11 @@
+item,study.name,group.name,Time,Time,Setting,Setting
+1,Study 1,1,timed,timed,ESL,ESL
+2,Study 1,2,untimed,untimed,ESL,ESL
+3,Study 2,1,timed,timed,EFL,EFL
+4,Study 3,1,untimed,untimed,EFL,ESL
+5,Study 3,2,timed,timed,EFL,ESL
+6,Study 3,3,untimed,untimed,EFL,ESL
+7,Study 4,1,timed,timed,EFL,EFL
+8,Study 4,2,untimed,timed,EFL,EFL
+9,Study 5,1,untimed,timed,EFL,EFL
+10,Study 5,2,timed,untimed,EFL,EFL
