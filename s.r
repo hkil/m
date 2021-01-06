@@ -402,7 +402,7 @@ splot <- function(y, main, lwd = 5, lend = 2, show.sa = FALSE, digits = 3, cex.s
   plot(x, y, type = "h", main = main, xlim = c(.95, 1.02*max(x)), ylim = 0:1,
        ylab = "SA%", xaxt = "n", xlab = "Category", lend = lend, lwd = lwd,
        col = colorRampPalette(c(4, 2))(ll), font.lab = 2, 
-       panel.first = abline(h = 0, col = 8), las = 1, cex.axis = .9, padj = .3)
+       panel.first = abline(h = 0, col = 8), las = 1, cex.axis = .9)
   
   if(show.sa) text(x[y != 0]-.015, .4, round(y[y != 0], digits), pos = 2, xpd = NA, srt = 90, font = 2, cex = cex.sa)
   
