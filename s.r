@@ -520,7 +520,7 @@ is.unique <- function(X, which){
 
 #===============================================================================================================================
 
-interrate <- meta_rate <- function(..., sub.name = "group.name", nsim = 1e3, level = .95, useNA = "ifany", type = c("s", "ac"), na.rm = FALSE, digits = 3, common = FALSE, all = TRUE, drop = NULL, plot = TRUE, lwd = 5, lend = 1, show.sa = TRUE, group.level = NULL, study.level = NULL, file.name = NULL, reset = TRUE, rev.page = FALSE, cex.sa = .9)
+meta_rate <- function(..., sub.name = "group.name", nsim = 1e3, level = .95, useNA = "ifany", type = c("s", "ac"), na.rm = FALSE, digits = 3, common = FALSE, all = TRUE, drop = NULL, plot = TRUE, lwd = 5, lend = 1, show.sa = TRUE, sub.level = NULL, study.level = NULL, file.name = NULL, reset = TRUE, rev.page = FALSE, cex.sa = .9)
 {
   
   r <- list(...) 
@@ -607,7 +607,7 @@ interrate <- meta_rate <- function(..., sub.name = "group.name", nsim = 1e3, lev
   
   st.level <- st.level[st.level %in% dot.names]
   
-  exclude <- trimws(group.level)
+  exclude <- trimws(sub.level)
   
   st.level <- st.level[!st.level %in% c(exclude,"study.name", sub.name)]
   
