@@ -1326,6 +1326,10 @@ sizetree2 <- function (x, left = 0, top, right = 1, lastcenter = NA,
   }
 }
 
+#======================== WCF Meta Dataset ======================================================================================================                
+                
+wcf <- read.csv("https://raw.githubusercontent.com/hkil/m/master/wcf.csv")
+                
 #=================================================================================================================================================
 
 needzzsf <- c('metafor', 'clubSandwich', 'nlme', 'effects', 'lexicon', 'plotrix', 'rlang', 'emmeans','tidyverse')      
