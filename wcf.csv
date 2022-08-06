@@ -1,4 +1,4 @@
-study,year,yi,vi,group,cont_type,prof,age_grp,wcf_scope,wcf_type,err_type,time,lang_setting,res_setting,study_length,des_type
+study,year,d,var,group,cont_type,prof,age_grp,wcf_scope,wcf_type,err_type,time,lang_setting,res_setting,study_length,des_type
 Al-Ahmad & Al-Jarrah,2015,1.68074562561521,0.208171266500474,1,1,intermediate,adult,focused,direct,verb_tense,baseline,FL,college,10,quasi_experiment
 Al-Ahmad & Al-Jarrah,2015,4.12205671407215,0.480602914500526,2,1,intermediate,adult,focused,direct+meta_linguistic,verb_tense,baseline,FL,college,10,quasi_experiment
 Al-Ahmad & Al-Jarrah,2015,2.60044330791934,0.283890488417355,1,1,intermediate,adult,focused,direct,verb_tense,post1,FL,college,10,quasi_experiment
