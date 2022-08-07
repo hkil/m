@@ -98,11 +98,8 @@ Karim & Endley,2019,-0.0192484549855966,0.089289830985929,1,0,intermediate,adult
 Karim & Endley,2019,0.371524906506313,0.0926658398085506,2,0,intermediate,adult,focused,location,preposition,post1,FL,college,6,true_experiment,97
 Karim & Endley,2019,-0.503109603471856,0.106419722060572,3,0,intermediate,adult,focused,meta_linguistic,preposition,post1,FL,college,6,true_experiment,98
 Karim & Endley,2019,0.636790468805924,0.093791293187515,1,0,intermediate,adult,focused,direct,preposition,post2,FL,college,6,true_experiment,99
-Karim & Endley,2019,0.32453458338042,0.0904559664613798,1,0,intermediate,adult,focused,direct,preposition,post3,FL,college,6,true_experiment,100
 Karim & Endley,2019,0.863517475250556,0.0995707451938752,2,0,intermediate,adult,focused,location,preposition,post2,FL,college,6,true_experiment,101
-Karim & Endley,2019,0.493256745384771,0.0938621064075625,2,0,intermediate,adult,focused,location,preposition,post3,FL,college,6,true_experiment,102
 Karim & Endley,2019,0.0819951306126148,0.103260798064913,3,0,intermediate,adult,focused,meta_linguistic,preposition,post2,FL,college,6,true_experiment,103
-Karim & Endley,2019,-0.469962969901285,0.10600620821407,3,0,intermediate,adult,focused,meta_linguistic,preposition,post3,FL,college,6,true_experiment,104
 Kassim & Ng,2014,-0.00905355481408922,0.0666673497237897,1,0,intermediate,adult,focused,location,preposition,baseline,FL,college,12,quasi_experiment,105
 Kassim & Ng,2014,0.10567015597843,0.0667597181822042,2,0,intermediate,adult,focused,location,preposition,baseline,FL,college,12,quasi_experiment,106
 Kassim & Ng,2014,0.824349615792945,0.0723296024088164,1,0,intermediate,adult,focused,location,preposition,post1,FL,college,12,quasi_experiment,107
