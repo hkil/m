@@ -492,7 +492,7 @@ environment(plot.efflist) <- asNamespace("effects")
 
 # M======================================================================================================================================================  
 
-plot_rma <- function(fit, full=FALSE, multiline=TRUE, 
+plot_rma <- function(fit, full=TRUE, multiline=TRUE, 
                      confint = list(style="auto"), x.var, 
                      key.args= list(space="top",cex=.7,cex.title=.8), main=NA,
                      index=NULL, xlab, ylab, z.var, colors, cex, lty, 
