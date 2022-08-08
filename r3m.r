@@ -978,7 +978,7 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
                      adjust = "none", mutos = FALSE, mutos_contrast = FALSE, compare = FALSE, plot = FALSE, p_value = TRUE,
                      reverse = FALSE, digits = 3, xlab = "Estimated Effect", shift_up = NULL, shift_down = NULL, 
                      drop_rows = NULL, mutos_name = "(M)UTOS Term", drop_cols = NULL, contrast_contrast = FALSE, 
-                     na.rm = TRUE, robust = FALSE, cluster, show0df = FALSE, sig = FALSE, contr, ...){
+                     na.rm = TRUE, robust = FALSE, cluster, show0df = FALSE, sig = TRUE, contr, ...){
   
   if(!inherits(fit, "rma.mv")) stop("Model is not 'rma.mv()'.", call. = FALSE)
   
