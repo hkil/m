@@ -529,6 +529,9 @@ plot_rma <- function(fit, full=TRUE, multiline=TRUE,
   x <- if(!is.null(index)) x[index] else x
   
   if(plot){   
+    
+    if(missing(ylab)) ylab <- paste0("Effect Size (",as.character(fixed_form_rma(fit))[2],")")
+    
     xcv <- plot(x, multiline=multiline, main=main, rug=FALSE, dots=dots,
                 confint=confint, x.var=x.var, z.var=z.var, key.args=key.args, 
                 xlab=xlab, ylab=ylab, colors=colors, cex=cex, lty=lty, 
