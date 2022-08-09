@@ -1112,7 +1112,7 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
     }
   }
   
-  out <- as.data.frame(out) %>%
+  out <- as.data.frame(out, adjust = adjust) %>%
     dplyr::rename(tidyselect::any_of(lookup)) %>% 
     dplyr::select(-tidyselect::any_of("note"))
   
