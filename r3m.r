@@ -1157,7 +1157,7 @@ R2_rma <- function(..., robust = TRUE, digits = 3,
 {
   
   LL <- list(...)
-  if(!all(sapply(LL,inherits,"rma.mv"))) stop("Some models are not 'rma.mv()'.", call. = FALSE)
+  if(!all(sapply(LL,inherits,"rma.mv"))) stop("All models must be 'rma.mv()'.", call. = FALSE)
   
   bad <- sapply(LL, function(i) i$withG || i$withH || i$withR)
   
