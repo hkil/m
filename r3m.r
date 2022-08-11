@@ -981,7 +981,8 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
                      adjust = "none", mutos = FALSE, mutos_contrast = FALSE, compare = FALSE, plot = FALSE, p_value = TRUE,
                      reverse = FALSE, digits = 3, xlab = "Estimated Effect", shift_up = NULL, shift_down = NULL, 
                      drop_rows = NULL, mutos_name = "(M)UTOS Term", drop_cols = NULL, contrast_contrast = FALSE, 
-                     na.rm = TRUE, robust = FALSE, cluster, show0df = FALSE, sig = TRUE, contr, ...){
+                     na.rm = TRUE, robust = FALSE, cluster, show0df = FALSE, sig = TRUE, contr, 
+                     get_rows = NULL, get_cols = NULL, ...){
   
   if(!inherits(fit, "rma.mv")) stop("Model is not 'rma.mv()'.", call. = FALSE)
   
@@ -1038,7 +1039,7 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
     fit <- suppressMessages(emmeans::ref_grid(fit))
     fit@nbasis <- suppressMessages(emmeans::ref_grid(lm_fit)@nbasis)
   }
-
+  
   infer <- c(ci, p_value)
   
   lookup <- c(Contrast="contrast",Estimate="estimate","Mean"="emmean",t="t.ratio",
@@ -1109,7 +1110,7 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
       
       joint_tests(com)
       
-      } else {
+    } else {
       
       ems
     }
@@ -1145,8 +1146,10 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
   if(!is.null(shift_up)) out <- shift_rows(out, shift_up)
   if(!is.null(shift_down)) out <- shift_rows(out, shift_down, up = FALSE)
   if(!is.null(drop_rows)) out <- out[-drop_rows, ]
+  if(!is.null(get_rows)) out <- out[get_rows, ]
   
-  out <- dplyr::select(out, -tidyselect::all_of(drop_cols))
+  if(!is.null(drop_cols)) out <- dplyr::select(out, -tidyselect::all_of(drop_cols))
+  if(!is.null(get_cols)) out <- dplyr::select(out, tidyselect::all_of(get_cols))
   
   return(out)
 }                   
