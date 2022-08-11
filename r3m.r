@@ -322,9 +322,9 @@ meta_tree <- function(data, ..., effect = TRUE, highest_level_name = NULL,
 # M================================================================================================================================================
 
 interactive_outlier <- function(fit, cook = NULL, st_del_res_z = NULL, 
-                                cex_add_point = .5, cex_multi_point = 6,
+                                cex_add_point = .5, cex_multi_point = 1.2,
                                 whisker_coef = 2.5, cex_text_outlier = .6,
-                                cex_main = .9, parallel = "snow", ncpus = 4, 
+                                cex_main = .9, parallel = "no", ncpus = 1, 
                                 reestimate = FALSE, save = FALSE, 
                                 file_name_cook = "cooks1",
                                 file_name_res_z = "rstudent1",
