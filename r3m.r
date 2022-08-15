@@ -1332,6 +1332,17 @@ sizetree2 <- function (x, left = 0, top, right = 1, lastcenter = NA,
   }
 }
 
+#================================================================================================================================================
+                
+contr_rma <- function(post_rma_fit, contr_index){
+  
+  all_emms <- rep(0, nrow(post_rma_fit))
+  
+  all_emms[abs(contr_index)] <- sign(contr_index)
+  
+  return(all_emms)
+}                
+                
 #======================== WCF Meta Dataset ======================================================================================================                
                 
 wcf <- read.csv("https://raw.githubusercontent.com/hkil/m/master/wcf.csv")
