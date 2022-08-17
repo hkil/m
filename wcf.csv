@@ -98,149 +98,149 @@ Karim & Endley,2019,-0.0192484549855966,0.089289830985929,1,0,intermediate,adult
 Karim & Endley,2019,0.371524906506313,0.0926658398085506,2,0,intermediate,adult,focused,location,preposition,post1,FL,college,6,true_experiment,97
 Karim & Endley,2019,-0.503109603471856,0.106419722060572,3,0,intermediate,adult,focused,meta_linguistic,preposition,post1,FL,college,6,true_experiment,98
 Karim & Endley,2019,0.636790468805924,0.093791293187515,1,0,intermediate,adult,focused,direct,preposition,post2,FL,college,6,true_experiment,99
-Karim & Endley,2019,0.863517475250556,0.0995707451938752,2,0,intermediate,adult,focused,location,preposition,post2,FL,college,6,true_experiment,101
-Karim & Endley,2019,0.0819951306126148,0.103260798064913,3,0,intermediate,adult,focused,meta_linguistic,preposition,post2,FL,college,6,true_experiment,103
-Kassim & Ng,2014,-0.00905355481408922,0.0666673497237897,1,0,intermediate,adult,focused,location,preposition,baseline,FL,college,12,quasi_experiment,105
-Kassim & Ng,2014,0.10567015597843,0.0667597181822042,2,0,intermediate,adult,focused,location,preposition,baseline,FL,college,12,quasi_experiment,106
-Kassim & Ng,2014,0.824349615792945,0.0723296024088164,1,0,intermediate,adult,focused,location,preposition,post1,FL,college,12,quasi_experiment,107
-Kassim & Ng,2014,1.46895253589163,0.0846485129391872,2,0,intermediate,adult,focused,location,preposition,post1,FL,college,12,quasi_experiment,108
-Kassim & Ng,2014,0.909120066795247,0.0735541607987482,1,0,intermediate,adult,focused,location,preposition,post2,FL,college,12,quasi_experiment,109
-Kassim & Ng,2014,1.45252413921683,0.0842485531250634,2,0,intermediate,adult,focused,location,preposition,post2,FL,college,12,quasi_experiment,110
-Munoz,2011,-0.319782537986253,0.107944927561678,1,1,intermediate,adult,focused,coding,mixed,baseline,FL,college,16,true_experiment,111
-Munoz,2011,0.00180682423816883,0.112121256237615,2,1,intermediate,adult,focused,location,mixed,baseline,FL,college,16,true_experiment,112
-Munoz,2011,0.15356139287532,0.106961430433939,1,1,intermediate,adult,focused,coding,mixed,post1,FL,college,16,true_experiment,113
-Munoz,2011,-0.118543118280576,0.112311110376505,2,1,intermediate,adult,focused,location,mixed,post1,FL,college,16,true_experiment,114
-Nemati et al,2019,0.290709830086727,0.0700236550472096,1,2,beginner,teen,focused,direct,verb_tense,baseline,FL,lang institute,5,true_experiment,115
-Nemati et al,2019,0.57263558681718,0.0694734190975641,2,2,beginner,teen,focused,location,verb_tense,baseline,FL,lang institute,5,true_experiment,116
-Nemati et al,2019,4.1192306653679,0.215571491850642,1,2,beginner,teen,focused,direct,verb_tense,post1,FL,lang institute,5,true_experiment,117
-Nemati et al,2019,1.93551690817257,0.0979593706520013,2,2,beginner,teen,focused,location,verb_tense,post1,FL,lang institute,5,true_experiment,118
-Nemati et al,2019,3.97780021365226,0.205699364826717,1,2,beginner,teen,focused,direct,verb_tense,post2,FL,lang institute,5,true_experiment,119
-Nemati et al,2019,1.92477247066374,0.0976137320020273,2,2,beginner,teen,focused,location,verb_tense,post2,FL,lang institute,5,true_experiment,120
-Nusrat et al,2019,0.129451632726838,0.0801675772521564,1,0,intermediate,adult,midfocused,coding,article,baseline,FL,college,12,quasi_experiment,121
-Nusrat et al,2019,0.116652139123714,0.0801360772156213,1,0,intermediate,adult,midfocused,coding,preposition,baseline,FL,college,12,quasi_experiment,122
-Nusrat et al,2019,-0.290595827529414,0.080844459349775,1,0,intermediate,adult,midfocused,coding,verb_tense,baseline,FL,college,12,quasi_experiment,123
-Nusrat et al,2019,-0.0601174257485819,0.0800361410487863,1,0,intermediate,adult,midfocused,coding,article,post1,FL,college,12,quasi_experiment,124
-Nusrat et al,2019,-0.11667774881428,0.0801361369706836,1,0,intermediate,adult,midfocused,coding,preposition,post1,FL,college,12,quasi_experiment,125
-Nusrat et al,2019,1.01327143129581,0.0902671899348027,1,0,intermediate,adult,midfocused,coding,verb_tense,post1,FL,college,12,quasi_experiment,126
-Pariyanto & Cahyono,2016,-0.0981518181877212,0.160449085844681,1,1,intermediate,adult,unfocused,direct,mixed,baseline,FL,college,12,true_experiment,127
-Pariyanto & Cahyono,2016,0.746956493335978,0.171415290315145,1,1,intermediate,adult,unfocused,direct,mixed,post1,FL,college,12,true_experiment,128
-Pariyanto & Cahyono,2016,-0.0836680197208079,0.16039641700689,1,1,intermediate,adult,unfocused,direct,mixed,post2,FL,college,12,true_experiment,129
-Parreno,2015,-0.0400753559717136,0.114402028312409,1,1,intermediate,adult,midfocused,location,mixed,baseline,FL,college,15,true_experiment,130
-Parreno,2015,0.234172573125686,0.11516246773881,1,1,intermediate,adult,midfocused,location,mixed,baseline,FL,college,15,true_experiment,131
-Parreno,2015,0.132176696547806,0.114628666097467,1,1,intermediate,adult,midfocused,location,mixed,baseline,FL,college,15,true_experiment,132
-Parreno,2015,0.218445122092752,0.115060774558264,1,1,intermediate,adult,midfocused,location,mixed,baseline,FL,college,15,true_experiment,133
-Parreno,2015,-0.448260374628581,0.139095562392544,2,1,intermediate,adult,midfocused,direct,mixed,baseline,FL,college,15,true_experiment,134
-Parreno,2015,0.211613720912484,0.136492945782815,2,1,intermediate,adult,midfocused,direct,mixed,baseline,FL,college,15,true_experiment,135
-Parreno,2015,-0.154378730334348,0.136143819541169,2,1,intermediate,adult,midfocused,direct,mixed,baseline,FL,college,15,true_experiment,136
-Parreno,2015,0.174056924393007,0.136251536550327,2,1,intermediate,adult,midfocused,direct,mixed,baseline,FL,college,15,true_experiment,137
-Parreno,2015,-0.373859318844055,0.110712323875096,3,1,intermediate,adult,midfocused,coding,mixed,baseline,FL,college,15,true_experiment,138
-Parreno,2015,0.219038806277225,0.109471880744945,3,1,intermediate,adult,midfocused,coding,mixed,baseline,FL,college,15,true_experiment,139
-Parreno,2015,-0.0801188002006427,0.108910272954272,3,1,intermediate,adult,midfocused,coding,mixed,baseline,FL,college,15,true_experiment,140
-Parreno,2015,0.44210008976868,0.111464779268163,3,1,intermediate,adult,midfocused,coding,mixed,baseline,FL,college,15,true_experiment,141
-Parreno,2015,0.391049144664183,0.116563648303642,1,1,intermediate,adult,midfocused,location,mixed,post1,FL,college,15,true_experiment,142
-Parreno,2015,0.231322927105956,0.115143517775961,1,1,intermediate,adult,midfocused,location,mixed,post1,FL,college,15,true_experiment,143
-Parreno,2015,0.767255957036168,0.122788823590284,1,1,intermediate,adult,midfocused,location,mixed,post1,FL,college,15,true_experiment,144
-Parreno,2015,0.769682682480196,0.122842105420319,1,1,intermediate,adult,midfocused,location,mixed,post1,FL,college,15,true_experiment,145
-Parreno,2015,-0.530556034185364,0.140438101425016,2,1,intermediate,adult,midfocused,direct,mixed,post1,FL,college,15,true_experiment,146
-Parreno,2015,0.23317183222558,0.136652758057232,2,1,intermediate,adult,midfocused,direct,mixed,post1,FL,college,15,true_experiment,147
-Parreno,2015,0.550431393924491,0.140796184991802,2,1,intermediate,adult,midfocused,direct,mixed,post1,FL,college,15,true_experiment,148
-Parreno,2015,0.722208123061447,0.144439682551773,2,1,intermediate,adult,midfocused,direct,mixed,post1,FL,college,15,true_experiment,149
-Parreno,2015,0.675513876420015,0.114990002347386,3,1,intermediate,adult,midfocused,coding,mixed,post1,FL,college,15,true_experiment,150
-Parreno,2015,1.58308111451627,0.142690364751468,3,1,intermediate,adult,midfocused,coding,mixed,post1,FL,college,15,true_experiment,151
-Parreno,2015,1.56425625839984,0.141889713762347,3,1,intermediate,adult,midfocused,coding,mixed,post1,FL,college,15,true_experiment,152
-Parreno,2015,1.41260139865146,0.135788971458684,3,1,intermediate,adult,midfocused,coding,mixed,post1,FL,college,15,true_experiment,153
-Rahimi,2009,0.135262062287362,0.0684420864056322,1,1,intermediate,adult,unfocused,coding,mixed,baseline,FL,college,14,true_experiment,154
-Rahimi,2009,0.581566296485544,0.0711533027760871,1,1,intermediate,adult,unfocused,coding,mixed,post1,FL,college,14,true_experiment,155
-Rummel & Bitchener,2015,-0.560688582999167,0.198394131078272,1,0,advanced,adult,focused,direct,verb_tense,baseline,FL,lang institute,7,quasi_experiment,156
-Rummel & Bitchener,2015,-0.586449483769064,0.199097733695114,2,0,advanced,adult,focused,coding,verb_tense,baseline,FL,lang institute,7,quasi_experiment,157
-Rummel & Bitchener,2015,-0.609307803122618,0.190255818157866,3,0,advanced,adult,focused,meta_linguistic,verb_tense,baseline,FL,lang institute,7,quasi_experiment,158
-Rummel & Bitchener,2015,0.488276427337796,0.196585611611323,1,0,advanced,adult,focused,direct,verb_tense,post1,FL,lang institute,7,quasi_experiment,159
-Rummel & Bitchener,2015,0.897754423837998,0.21009868627863101,2,0,advanced,adult,focused,coding,verb_tense,post1,FL,lang institute,7,quasi_experiment,160
-Rummel & Bitchener,2015,0.884648179993307,0.19960460005376,3,0,advanced,adult,focused,meta_linguistic,verb_tense,post1,FL,lang institute,7,quasi_experiment,161
-Rummel & Bitchener,2015,0.0401489534302786,0.19094747039627,1,0,advanced,adult,focused,direct,verb_tense,post2,FL,lang institute,7,quasi_experiment,162
-Rummel & Bitchener,2015,0.0665785399893831,0.191014631432593,2,0,advanced,adult,focused,coding,verb_tense,post2,FL,lang institute,7,quasi_experiment,163
-Rummel & Bitchener,2015,0.184385445955995,0.182590863470008,3,0,advanced,adult,focused,meta_linguistic,verb_tense,post2,FL,lang institute,7,quasi_experiment,164
-Seiffedin & El-Sakka,2017,0.912180763673872,0.0921456957197386,1,0,intermediate,adult,unfocused,location,mixed,baseline,FL,college,10,true_experiment,165
-Seiffedin & El-Sakka,2017,6.4129062185481,0.511867491785117,1,0,intermediate,adult,unfocused,location,mixed,post1,FL,college,10,true_experiment,166
-Sheen a,2007,-0.201447021474329,0.068316256183473,1,0,intermediate,adult,focused,direct,article,baseline,SL,college,NA,true_experiment,167
-Sheen a,2007,0.013975505184671,0.0669659133371621,2,0,intermediate,adult,focused,direct+meta_linguistic,article,baseline,SL,college,NA,true_experiment,168
-Sheen a,2007,0.103552339725858,0.0680632238495901,1,0,intermediate,adult,focused,direct,article,post1,SL,college,NA,true_experiment,169
-Sheen a,2007,0.452278426132362,0.0686689171704921,2,0,intermediate,adult,focused,direct+meta_linguistic,article,post1,SL,college,NA,true_experiment,170
-Sheen a,2007,0.0463843751062926,0.0679905833681605,1,0,intermediate,adult,focused,direct,article,post2,SL,college,NA,true_experiment,171
-Sheen a,2007,0.715090507884519,0.0712255726681735,2,0,intermediate,adult,focused,direct+meta_linguistic,article,post2,SL,college,NA,true_experiment,172
-Sobhani & Tayebipour,2015,0.0108256027677643,0.133335286561254,1,0,intermediate,teen,unfocused,location,mixed,baseline,FL,lang institute,2,quasi_experiment,173
-Sobhani & Tayebipour,2015,0.0932816961118511,0.133478357913825,2,0,intermediate,teen,midfocused,location,mixed,baseline,FL,lang institute,2,quasi_experiment,174
-Sobhani & Tayebipour,2015,0.357723742223608,0.135466104595841,1,0,intermediate,teen,unfocused,location,mixed,post1,FL,lang institute,2,quasi_experiment,175
-Sobhani & Tayebipour,2015,0.518627959537307,0.13781624934023,2,0,intermediate,teen,midfocused,location,mixed,post1,FL,lang institute,2,quasi_experiment,176
-Stefanou & Revesz,2015,0.618040100451535,0.0710531560706852,1,3,intermediate,teen,focused,direct,article,baseline,FL,high school,5,true_experiment,177
-Stefanou & Revesz,2015,-0.567192143843164,0.070542421852645,1,3,intermediate,teen,focused,direct,article,baseline,FL,high school,5,true_experiment,178
-Stefanou & Revesz,2015,0.158808891009249,0.068029823003714407,2,3,intermediate,teen,focused,direct+meta_linguistic,article,baseline,FL,high school,5,true_experiment,179
-Stefanou & Revesz,2015,-0.380401127523886,0.0690424056643742,2,3,intermediate,teen,focused,direct+meta_linguistic,article,baseline,FL,high school,5,true_experiment,180
-Stefanou & Revesz,2015,0.112189907219658,0.0679227578462429,1,3,intermediate,teen,focused,direct,article,post1,FL,high school,5,true_experiment,181
-Stefanou & Revesz,2015,1.15294901828493,0.0790812736384653,1,3,intermediate,teen,focused,direct,article,post1,FL,high school,5,true_experiment,182
-Stefanou & Revesz,2015,0.281166738323401,0.0684860473331706,2,3,intermediate,teen,focused,direct+meta_linguistic,article,post1,FL,high school,5,true_experiment,183
-Stefanou & Revesz,2015,1.24050945586873,0.0808573098362242,2,3,intermediate,teen,focused,direct+meta_linguistic,article,post1,FL,high school,5,true_experiment,184
-Stefanou & Revesz,2015,0.408755473809317,0.0692320329486762,1,3,intermediate,teen,focused,direct,article,post2,FL,high school,5,true_experiment,185
-Stefanou & Revesz,2015,1.05949553813836,0.0773290647958459,1,3,intermediate,teen,focused,direct,article,post2,FL,high school,5,true_experiment,186
-Stefanou & Revesz,2015,0.678409758294854,0.071716429243427,2,3,intermediate,teen,focused,direct+meta_linguistic,article,post2,FL,high school,5,true_experiment,187
-Stefanou & Revesz,2015,1.28139233821077,0.0817310608050846,2,3,intermediate,teen,focused,direct+meta_linguistic,article,post2,FL,high school,5,true_experiment,188
-Tanveer et al,2018,0.0534960372390084,0.200071545650006,1,0,intermediate,teen,midfocused,direct+meta_linguistic,other,baseline,FL,high school,NA,true_experiment,189
-Tanveer et al,2018,0.134172477626731,0.200450056343812,2,0,intermediate,teen,midfocused,meta_linguistic,other,baseline,FL,high school,NA,true_experiment,190
-Tanveer et al,2018,1.92105098695418,0.292260922361941,1,0,intermediate,teen,midfocused,direct+meta_linguistic,other,post1,FL,high school,NA,true_experiment,191
-Tanveer et al,2018,1.37468506944014,0.247243976003541,2,0,intermediate,teen,midfocused,meta_linguistic,other,post1,FL,high school,NA,true_experiment,192
-Tanveer et al,2018,1.58286257113733,0.262636347977687,1,0,intermediate,teen,midfocused,direct+meta_linguistic,other,post2,FL,high school,NA,true_experiment,193
-Tanveer et al,2018,1.24311411311275,0.238633317455502,2,0,intermediate,teen,midfocused,meta_linguistic,other,post2,FL,high school,NA,true_experiment,194
-Truscott & Hsu,2008,-0.0932998741949501,0.0861731910436158,1,0,intermediate,adult,unfocused,location,mixed,baseline,FL,college,2,quasi_experiment,195
-Truscott & Hsu,2008,-0.0675906167804333,0.086129187053743,1,0,intermediate,adult,unfocused,location,mixed,post1,FL,college,2,quasi_experiment,196
-Van Beuningen et al a,2008,0.625999696562244,0.125061122380153,1,2,beginner,teen,unfocused,direct,mixed,baseline,FL,high school,3,true_experiment,197
-Van Beuningen et al a,2008,0.133258514124795,0.143906847725221,1,0,beginner,teen,unfocused,direct,mixed,baseline,FL,high school,3,true_experiment,198
-Van Beuningen et al a,2008,0.499418649232683,0.117942213355911,1,2,beginner,teen,unfocused,direct,mixed,baseline,FL,high school,3,true_experiment,199
-Van Beuningen et al a,2008,-0.176058499650398,0.127468448785676,1,0,beginner,teen,unfocused,direct,mixed,baseline,FL,high school,3,true_experiment,200
-Van Beuningen et al a,2008,-0.10707954473698,0.119466863686109,2,2,beginner,teen,unfocused,coding,mixed,baseline,FL,high school,3,true_experiment,201
-Van Beuningen et al a,2008,-0.605679236362998,0.150140588899766,2,0,beginner,teen,unfocused,coding,mixed,baseline,FL,high school,3,true_experiment,202
-Van Beuningen et al a,2008,0.0862370627491512,0.11775642398517,2,2,beginner,teen,unfocused,coding,mixed,baseline,FL,high school,3,true_experiment,203
-Van Beuningen et al a,2008,-0.84473469605865,0.141761402561711,2,0,beginner,teen,unfocused,coding,mixed,baseline,FL,high school,3,true_experiment,204
-Van Beuningen et al a,2008,-0.261881013147963,0.120306799511791,1,2,beginner,teen,unfocused,direct,mixed,post1,FL,high school,3,true_experiment,205
-Van Beuningen et al a,2008,-1.12196924523348,0.166068582647775,1,0,beginner,teen,unfocused,direct,mixed,post1,FL,high school,3,true_experiment,206
-Van Beuningen et al a,2008,-0.492497516188173,0.117844139302341,1,2,beginner,teen,unfocused,direct,mixed,post1,FL,high school,3,true_experiment,207
-Van Beuningen et al a,2008,-0.844529429232449,0.138128345059747,1,0,beginner,teen,unfocused,direct,mixed,post1,FL,high school,3,true_experiment,208
-Van Beuningen et al a,2008,0.140707913531437,0.119589403215952,2,2,beginner,teen,unfocused,coding,mixed,post1,FL,high school,3,true_experiment,209
-Van Beuningen et al a,2008,-0.652999940599065,0.151204188633,2,0,beginner,teen,unfocused,coding,mixed,post1,FL,high school,3,true_experiment,210
-Van Beuningen et al a,2008,-0.226953418612877,0.118404527267942,2,2,beginner,teen,unfocused,coding,mixed,post1,FL,high school,3,true_experiment,211
-Van Beuningen et al a,2008,-0.665371905638355,0.137392742337317,2,0,beginner,teen,unfocused,coding,mixed,post1,FL,high school,3,true_experiment,212
-Van Beuningen et al b,2012,-0.0627851881270931,0.0580117583486743,1,2,intermediate,teen,unfocused,direct,mixed,baseline,FL,high school,6,true_experiment,213
-Van Beuningen et al b,2012,-0.0885727379709553,0.059879974317038,1,0,intermediate,teen,unfocused,direct,mixed,baseline,FL,high school,6,true_experiment,214
-Van Beuningen et al b,2012,0.182497200231624,0.059963341487214,2,2,intermediate,teen,unfocused,coding,mixed,baseline,FL,high school,6,true_experiment,215
-Van Beuningen et al b,2012,0.143157672822309,0.0617106773744756,2,0,intermediate,teen,unfocused,coding,mixed,baseline,FL,high school,6,true_experiment,216
-Van Beuningen et al b,2012,0.399162483528395,0.0591377634820685,1,2,intermediate,teen,unfocused,direct,mixed,post1,FL,high school,6,true_experiment,217
-Van Beuningen et al b,2012,0.51161553071262,0.0617747901480431,1,0,intermediate,teen,unfocused,direct,mixed,post1,FL,high school,6,true_experiment,218
-Van Beuningen et al b,2012,0.36903799416704,0.0607311311368143,2,2,intermediate,teen,unfocused,coding,mixed,post1,FL,high school,6,true_experiment,219
-Van Beuningen et al b,2012,0.488967583623183,0.0633921787479095,2,0,intermediate,teen,unfocused,coding,mixed,post1,FL,high school,6,true_experiment,220
-Van Beuningen et al b,2012,0.628288296732774,0.0608436728701469,1,2,intermediate,teen,unfocused,direct,mixed,post2,FL,high school,6,true_experiment,221
-Van Beuningen et al b,2012,0.883567422925136,0.0656474837270596,1,0,intermediate,teen,unfocused,direct,mixed,post2,FL,high school,6,true_experiment,222
-Van Beuningen et al b,2012,0.304333169607012,0.06040597917401,2,2,intermediate,teen,unfocused,coding,mixed,post2,FL,high school,6,true_experiment,223
-Van Beuningen et al b,2012,0.575114713663725,0.0640973144097419,2,0,intermediate,teen,unfocused,coding,mixed,post2,FL,high school,6,true_experiment,224
-Van Beuningen et al b,2012,-0.22866240667366,0.0586559146808371,1,2,intermediate,teen,unfocused,direct,mixed,baseline,FL,high school,6,true_experiment,225
-Van Beuningen et al b,2012,-0.219685756120585,0.0593826441854415,1,0,intermediate,teen,unfocused,direct,mixed,baseline,FL,high school,6,true_experiment,226
-Van Beuningen et al b,2012,0.28157486523058,0.0621104250774865,2,2,intermediate,teen,unfocused,coding,mixed,baseline,FL,high school,6,true_experiment,227
-Van Beuningen et al b,2012,0.269012071523877,0.0628172094340487,2,0,intermediate,teen,unfocused,coding,mixed,baseline,FL,high school,6,true_experiment,228
-Van Beuningen et al b,2012,0.371723040774175,0.059278317020087803,1,2,intermediate,teen,unfocused,direct,mixed,post1,FL,high school,6,true_experiment,229
-Van Beuningen et al b,2012,0.526407538592559,0.0610653137828298,1,0,intermediate,teen,unfocused,direct,mixed,post1,FL,high school,6,true_experiment,230
-Van Beuningen et al b,2012,0.206410553938512,0.0618325531990591,2,2,intermediate,teen,unfocused,coding,mixed,post1,FL,high school,6,true_experiment,231
-Van Beuningen et al b,2012,0.317986917428867,0.0630383493188975,2,0,intermediate,teen,unfocused,coding,mixed,post1,FL,high school,6,true_experiment,232
-Van Beuningen et al b,2012,0.206813366056158,0.0585869673776029,1,2,intermediate,teen,unfocused,direct,mixed,post2,FL,high school,6,true_experiment,233
-Van Beuningen et al b,2012,0.206696851669011,0.0593419218107916,1,0,intermediate,teen,unfocused,direct,mixed,post2,FL,high school,6,true_experiment,234
-Van Beuningen et al b,2012,0.309780114475619,0.0622367835213873,2,2,intermediate,teen,unfocused,coding,mixed,post2,FL,high school,6,true_experiment,235
-Van Beuningen et al b,2012,0.350352769039644,0.06320474457365,2,0,intermediate,teen,unfocused,coding,mixed,post2,FL,high school,6,true_experiment,236
-Wagner,2016,-0.0356897789110568,0.1002665485704,1,1,advanced,teen,unfocused,coding,mixed,baseline,FL,high school,12,quasi_experiment,237
-Wagner,2016,0.35786609808098,0.101851478368362,1,1,advanced,teen,unfocused,coding,mixed,post1,FL,high school,12,quasi_experiment,238
-Wang,2017,-0.443019920025121,0.0585447617824218,1,1,advanced,adult,unfocused,location,mixed,baseline,FL,college,9,quasi_experiment,239
-Wang,2017,-0.517136387666639,0.0590530717389207,2,1,advanced,adult,unfocused,direct,mixed,baseline,FL,college,9,quasi_experiment,240
-Wang,2017,-0.0569616638098413,0.0571660330795998,1,1,advanced,adult,unfocused,location,mixed,post1,FL,college,9,quasi_experiment,241
-Wang,2017,-0.0945442714298422,0.0572067044232871,2,1,advanced,adult,unfocused,direct,mixed,post1,FL,college,9,quasi_experiment,242
-Yu & Cheng,2017,-0.62808895356328,0.0700282875833871,1,1,intermediate,adult,focused,direct+meta_linguistic,article,baseline,FL,college,18,quasi_experiment,243
-Yu & Cheng,2017,-0.134762048650559,0.0668921632181228,1,1,intermediate,adult,focused,direct+meta_linguistic,article,post1,FL,college,18,quasi_experiment,244
-Yu & Cheng,2017,-0.312303842675796,0.0675536038880692,1,1,intermediate,adult,focused,direct+meta_linguistic,article,post2,FL,college,18,quasi_experiment,245
-Zhang,2017,-0.0630854636703089,0.0666998314643874,1,0,intermediate,adult,unfocused,direct,mixed,baseline,FL,college,5,true_experiment,246
-Zhang,2017,-0.877325471216197,0.0730808331870393,1,0,intermediate,adult,unfocused,direct,mixed,post1,FL,college,5,true_experiment,247
-Zhang,2017,-0.935287405296949,0.0739563544208925,1,0,intermediate,adult,unfocused,direct,mixed,post2,FL,college,5,true_experiment,248
+Karim & Endley,2019,0.863517475250556,0.0995707451938752,2,0,intermediate,adult,focused,location,preposition,post2,FL,college,6,true_experiment,100
+Karim & Endley,2019,0.0819951306126148,0.103260798064913,3,0,intermediate,adult,focused,meta_linguistic,preposition,post2,FL,college,6,true_experiment,101
+Kassim & Ng,2014,-0.00905355481408922,0.0666673497237897,1,0,intermediate,adult,focused,location,preposition,baseline,FL,college,12,quasi_experiment,102
+Kassim & Ng,2014,0.10567015597843,0.0667597181822042,2,0,intermediate,adult,focused,location,preposition,baseline,FL,college,12,quasi_experiment,103
+Kassim & Ng,2014,0.824349615792945,0.0723296024088164,1,0,intermediate,adult,focused,location,preposition,post1,FL,college,12,quasi_experiment,104
+Kassim & Ng,2014,1.46895253589163,0.0846485129391872,2,0,intermediate,adult,focused,location,preposition,post1,FL,college,12,quasi_experiment,105
+Kassim & Ng,2014,0.909120066795247,0.0735541607987482,1,0,intermediate,adult,focused,location,preposition,post2,FL,college,12,quasi_experiment,106
+Kassim & Ng,2014,1.45252413921683,0.0842485531250634,2,0,intermediate,adult,focused,location,preposition,post2,FL,college,12,quasi_experiment,107
+Munoz,2011,-0.319782537986253,0.107944927561678,1,1,intermediate,adult,focused,coding,mixed,baseline,FL,college,16,true_experiment,108
+Munoz,2011,0.00180682423816883,0.112121256237615,2,1,intermediate,adult,focused,location,mixed,baseline,FL,college,16,true_experiment,109
+Munoz,2011,0.15356139287532,0.106961430433939,1,1,intermediate,adult,focused,coding,mixed,post1,FL,college,16,true_experiment,110
+Munoz,2011,-0.118543118280576,0.112311110376505,2,1,intermediate,adult,focused,location,mixed,post1,FL,college,16,true_experiment,111
+Nemati et al,2019,0.290709830086727,0.0700236550472096,1,2,beginner,teen,focused,direct,verb_tense,baseline,FL,lang institute,5,true_experiment,112
+Nemati et al,2019,0.57263558681718,0.0694734190975641,2,2,beginner,teen,focused,location,verb_tense,baseline,FL,lang institute,5,true_experiment,113
+Nemati et al,2019,4.1192306653679,0.215571491850642,1,2,beginner,teen,focused,direct,verb_tense,post1,FL,lang institute,5,true_experiment,114
+Nemati et al,2019,1.93551690817257,0.0979593706520013,2,2,beginner,teen,focused,location,verb_tense,post1,FL,lang institute,5,true_experiment,115
+Nemati et al,2019,3.97780021365226,0.205699364826717,1,2,beginner,teen,focused,direct,verb_tense,post2,FL,lang institute,5,true_experiment,116
+Nemati et al,2019,1.92477247066374,0.0976137320020273,2,2,beginner,teen,focused,location,verb_tense,post2,FL,lang institute,5,true_experiment,117
+Nusrat et al,2019,0.129451632726838,0.0801675772521564,1,0,intermediate,adult,midfocused,coding,article,baseline,FL,college,12,quasi_experiment,118
+Nusrat et al,2019,0.116652139123714,0.0801360772156213,1,0,intermediate,adult,midfocused,coding,preposition,baseline,FL,college,12,quasi_experiment,119
+Nusrat et al,2019,-0.290595827529414,0.080844459349775,1,0,intermediate,adult,midfocused,coding,verb_tense,baseline,FL,college,12,quasi_experiment,120
+Nusrat et al,2019,-0.0601174257485819,0.0800361410487863,1,0,intermediate,adult,midfocused,coding,article,post1,FL,college,12,quasi_experiment,121
+Nusrat et al,2019,-0.11667774881428,0.0801361369706836,1,0,intermediate,adult,midfocused,coding,preposition,post1,FL,college,12,quasi_experiment,122
+Nusrat et al,2019,1.01327143129581,0.0902671899348027,1,0,intermediate,adult,midfocused,coding,verb_tense,post1,FL,college,12,quasi_experiment,123
+Pariyanto & Cahyono,2016,-0.0981518181877212,0.160449085844681,1,1,intermediate,adult,unfocused,direct,mixed,baseline,FL,college,12,true_experiment,124
+Pariyanto & Cahyono,2016,0.746956493335978,0.171415290315145,1,1,intermediate,adult,unfocused,direct,mixed,post1,FL,college,12,true_experiment,125
+Pariyanto & Cahyono,2016,-0.0836680197208079,0.16039641700689,1,1,intermediate,adult,unfocused,direct,mixed,post2,FL,college,12,true_experiment,126
+Parreno,2015,-0.0400753559717136,0.114402028312409,1,1,intermediate,adult,midfocused,location,mixed,baseline,FL,college,15,true_experiment,127
+Parreno,2015,0.234172573125686,0.11516246773881,1,1,intermediate,adult,midfocused,location,mixed,baseline,FL,college,15,true_experiment,128
+Parreno,2015,0.132176696547806,0.114628666097467,1,1,intermediate,adult,midfocused,location,mixed,baseline,FL,college,15,true_experiment,129
+Parreno,2015,0.218445122092752,0.115060774558264,1,1,intermediate,adult,midfocused,location,mixed,baseline,FL,college,15,true_experiment,130
+Parreno,2015,-0.448260374628581,0.139095562392544,2,1,intermediate,adult,midfocused,direct,mixed,baseline,FL,college,15,true_experiment,131
+Parreno,2015,0.211613720912484,0.136492945782815,2,1,intermediate,adult,midfocused,direct,mixed,baseline,FL,college,15,true_experiment,132
+Parreno,2015,-0.154378730334348,0.136143819541169,2,1,intermediate,adult,midfocused,direct,mixed,baseline,FL,college,15,true_experiment,133
+Parreno,2015,0.174056924393007,0.136251536550327,2,1,intermediate,adult,midfocused,direct,mixed,baseline,FL,college,15,true_experiment,134
+Parreno,2015,-0.373859318844055,0.110712323875096,3,1,intermediate,adult,midfocused,coding,mixed,baseline,FL,college,15,true_experiment,135
+Parreno,2015,0.219038806277225,0.109471880744945,3,1,intermediate,adult,midfocused,coding,mixed,baseline,FL,college,15,true_experiment,136
+Parreno,2015,-0.0801188002006427,0.108910272954272,3,1,intermediate,adult,midfocused,coding,mixed,baseline,FL,college,15,true_experiment,137
+Parreno,2015,0.44210008976868,0.111464779268163,3,1,intermediate,adult,midfocused,coding,mixed,baseline,FL,college,15,true_experiment,138
+Parreno,2015,0.391049144664183,0.116563648303642,1,1,intermediate,adult,midfocused,location,mixed,post1,FL,college,15,true_experiment,139
+Parreno,2015,0.231322927105956,0.115143517775961,1,1,intermediate,adult,midfocused,location,mixed,post1,FL,college,15,true_experiment,140
+Parreno,2015,0.767255957036168,0.122788823590284,1,1,intermediate,adult,midfocused,location,mixed,post1,FL,college,15,true_experiment,141
+Parreno,2015,0.769682682480196,0.122842105420319,1,1,intermediate,adult,midfocused,location,mixed,post1,FL,college,15,true_experiment,142
+Parreno,2015,-0.530556034185364,0.140438101425016,2,1,intermediate,adult,midfocused,direct,mixed,post1,FL,college,15,true_experiment,143
+Parreno,2015,0.23317183222558,0.136652758057232,2,1,intermediate,adult,midfocused,direct,mixed,post1,FL,college,15,true_experiment,144
+Parreno,2015,0.550431393924491,0.140796184991802,2,1,intermediate,adult,midfocused,direct,mixed,post1,FL,college,15,true_experiment,145
+Parreno,2015,0.722208123061447,0.144439682551773,2,1,intermediate,adult,midfocused,direct,mixed,post1,FL,college,15,true_experiment,146
+Parreno,2015,0.675513876420015,0.114990002347386,3,1,intermediate,adult,midfocused,coding,mixed,post1,FL,college,15,true_experiment,147
+Parreno,2015,1.58308111451627,0.142690364751468,3,1,intermediate,adult,midfocused,coding,mixed,post1,FL,college,15,true_experiment,148
+Parreno,2015,1.56425625839984,0.141889713762347,3,1,intermediate,adult,midfocused,coding,mixed,post1,FL,college,15,true_experiment,149
+Parreno,2015,1.41260139865146,0.135788971458684,3,1,intermediate,adult,midfocused,coding,mixed,post1,FL,college,15,true_experiment,150
+Rahimi,2009,0.135262062287362,0.0684420864056322,1,1,intermediate,adult,unfocused,coding,mixed,baseline,FL,college,14,true_experiment,151
+Rahimi,2009,0.581566296485544,0.0711533027760871,1,1,intermediate,adult,unfocused,coding,mixed,post1,FL,college,14,true_experiment,152
+Rummel & Bitchener,2015,-0.560688582999167,0.198394131078272,1,0,advanced,adult,focused,direct,verb_tense,baseline,FL,lang institute,7,quasi_experiment,153
+Rummel & Bitchener,2015,-0.586449483769064,0.199097733695114,2,0,advanced,adult,focused,coding,verb_tense,baseline,FL,lang institute,7,quasi_experiment,154
+Rummel & Bitchener,2015,-0.609307803122618,0.190255818157866,3,0,advanced,adult,focused,meta_linguistic,verb_tense,baseline,FL,lang institute,7,quasi_experiment,155
+Rummel & Bitchener,2015,0.488276427337796,0.196585611611323,1,0,advanced,adult,focused,direct,verb_tense,post1,FL,lang institute,7,quasi_experiment,156
+Rummel & Bitchener,2015,0.897754423837998,0.21009868627863101,2,0,advanced,adult,focused,coding,verb_tense,post1,FL,lang institute,7,quasi_experiment,157
+Rummel & Bitchener,2015,0.884648179993307,0.19960460005376,3,0,advanced,adult,focused,meta_linguistic,verb_tense,post1,FL,lang institute,7,quasi_experiment,158
+Rummel & Bitchener,2015,0.0401489534302786,0.19094747039627,1,0,advanced,adult,focused,direct,verb_tense,post2,FL,lang institute,7,quasi_experiment,159
+Rummel & Bitchener,2015,0.0665785399893831,0.191014631432593,2,0,advanced,adult,focused,coding,verb_tense,post2,FL,lang institute,7,quasi_experiment,160
+Rummel & Bitchener,2015,0.184385445955995,0.182590863470008,3,0,advanced,adult,focused,meta_linguistic,verb_tense,post2,FL,lang institute,7,quasi_experiment,161
+Seiffedin & El-Sakka,2017,0.912180763673872,0.0921456957197386,1,0,intermediate,adult,unfocused,location,mixed,baseline,FL,college,10,true_experiment,162
+Seiffedin & El-Sakka,2017,6.4129062185481,0.511867491785117,1,0,intermediate,adult,unfocused,location,mixed,post1,FL,college,10,true_experiment,163
+Sheen a,2007,-0.201447021474329,0.068316256183473,1,0,intermediate,adult,focused,direct,article,baseline,SL,college,NA,true_experiment,164
+Sheen a,2007,0.013975505184671,0.0669659133371621,2,0,intermediate,adult,focused,direct+meta_linguistic,article,baseline,SL,college,NA,true_experiment,165
+Sheen a,2007,0.103552339725858,0.0680632238495901,1,0,intermediate,adult,focused,direct,article,post1,SL,college,NA,true_experiment,166
+Sheen a,2007,0.452278426132362,0.0686689171704921,2,0,intermediate,adult,focused,direct+meta_linguistic,article,post1,SL,college,NA,true_experiment,167
+Sheen a,2007,0.0463843751062926,0.0679905833681605,1,0,intermediate,adult,focused,direct,article,post2,SL,college,NA,true_experiment,168
+Sheen a,2007,0.715090507884519,0.0712255726681735,2,0,intermediate,adult,focused,direct+meta_linguistic,article,post2,SL,college,NA,true_experiment,169
+Sobhani & Tayebipour,2015,0.0108256027677643,0.133335286561254,1,0,intermediate,teen,unfocused,location,mixed,baseline,FL,lang institute,2,quasi_experiment,170
+Sobhani & Tayebipour,2015,0.0932816961118511,0.133478357913825,2,0,intermediate,teen,midfocused,location,mixed,baseline,FL,lang institute,2,quasi_experiment,171
+Sobhani & Tayebipour,2015,0.357723742223608,0.135466104595841,1,0,intermediate,teen,unfocused,location,mixed,post1,FL,lang institute,2,quasi_experiment,172
+Sobhani & Tayebipour,2015,0.518627959537307,0.13781624934023,2,0,intermediate,teen,midfocused,location,mixed,post1,FL,lang institute,2,quasi_experiment,173
+Stefanou & Revesz,2015,0.618040100451535,0.0710531560706852,1,3,intermediate,teen,focused,direct,article,baseline,FL,high school,5,true_experiment,174
+Stefanou & Revesz,2015,-0.567192143843164,0.070542421852645,1,3,intermediate,teen,focused,direct,article,baseline,FL,high school,5,true_experiment,175
+Stefanou & Revesz,2015,0.158808891009249,0.068029823003714407,2,3,intermediate,teen,focused,direct+meta_linguistic,article,baseline,FL,high school,5,true_experiment,176
+Stefanou & Revesz,2015,-0.380401127523886,0.0690424056643742,2,3,intermediate,teen,focused,direct+meta_linguistic,article,baseline,FL,high school,5,true_experiment,177
+Stefanou & Revesz,2015,0.112189907219658,0.0679227578462429,1,3,intermediate,teen,focused,direct,article,post1,FL,high school,5,true_experiment,178
+Stefanou & Revesz,2015,1.15294901828493,0.0790812736384653,1,3,intermediate,teen,focused,direct,article,post1,FL,high school,5,true_experiment,179
+Stefanou & Revesz,2015,0.281166738323401,0.0684860473331706,2,3,intermediate,teen,focused,direct+meta_linguistic,article,post1,FL,high school,5,true_experiment,180
+Stefanou & Revesz,2015,1.24050945586873,0.0808573098362242,2,3,intermediate,teen,focused,direct+meta_linguistic,article,post1,FL,high school,5,true_experiment,181
+Stefanou & Revesz,2015,0.408755473809317,0.0692320329486762,1,3,intermediate,teen,focused,direct,article,post2,FL,high school,5,true_experiment,182
+Stefanou & Revesz,2015,1.05949553813836,0.0773290647958459,1,3,intermediate,teen,focused,direct,article,post2,FL,high school,5,true_experiment,183
+Stefanou & Revesz,2015,0.678409758294854,0.071716429243427,2,3,intermediate,teen,focused,direct+meta_linguistic,article,post2,FL,high school,5,true_experiment,184
+Stefanou & Revesz,2015,1.28139233821077,0.0817310608050846,2,3,intermediate,teen,focused,direct+meta_linguistic,article,post2,FL,high school,5,true_experiment,185
+Tanveer et al,2018,0.0534960372390084,0.200071545650006,1,0,intermediate,teen,midfocused,direct+meta_linguistic,other,baseline,FL,high school,NA,true_experiment,186
+Tanveer et al,2018,0.134172477626731,0.200450056343812,2,0,intermediate,teen,midfocused,meta_linguistic,other,baseline,FL,high school,NA,true_experiment,187
+Tanveer et al,2018,1.92105098695418,0.292260922361941,1,0,intermediate,teen,midfocused,direct+meta_linguistic,other,post1,FL,high school,NA,true_experiment,188
+Tanveer et al,2018,1.37468506944014,0.247243976003541,2,0,intermediate,teen,midfocused,meta_linguistic,other,post1,FL,high school,NA,true_experiment,189
+Tanveer et al,2018,1.58286257113733,0.262636347977687,1,0,intermediate,teen,midfocused,direct+meta_linguistic,other,post2,FL,high school,NA,true_experiment,190
+Tanveer et al,2018,1.24311411311275,0.238633317455502,2,0,intermediate,teen,midfocused,meta_linguistic,other,post2,FL,high school,NA,true_experiment,191
+Truscott & Hsu,2008,-0.0932998741949501,0.0861731910436158,1,0,intermediate,adult,unfocused,location,mixed,baseline,FL,college,2,quasi_experiment,192
+Truscott & Hsu,2008,-0.0675906167804333,0.086129187053743,1,0,intermediate,adult,unfocused,location,mixed,post1,FL,college,2,quasi_experiment,193
+Van Beuningen et al a,2008,0.625999696562244,0.125061122380153,1,2,beginner,teen,unfocused,direct,mixed,baseline,FL,high school,3,true_experiment,194
+Van Beuningen et al a,2008,0.133258514124795,0.143906847725221,1,0,beginner,teen,unfocused,direct,mixed,baseline,FL,high school,3,true_experiment,195
+Van Beuningen et al a,2008,0.499418649232683,0.117942213355911,1,2,beginner,teen,unfocused,direct,mixed,baseline,FL,high school,3,true_experiment,196
+Van Beuningen et al a,2008,-0.176058499650398,0.127468448785676,1,0,beginner,teen,unfocused,direct,mixed,baseline,FL,high school,3,true_experiment,197
+Van Beuningen et al a,2008,-0.10707954473698,0.119466863686109,2,2,beginner,teen,unfocused,coding,mixed,baseline,FL,high school,3,true_experiment,198
+Van Beuningen et al a,2008,-0.605679236362998,0.150140588899766,2,0,beginner,teen,unfocused,coding,mixed,baseline,FL,high school,3,true_experiment,199
+Van Beuningen et al a,2008,0.0862370627491512,0.11775642398517,2,2,beginner,teen,unfocused,coding,mixed,baseline,FL,high school,3,true_experiment,200
+Van Beuningen et al a,2008,-0.84473469605865,0.141761402561711,2,0,beginner,teen,unfocused,coding,mixed,baseline,FL,high school,3,true_experiment,201
+Van Beuningen et al a,2008,-0.261881013147963,0.120306799511791,1,2,beginner,teen,unfocused,direct,mixed,post1,FL,high school,3,true_experiment,202
+Van Beuningen et al a,2008,-1.12196924523348,0.166068582647775,1,0,beginner,teen,unfocused,direct,mixed,post1,FL,high school,3,true_experiment,203
+Van Beuningen et al a,2008,-0.492497516188173,0.117844139302341,1,2,beginner,teen,unfocused,direct,mixed,post1,FL,high school,3,true_experiment,204
+Van Beuningen et al a,2008,-0.844529429232449,0.138128345059747,1,0,beginner,teen,unfocused,direct,mixed,post1,FL,high school,3,true_experiment,205
+Van Beuningen et al a,2008,0.140707913531437,0.119589403215952,2,2,beginner,teen,unfocused,coding,mixed,post1,FL,high school,3,true_experiment,206
+Van Beuningen et al a,2008,-0.652999940599065,0.151204188633,2,0,beginner,teen,unfocused,coding,mixed,post1,FL,high school,3,true_experiment,207
+Van Beuningen et al a,2008,-0.226953418612877,0.118404527267942,2,2,beginner,teen,unfocused,coding,mixed,post1,FL,high school,3,true_experiment,208
+Van Beuningen et al a,2008,-0.665371905638355,0.137392742337317,2,0,beginner,teen,unfocused,coding,mixed,post1,FL,high school,3,true_experiment,209
+Van Beuningen et al b,2012,-0.0627851881270931,0.0580117583486743,1,2,intermediate,teen,unfocused,direct,mixed,baseline,FL,high school,6,true_experiment,210
+Van Beuningen et al b,2012,-0.0885727379709553,0.059879974317038,1,0,intermediate,teen,unfocused,direct,mixed,baseline,FL,high school,6,true_experiment,211
+Van Beuningen et al b,2012,0.182497200231624,0.059963341487214,2,2,intermediate,teen,unfocused,coding,mixed,baseline,FL,high school,6,true_experiment,212
+Van Beuningen et al b,2012,0.143157672822309,0.0617106773744756,2,0,intermediate,teen,unfocused,coding,mixed,baseline,FL,high school,6,true_experiment,213
+Van Beuningen et al b,2012,0.399162483528395,0.0591377634820685,1,2,intermediate,teen,unfocused,direct,mixed,post1,FL,high school,6,true_experiment,214
+Van Beuningen et al b,2012,0.51161553071262,0.0617747901480431,1,0,intermediate,teen,unfocused,direct,mixed,post1,FL,high school,6,true_experiment,215
+Van Beuningen et al b,2012,0.36903799416704,0.0607311311368143,2,2,intermediate,teen,unfocused,coding,mixed,post1,FL,high school,6,true_experiment,216
+Van Beuningen et al b,2012,0.488967583623183,0.0633921787479095,2,0,intermediate,teen,unfocused,coding,mixed,post1,FL,high school,6,true_experiment,217
+Van Beuningen et al b,2012,0.628288296732774,0.0608436728701469,1,2,intermediate,teen,unfocused,direct,mixed,post2,FL,high school,6,true_experiment,218
+Van Beuningen et al b,2012,0.883567422925136,0.0656474837270596,1,0,intermediate,teen,unfocused,direct,mixed,post2,FL,high school,6,true_experiment,219
+Van Beuningen et al b,2012,0.304333169607012,0.06040597917401,2,2,intermediate,teen,unfocused,coding,mixed,post2,FL,high school,6,true_experiment,220
+Van Beuningen et al b,2012,0.575114713663725,0.0640973144097419,2,0,intermediate,teen,unfocused,coding,mixed,post2,FL,high school,6,true_experiment,221
+Van Beuningen et al b,2012,-0.22866240667366,0.0586559146808371,1,2,intermediate,teen,unfocused,direct,mixed,baseline,FL,high school,6,true_experiment,222
+Van Beuningen et al b,2012,-0.219685756120585,0.0593826441854415,1,0,intermediate,teen,unfocused,direct,mixed,baseline,FL,high school,6,true_experiment,223
+Van Beuningen et al b,2012,0.28157486523058,0.0621104250774865,2,2,intermediate,teen,unfocused,coding,mixed,baseline,FL,high school,6,true_experiment,224
+Van Beuningen et al b,2012,0.269012071523877,0.0628172094340487,2,0,intermediate,teen,unfocused,coding,mixed,baseline,FL,high school,6,true_experiment,225
+Van Beuningen et al b,2012,0.371723040774175,0.059278317020087803,1,2,intermediate,teen,unfocused,direct,mixed,post1,FL,high school,6,true_experiment,226
+Van Beuningen et al b,2012,0.526407538592559,0.0610653137828298,1,0,intermediate,teen,unfocused,direct,mixed,post1,FL,high school,6,true_experiment,227
+Van Beuningen et al b,2012,0.206410553938512,0.0618325531990591,2,2,intermediate,teen,unfocused,coding,mixed,post1,FL,high school,6,true_experiment,228
+Van Beuningen et al b,2012,0.317986917428867,0.0630383493188975,2,0,intermediate,teen,unfocused,coding,mixed,post1,FL,high school,6,true_experiment,229
+Van Beuningen et al b,2012,0.206813366056158,0.0585869673776029,1,2,intermediate,teen,unfocused,direct,mixed,post2,FL,high school,6,true_experiment,230
+Van Beuningen et al b,2012,0.206696851669011,0.0593419218107916,1,0,intermediate,teen,unfocused,direct,mixed,post2,FL,high school,6,true_experiment,231
+Van Beuningen et al b,2012,0.309780114475619,0.0622367835213873,2,2,intermediate,teen,unfocused,coding,mixed,post2,FL,high school,6,true_experiment,232
+Van Beuningen et al b,2012,0.350352769039644,0.06320474457365,2,0,intermediate,teen,unfocused,coding,mixed,post2,FL,high school,6,true_experiment,233
+Wagner,2016,-0.0356897789110568,0.1002665485704,1,1,advanced,teen,unfocused,coding,mixed,baseline,FL,high school,12,quasi_experiment,234
+Wagner,2016,0.35786609808098,0.101851478368362,1,1,advanced,teen,unfocused,coding,mixed,post1,FL,high school,12,quasi_experiment,235
+Wang,2017,-0.443019920025121,0.0585447617824218,1,1,advanced,adult,unfocused,location,mixed,baseline,FL,college,9,quasi_experiment,236
+Wang,2017,-0.517136387666639,0.0590530717389207,2,1,advanced,adult,unfocused,direct,mixed,baseline,FL,college,9,quasi_experiment,237
+Wang,2017,-0.0569616638098413,0.0571660330795998,1,1,advanced,adult,unfocused,location,mixed,post1,FL,college,9,quasi_experiment,238
+Wang,2017,-0.0945442714298422,0.0572067044232871,2,1,advanced,adult,unfocused,direct,mixed,post1,FL,college,9,quasi_experiment,239
+Yu & Cheng,2017,-0.62808895356328,0.0700282875833871,1,1,intermediate,adult,focused,direct+meta_linguistic,article,baseline,FL,college,18,quasi_experiment,240
+Yu & Cheng,2017,-0.134762048650559,0.0668921632181228,1,1,intermediate,adult,focused,direct+meta_linguistic,article,post1,FL,college,18,quasi_experiment,241
+Yu & Cheng,2017,-0.312303842675796,0.0675536038880692,1,1,intermediate,adult,focused,direct+meta_linguistic,article,post2,FL,college,18,quasi_experiment,242
+Zhang,2017,-0.0630854636703089,0.0666998314643874,1,0,intermediate,adult,unfocused,direct,mixed,baseline,FL,college,5,true_experiment,243
+Zhang,2017,-0.877325471216197,0.0730808331870393,1,0,intermediate,adult,unfocused,direct,mixed,post1,FL,college,5,true_experiment,244
+Zhang,2017,-0.935287405296949,0.0739563544208925,1,0,intermediate,adult,unfocused,direct,mixed,post2,FL,college,5,true_experiment,245
