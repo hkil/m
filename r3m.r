@@ -1048,13 +1048,23 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
   
   names(lookup)[12] <- if(is.null(block_vars)) paste(mutos_name, "Contrast") else "Block Contrast"
   
+  is_cont <- !missing(contr)            
+              
   ems <- try(if(is.null(cont_var)){
     
     emmeans(object = fit, specs = specs, infer = infer, adjust = adjust, contr = contr, ...)
     
   } else {
     
+      if(!is_cont){ 
+      
+    emtrends(object = fit, specs = specs, var = cont_var, infer = infer, adjust = adjust, ...)
+    
+    } else {
+        
     emtrends(object = fit, specs = specs, var = cont_var, infer = infer, adjust = adjust, contr = contr, ...)
+      
+      }
     
   }, silent = TRUE)
   
@@ -1069,8 +1079,6 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
   if(!is.null(cont_var) & is_pair) names(lookup)[2] <- paste0(cont_var,".dif")
   
   out <- if(is_pair){
-    
-    is_cont <- !missing(contr)
     
     methd <- as.character(specs[2])
     
