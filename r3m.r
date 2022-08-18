@@ -1048,7 +1048,7 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
   
   names(lookup)[12] <- if(is.null(block_vars)) paste(mutos_name, "Contrast") else "Block Contrast"
   
-  is_cont <- !missing(contr)            
+  is_contr <- !missing(contr)            
               
   ems <- try(if(is.null(cont_var)){
     
@@ -1056,7 +1056,7 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
     
   } else {
     
-      if(!is_cont){ 
+      if(!is_contr){ 
       
     emtrends(object = fit, specs = specs, var = cont_var, infer = infer, adjust = adjust, ...)
     
@@ -1084,9 +1084,9 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
     
     if(plot) print(plot(ems, by = by, comparisons = compare, horizontal = horiz, adjust = adjust, xlab = xlab)) 
     
-    pp <- contrast(ems, method = methd, each="simple",infer=infer, reverse=reverse, adjust=adjust)[[if(!contrast_contrast) 1 else 2]]
+    pp <- contrast(ems, method = methd, each="simple", infer=infer, reverse=reverse, adjust=adjust)[[if(!contrast_contrast) 1 else 2]]
     
-    if(!is_cont) pp else contrast(pp, contr)
+    if(!is_contr) pp else contrast(pp, contr)
     
   }
   
