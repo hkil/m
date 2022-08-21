@@ -1049,22 +1049,22 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
   names(lookup)[12] <- if(is.null(block_vars)) paste(mutos_name, "Contrast") else "Block Contrast"
   
   is_contr <- !missing(contr)            
-              
+  
   ems <- try(if(is.null(cont_var)){
     
     emmeans(object = fit, specs = specs, infer = infer, adjust = adjust, contr = contr, ...)
     
   } else {
     
-      if(!is_contr){ 
+    if(!is_contr){ 
       
-    emtrends(object = fit, specs = specs, var = cont_var, infer = infer, adjust = adjust, ...)
-    
+      emtrends(object = fit, specs = specs, var = cont_var, infer = infer, adjust = adjust, ...)
+      
     } else {
-        
-    emtrends(object = fit, specs = specs, var = cont_var, infer = infer, adjust = adjust, contr = contr, ...)
       
-      }
+      emtrends(object = fit, specs = specs, var = cont_var, infer = infer, adjust = adjust, contr = contr, ...)
+      
+    }
     
   }, silent = TRUE)
   
@@ -1159,6 +1159,7 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
   if(!is.null(drop_cols)) out <- dplyr::select(out, -tidyselect::all_of(drop_cols))
   if(!is.null(get_cols)) out <- dplyr::select(out, tidyselect::all_of(get_cols))
   
+  class(out) <- c("data.frame","post_rma")
   return(out)
 }                   
 
@@ -1350,7 +1351,43 @@ contr_rma <- function(post_rma_fit, contr_index){
   
   return(all_emms)
 }                
+
+#===================================================================================================================================================
                 
+predict_rma <- function(fit, post_rma_fit, target_effect = 0, condition = c("or larger", "or smaller")){
+  
+if(!inherits(fit, "rma.mv")) stop("Model is not 'rma.mv()'.", call. = FALSE)
+
+if(!inherits(post_rma_fit, "post_rma")) stop("post_rma_fit is not 'post_rma()'.", call. = FALSE)    
+  
+if(fit$withG || fit$withH || fit$withR) stop("These models not yet supported.", call. = FALSE)
+ 
+ave_eff <- as.numeric(post_rma_fit$Mean)  
+
+nms <- names(post_rma_fit)
+
+vv <- nms[!nms %in% c("Mean","SE","Df","Lower","Upper","t",      
+                      "p-value","Sig.","Contrast","F","Df1","Df2",
+                      "Estimate","m","Block Contrast","(M)UTOS Term")]
+
+Term <-sapply(seq_len(nrow(post_rma_fit)), 
+              function(i) paste0(as.vector(unlist(post_rma_fit[vv][i,])), collapse = " "))
+
+
+cond <- match.arg(condition)  
+
+lower.tail <- switch(cond, 
+          "or larger" = FALSE, 
+          "or smaller" = TRUE)
+   
+total_sigma <- sqrt(sum(fit$sigma2))
+  
+Probability <- paste0(round(pnorm(target_effect, ave_eff, total_sigma, lower.tail=lower.tail), 4)*1e2,"%")
+
+data.frame(Term=Term, Target_Effect = paste(target_effect, cond, collapse = " "), Probability = Probability)
+
+}                
+                            
 #======================== WCF Meta Dataset ======================================================================================================                
                 
 wcf <- read.csv("https://raw.githubusercontent.com/hkil/m/master/wcf.csv")
