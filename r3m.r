@@ -1384,7 +1384,7 @@ total_sigma <- sqrt(sum(fit$sigma2))
   
 Probability <- paste0(round(pnorm(target_effect, ave_eff, total_sigma, lower.tail=lower.tail), 4)*1e2,"%")
 
-data.frame(Term=Term, Target_Benefit = paste(target_effect, cond, collapse = " "), Probability = Probability)
+data.frame(Term=Term, Target_Effect = paste(target_effect, cond, collapse = " "), Probability = Probability)
 
 }                
                             
