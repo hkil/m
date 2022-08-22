@@ -1405,7 +1405,7 @@ predict_rma <- function(fit, post_rma_fit, target_effect = 0, condition = c("or 
   upper_Probability <- paste0(formatC(round(pnorm(target_effect, upper_ave_eff, total_sd[2], lower.tail=lower.tail), 4)*1e2, digits = 2, format = "f"),"%")
   
   data.frame(Term=Term, Target_Effect = paste(target_effect, cond, collapse = " "), Probability = Probability, 
-             Lower = lower_Probability, Upper = upper_Probability)
+             Min = lower_Probability, Max = upper_Probability)
   
 }                 
                             
