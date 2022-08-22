@@ -59,6 +59,10 @@ get_vars_ <- function(gls_fit, as_fml = TRUE){
 }
 
 # H=============================================================================================================================== 
+                 
+ odds_. <- function(x) subset(x, x %% 2 != 0)
+                 
+# H=============================================================================================================================== 
 
 full_clean <- function(data) rm.colrowNA(trim_(data))           
 
@@ -1388,19 +1392,20 @@ predict_rma <- function(fit, post_rma_fit, target_effect = 0, condition = c("or 
   
   ci <- as.data.frame(confint.rma.mv(fit))
   
-  odds_. <- function(x) subset(x, x %% 2 != 0)
-  
-  #total_sd: estimate lower upper
+  #total_sd: estimate, lower, upper
   total_sd <- sqrt(colSums(ci[odds_.(seq_len(nrow(ci))),]))
   
-  
+  # Probability at the estimates
   Probability <- paste0(round(pnorm(target_effect, ave_eff, total_sd[1], lower.tail=lower.tail), 4)*1e2,"%")
   
+  # Probability at the lowest ave_eff and highest variability
   lower_Probability <- paste0(round(pnorm(target_effect, lower_ave_eff, total_sd[3], lower.tail=lower.tail), 4)*1e2,"%")
   
+  # Probability at the highest ave_eff and lowest variability
   upper_Probability <- paste0(round(pnorm(target_effect, upper_ave_eff, total_sd[2], lower.tail=lower.tail), 4)*1e2,"%")
   
-  data.frame(Term=Term, Target_Effect = paste(target_effect, cond, collapse = " "), Probability = Probability, Lower = lower_Probability, Upper = upper_Probability)
+  data.frame(Term=Term, Target_Effect = paste(target_effect, cond, collapse = " "), Probability = Probability, 
+             Lower = lower_Probability, Upper = upper_Probability)
   
 }                
                             
