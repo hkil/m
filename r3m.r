@@ -1354,38 +1354,54 @@ contr_rma <- function(post_rma_fit, contr_index){
 
 #===================================================================================================================================================
                 
-predict_rma <- function(fit, post_rma_fit, target_effect = 0, condition = c("or larger", "or smaller")){
+predict_rma <- function(fit, post_rma_fit, target_effect = 0, condition = c("or larger", "or smaller"),none_names = NULL){
   
-if(!inherits(fit, "rma.mv")) stop("Model is not 'rma.mv()'.", call. = FALSE)
-
-if(!inherits(post_rma_fit, "post_rma")) stop("post_rma_fit is not 'post_rma()'.", call. = FALSE)    
+  if(!inherits(fit, "rma.mv")) stop("Model is not 'rma.mv()'.", call. = FALSE)
   
-if(fit$withG || fit$withH || fit$withR) stop("These models not yet supported.", call. = FALSE)
- 
-ave_eff <- as.numeric(post_rma_fit$Mean)  
-
-nms <- names(post_rma_fit)
-
-vv <- nms[!nms %in% c("Mean","SE","Df","Lower","Upper","t",      
-                      "p-value","Sig.","Contrast","F","Df1","Df2",
-                      "Estimate","m","Block Contrast","(M)UTOS Term")]
-
-Term <-sapply(seq_len(nrow(post_rma_fit)), 
-              function(i) paste0(as.vector(unlist(post_rma_fit[vv][i,])), collapse = " "))
-
-
-cond <- match.arg(condition)  
-
-lower.tail <- switch(cond, 
-          "or larger" = FALSE, 
-          "or smaller" = TRUE)
-   
-total_sigma <- sqrt(sum(fit$sigma2))
+  if(!inherits(post_rma_fit, "post_rma")) stop("post_rma_fit is not 'post_rma()'.", call. = FALSE)    
   
-Probability <- paste0(round(pnorm(target_effect, ave_eff, total_sigma, lower.tail=lower.tail), 4)*1e2,"%")
-
-data.frame(Term=Term, Target_Effect = paste(target_effect, cond, collapse = " "), Probability = Probability)
-
+  if(fit$withG || fit$withH || fit$withR) stop("These models not yet supported.", call. = FALSE)
+  
+  post_rma_fit <- type.convert(post_rma_fit, as.is=TRUE)
+  
+  nms <- names(post_rma_fit)
+  
+  vv <- nms[!nms %in% c("Mean","SE","Df","Lower","Upper","t",      
+                        "p-value","Sig.","Contrast","F","Df1","Df2",
+                        "Estimate","m","Block Contrast","(M)UTOS Term", none_names)]
+  
+  Term <-sapply(seq_len(nrow(post_rma_fit)), 
+                function(i) paste0(as.vector(unlist(post_rma_fit[vv][i,])), collapse = " "))
+  
+  
+  cond <- match.arg(condition)  
+  
+  lower.tail <- switch(cond, 
+                       "or larger" = FALSE, 
+                       "or smaller" = TRUE)
+  
+  lower_ave_eff <- post_rma_fit$Lower
+  
+  upper_ave_eff <- post_rma_fit$Upper
+  
+  ave_eff <- post_rma_fit$Mean
+  
+  ci <- as.data.frame(confint.rma.mv(fit))
+  
+  odds_. <- function(x) subset(x, x %% 2 != 0)
+  
+  #total_sd: estimate lower upper
+  total_sd <- sqrt(colSums(ci[odds_.(seq_len(nrow(ci))),]))
+  
+  
+  Probability <- paste0(round(pnorm(target_effect, ave_eff, total_sd[1], lower.tail=lower.tail), 4)*1e2,"%")
+  
+  lower_Probability <- paste0(round(pnorm(target_effect, lower_ave_eff, total_sd[3], lower.tail=lower.tail), 4)*1e2,"%")
+  
+  upper_Probability <- paste0(round(pnorm(target_effect, upper_ave_eff, total_sd[2], lower.tail=lower.tail), 4)*1e2,"%")
+  
+  data.frame(Term=Term, Target_Effect = paste(target_effect, cond, collapse = " "), Probability = Probability, Lower = lower_Probability, Upper = upper_Probability)
+  
 }                
                             
 #======================== WCF Meta Dataset ======================================================================================================                
