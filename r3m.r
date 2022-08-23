@@ -62,6 +62,12 @@ get_vars_ <- function(gls_fit, as_fml = TRUE){
                  
  odds_. <- function(x) subset(x, x %% 2 != 0)
                  
+# H===============================================================================================================================
+              
+print.post_rma <- function(post_rma_call){
+  print(post_rma_call$table)
+}                 
+                 
 # H=============================================================================================================================== 
 
 full_clean <- function(data) rm.colrowNA(trim_(data))           
@@ -998,6 +1004,8 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
   
   if(!inherits(fit, "rma.mv")) stop("Model is not 'rma.mv()'.", call. = FALSE)
   
+  cl <- match.call()
+  
   if(robust) { 
     
     fixed_eff <- is.null(fit$random)
@@ -1171,7 +1179,8 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
   if(!is.null(drop_cols)) out <- dplyr::select(out, -tidyselect::all_of(drop_cols))
   if(!is.null(get_cols)) out <- dplyr::select(out, tidyselect::all_of(get_cols))
   
-  class(out) <- c("data.frame","post_rma")
+  out <- list(table = out, specs = specs, call = cl, fit = fit)
+  class(out) <- "post_rma"
   return(out)
 }                   
 
@@ -1374,7 +1383,7 @@ predict_rma <- function(fit, post_rma_fit, target_effect = 0, condition = c("or 
   
   if(fit$withG || fit$withH || fit$withR) stop("These models not yet supported.", call. = FALSE)
   
-  post_rma_fit <- type.convert(post_rma_fit, as.is=TRUE)
+  post_rma_fit <- type.convert(post_rma_fit$table, as.is=TRUE)
   
   nms <- names(post_rma_fit)
   
@@ -1416,7 +1425,114 @@ predict_rma <- function(fit, post_rma_fit, target_effect = 0, condition = c("or 
              Min = min_Probability, Max = max_Probability)
   
 }                 
-                            
+
+                
+                
+#M==============================================================================================================================================
+                
+sense_rma <- function(fit, post_rma_fit, var_name, 
+                          r = (3:7)*.1, cluster = NULL, 
+                          regression = NULL, label_lines = TRUE,
+                          cex_labels = .55, ...){
+  
+  
+  if(!inherits(fit, "rma.mv")) stop("Model is not 'rma.mv()'.", call. = FALSE)
+  
+  if(!inherits(post_rma_fit, "post_rma")) stop("post_rma_fit is not 'post_rma()'.", call. = FALSE)     
+  
+
+regression <- if(is.null(regression)) {
+  
+  if("cont_var" %in% as.character(post_rma_fit$call)) TRUE else FALSE
+    
+} else regression 
+
+specs <- post_rma_fit$specs
+
+post_rma_fit <- post_rma_fit$table
+dat <- clubSandwich:::getData(fit)
+
+cluster_name <- if(is.null(cluster)) strsplit(fit$s.names,"/",fixed=TRUE)[[1]] else cluster
+  
+V_list <- lapply(r, function(i) impute_covariance_matrix(vi = dat[[var_name]], cluster=dat[[cluster_name]], r=i))
+
+model_list <- lapply(V_list, function(i) suppressWarnings(update.rma(fit, V = i)))
+
+xaxis_lab <- paste0("r=",r)
+
+total_hetros <- sapply(model_list, function(i) sqrt(sum(i$sigma2)))
+
+
+graphics.off()
+org.par <- par(no.readonly = TRUE)
+on.exit(par(org.par))
+
+set.margin <- function() 
+{
+  par(mgp = c(1.5, 0.14, 0), mar = c(1.5, 2.6, 1.5, .5), 
+      tck = -0.02)
+}
+
+par(mfrow = c(2,1))
+set.margin()
+
+
+output <- if(regression){
+  
+fixed_eff_list <- lapply(model_list, function(i) setNames(coef(summary(i))$estimate, rownames(fit$b)))
+
+matplot(t(as.data.frame(fixed_eff_list)), type = "l", xaxt = "n", ylab = "Estimates", ...)
+
+axis(1, at = axTicks(1), labels = xaxis_lab,...)
+
+mn <- mean(seq_len(length(fixed_eff_list)))
+
+if(label_lines) text(mn, as.data.frame(fixed_effs)[,mn], rownames(fit$b),
+     cex = cex_labels)
+
+output <- as.data.frame(t(do.call(rbind, fixed_eff_list)))
+
+setNames(output, xaxis_lab)
+
+
+} else {
+
+
+nms <- names(post_rma_fit)
+
+vv <- nms[!nms %in% c("Mean","SE","Df","Lower","Upper","t",      
+                      "p-value","Sig.","Contrast","F","Df1","Df2",
+                      "Estimate","m","Block Contrast","(M)UTOS Term", none_names=NULL)]
+
+Term <-sapply(seq_len(nrow(post_rma_fit)), 
+              function(i) paste0(as.vector(unlist(post_rma_fit[vv][i,])), collapse = " "))
+
+post_rma_list <- lapply(model_list, function(i) setNames(as.numeric(post_rma(i, specs)$table$Mean),Term))
+
+matplot(t(as.data.frame(post_rma_list)), type = 'l', xaxt = "n", ylab = "Mean Effect", xlab = NA,...)
+
+axis(1, at = axTicks(1), labels = xaxis_lab,...)
+
+mn <- mean(seq_len(length(post_rma_list)))
+
+if(label_lines) text(mn, as.data.frame(post_rma_list)[,mn], Term,
+     cex = cex_labels)
+
+output <- as.data.frame(t(do.call(rbind, post_rma_list)))
+
+setNames(output, xaxis_lab)
+
+}
+
+rng <- range(total_hetros)
+mrng <- mean(rng)
+plot(total_hetros, type = "l", ylim = rng+c(-mrng,mrng), xaxt = "n", xlab = NA, ylab = "Total Variation (SD)",...)
+axis(1, at = axTicks(1), labels = xaxis_lab,...)
+
+rbind(output, Total_variation_in_SD = total_hetros)
+
+}                
+                
 #======================== WCF Meta Dataset ======================================================================================================                
                 
 wcf <- read.csv("https://raw.githubusercontent.com/hkil/m/master/wcf.csv")
