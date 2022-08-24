@@ -1444,6 +1444,15 @@ sense_rma <- function(fit, post_rma_fit = NULL, var_name,
   
   dat <- clubSandwich:::getData(fit)
   
+  regression <- if(is.null(regression) & !is.null(post_rma_fit)) {
+    
+    if("cont_var" %in% as.character(post_rma_fit$call)) TRUE else FALSE
+    
+  } else if(is.null(regression) & is.null(post_rma_fit)) TRUE else regression 
+  
+    
+if(regression){
+    
   lm_fit <- lm(fixed_form_rma(fit), data = dat, na.action = "na.omit")
   
   cl <- clean_reg(lm_fit, names(coef(lm_fit)))
@@ -1463,13 +1472,9 @@ sense_rma <- function(fit, post_rma_fit = NULL, var_name,
   
   if(clean_names) names(lm_fit$coefficients) <- cl
   if(clean_names) fit <- clean_reg_names(fit)
-  
-  regression <- if(is.null(regression) & !is.null(post_rma_fit)) {
+ }   
     
-    if("cont_var" %in% as.character(post_rma_fit$call)) TRUE else FALSE
     
-  } else if(is.null(regression) & is.null(post_rma_fit)) TRUE else regression 
-  
   
 if(!is.null(post_rma_fit)){
   
