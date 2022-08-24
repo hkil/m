@@ -1533,7 +1533,8 @@ if(plot){
   axis(1, at = axTicks(1), labels = xaxis_lab, ...)
 }  
   out <- rbind(output, Total_variation_in_SD = total_hetros)
-  cbind(out, sd = sapply(1:nrow(out), function(i) sd(out[i,])))
+  out <- cbind(out, sd = sapply(1:nrow(out), function(i) sd(out[i,])))
+  rownames_to_column(out, "Term")
 }                
                 
 #======================== WCF Meta Dataset ======================================================================================================                
