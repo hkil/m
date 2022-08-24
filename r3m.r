@@ -1435,7 +1435,7 @@ predict_rma <- function(fit, post_rma_fit, target_effect = 0, condition = c("or 
 sense_rma <- function(fit, post_rma_fit, var_name, 
                       r = (3:7)*.1, cluster = NULL, 
                       regression = NULL, label_lines = TRUE,
-                      cex_labels = .55, plot = TRUE, ...){
+                      cex_labels = .55, plot = TRUE, digits = 3, ...){
   
   
   if(!inherits(fit, "rma.mv")) stop("Model is not 'rma.mv()'.", call. = FALSE)
@@ -1464,29 +1464,29 @@ sense_rma <- function(fit, post_rma_fit, var_name,
   
   total_hetros <- sapply(model_list, function(i) sqrt(sum(i$sigma2)))
   
-if(plot){
-  
-  graphics.off()
-  org.par <- par(no.readonly = TRUE)
-  on.exit(par(org.par))
-  
-  par(mfrow = c(2,1), mgp = c(1.5, 0.14, 0), mar = c(1.5, 2.6, 1.5, .5), 
+  if(plot){
+    
+    graphics.off()
+    org.par <- par(no.readonly = TRUE)
+    on.exit(par(org.par))
+    
+    par(mfrow = c(2,1), mgp = c(1.5, 0.14, 0), mar = c(1.5, 2.6, 1.5, .5), 
         tck = -0.02)
-}  
+  }  
   
   output <- if(regression){
     
     fixed_eff_list <- lapply(model_list, function(i) setNames(coef(summary(i))$estimate, rownames(fit$b)))
     if(plot){    
-    
-    matplot(t(as.data.frame(fixed_eff_list)), type = "l", xaxt = "n", ylab = "Estimates", ...)
-    
-    axis(1, at = axTicks(1), labels = xaxis_lab,...)
-    
-    mn <- mean(seq_len(length(fixed_eff_list)))
-    
-    if(label_lines) text(mn, as.data.frame(fixed_effs)[,mn], rownames(fit$b),
-                         cex = cex_labels)
+      
+      matplot(t(as.data.frame(fixed_eff_list)), type = "l", xaxt = "n", ylab = "Estimates", ...)
+      
+      axis(1, at = axTicks(1), labels = xaxis_lab,...)
+      
+      mn <- mean(seq_len(length(fixed_eff_list)))
+      
+      if(label_lines) text(mn, as.data.frame(fixed_effs)[,mn], rownames(fit$b),
+                           cex = cex_labels)
     }
     
     output <- as.data.frame(t(do.call(rbind, fixed_eff_list)))
@@ -1508,17 +1508,17 @@ if(plot){
     
     post_rma_list <- lapply(model_list, function(i) setNames(as.numeric(post_rma(i, specs)$table$Mean),Term))
     
-if(plot){    
-  
-    matplot(t(as.data.frame(post_rma_list)), type = 'l', xaxt = "n", ylab = "Mean Effect", xlab = NA,...)
-    
-    axis(1, at = axTicks(1), labels = xaxis_lab,...)
-    
-    mn <- mean(seq_len(length(post_rma_list)))
-    
-    if(label_lines) text(mn, as.data.frame(post_rma_list)[,mn], Term,
-                         cex = cex_labels)
-}    
+    if(plot){    
+      
+      matplot(t(as.data.frame(post_rma_list)), type = 'l', xaxt = "n", ylab = "Mean Effect", xlab = NA,...)
+      
+      axis(1, at = axTicks(1), labels = xaxis_lab,...)
+      
+      mn <- mean(seq_len(length(post_rma_list)))
+      
+      if(label_lines) text(mn, as.data.frame(post_rma_list)[,mn], Term,
+                           cex = cex_labels)
+    }    
     output <- as.data.frame(t(do.call(rbind, post_rma_list)))
     
     setNames(output, xaxis_lab)
@@ -1527,14 +1527,14 @@ if(plot){
   
   if(plot){
     
-  rng <- range(total_hetros)
-  mrng <- mean(rng)
-  plot(total_hetros, type = "l", ylim = rng+c(-mrng,mrng), xaxt = "n", xlab = NA, ylab = "Total Variation (SD)",...)
-  axis(1, at = axTicks(1), labels = xaxis_lab, ...)
-}  
+    rng <- range(total_hetros)
+    mrng <- mean(rng)
+    plot(total_hetros, type = "l", ylim = rng+c(-mrng,mrng), xaxt = "n", xlab = NA, ylab = "Total Variation (SD)",...)
+    axis(1, at = axTicks(1), labels = xaxis_lab, ...)
+  }  
   out <- rbind(output, Total_variation_in_SD = total_hetros)
   out <- cbind(out, sd = sapply(1:nrow(out), function(i) sd(out[i,])))
-  rownames_to_column(out, "Term")
+  roundi(rownames_to_column(out, "Term"), digits = digits)
 }                
                 
 #======================== WCF Meta Dataset ======================================================================================================                
