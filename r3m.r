@@ -1432,27 +1432,51 @@ predict_rma <- function(fit, post_rma_fit, target_effect = 0, condition = c("or 
                 
 #M==============================================================================================================================================
                 
-sense_rma <- function(fit, post_rma_fit, var_name, 
-                      r = (3:7)*.1, cluster = NULL, 
+sense_rma <- function(fit, post_rma_fit = NULL, var_name, 
+                      r = (3:7)*.1, cluster = NULL, clean_names = NULL,
                       regression = NULL, label_lines = TRUE,
                       cex_labels = .55, plot = TRUE, digits = 3, ...){
   
   
   if(!inherits(fit, "rma.mv")) stop("Model is not 'rma.mv()'.", call. = FALSE)
   
-  if(!inherits(post_rma_fit, "post_rma")) stop("post_rma_fit is not 'post_rma()'.", call. = FALSE)     
+  if(!is.null(post_rma_fit) & !inherits(post_rma_fit, "post_rma")) stop("post_rma_fit is not 'post_rma()'.", call. = FALSE)     
   
+  dat <- clubSandwich:::getData(fit)
   
-  regression <- if(is.null(regression)) {
+  lm_fit <- lm(fixed_form_rma(fit), data = dat, na.action = "na.omit")
+  
+  cl <- clean_reg(lm_fit, names(coef(lm_fit)))
+  
+  if(is.null(clean_names)){
+    
+    if(any_num_vec(cl)) {
+      
+      clean_names <- FALSE
+      
+    } else { 
+      
+      clean_names <- TRUE
+      
+    }
+  } 
+  
+  if(clean_names) names(lm_fit$coefficients) <- cl
+  if(clean_names) fit <- clean_reg_names(fit)
+  
+  regression <- if(is.null(regression) & !is.null(post_rma_fit)) {
     
     if("cont_var" %in% as.character(post_rma_fit$call)) TRUE else FALSE
     
-  } else regression 
+  } else if(is.null(regression) & is.null(post_rma_fit)) TRUE else regression 
+  
+  
+if(!is.null(post_rma_fit)){
   
   specs <- post_rma_fit$specs
   
   post_rma_fit <- post_rma_fit$table
-  dat <- clubSandwich:::getData(fit)
+}
   
   cluster_name <- if(is.null(cluster)) strsplit(fit$s.names,"/",fixed=TRUE)[[1]] else cluster
   
@@ -1496,7 +1520,8 @@ sense_rma <- function(fit, post_rma_fit, var_name,
     
   } else {
     
-    
+    if(!is.null(post_rma_fit)){
+      
     nms <- names(post_rma_fit)
     
     vv <- nms[!nms %in% c("Mean","SE","Df","Lower","Upper","t",      
@@ -1507,6 +1532,12 @@ sense_rma <- function(fit, post_rma_fit, var_name,
                   function(i) paste0(as.vector(unlist(post_rma_fit[vv][i,])), collapse = " "))
     
     post_rma_list <- lapply(model_list, function(i) setNames(as.numeric(post_rma(i, specs)$table$Mean),Term))
+    
+    } else {
+      
+      stop("Please provide a 'post_rma_fit' or use 'regression=TRUE'.", call. = FALSE)
+      
+    }
     
     if(plot){    
       
