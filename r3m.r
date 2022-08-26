@@ -1377,7 +1377,7 @@ contr_rma <- function(post_rma_fit, contr_index){
 
 #===================================================================================================================================================
                 
-predict_rma <- function(fit, post_rma_fit, target_effect = 0, condition = c("or larger", "or smaller"),none_names = NULL){
+predict_rma <- function(fit, post_rma_fit, target_effect = 0, condition = c("or larger", "or smaller"), none_names = NULL){
   
   if(!inherits(fit, "rma.mv")) stop("Model is not 'rma.mv()'.", call. = FALSE)
   
@@ -1385,12 +1385,18 @@ predict_rma <- function(fit, post_rma_fit, target_effect = 0, condition = c("or 
   
   if(fit$withG || fit$withH || fit$withR) stop("These models not yet supported.", call. = FALSE)
   
+  specs <- post_rma_fit$specs
+  
   post_rma_fit <- type.convert(post_rma_fit$table, as.is=TRUE)
   
   nms <- names(post_rma_fit)
   
+  contr <- if("contr" %in% as.character(post_rma_fit$call) || c("pairwise","revpairwise","tukey","consec",
+                   "poly","trt.vs.ctrl","trt.vs.ctrlk","trt.vs.ctrl1",
+                   "dunnett","mean_chg","eff","del.eff","identity") %in% as.character(specs)) "Contrast" else NULL
+  
   vv <- nms[!nms %in% c("Mean","SE","Df","Lower","Upper","t",      
-                        "p-value","Sig.","Contrast","F","Df1","Df2",
+                        "p-value","Sig.",contr,"F","Df1","Df2",
                         "Estimate","m","Block Contrast","(M)UTOS Term", none_names)]
   
   Term <-sapply(seq_len(nrow(post_rma_fit)), 
@@ -1426,7 +1432,7 @@ predict_rma <- function(fit, post_rma_fit, target_effect = 0, condition = c("or 
   data.frame(Term=Term, Target_Effect = paste(target_effect, cond, collapse = " "), Probability = Probability, 
              Min = min_Probability, Max = max_Probability)
   
-}                 
+}                                  
 
                 
                 
