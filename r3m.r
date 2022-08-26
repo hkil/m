@@ -1392,8 +1392,8 @@ predict_rma <- function(fit, post_rma_fit, target_effect = 0, condition = c("or 
   nms <- names(post_rma_fit)
   
   contr <- if("contr" %in% as.character(post_rma_fit$call) || c("pairwise","revpairwise","tukey","consec",
-                   "poly","trt.vs.ctrl","trt.vs.ctrlk","trt.vs.ctrl1",
-                   "dunnett","mean_chg","eff","del.eff","identity") %in% as.character(specs)) "Contrast" else NULL
+                                                                "poly","trt.vs.ctrl","trt.vs.ctrlk","trt.vs.ctrl1",
+                                                                "dunnett","mean_chg","eff","del.eff","identity") %in% as.character(specs)) "Contrast" else NULL
   
   vv <- nms[!nms %in% c("Mean","SE","Df","Lower","Upper","t",      
                         "p-value","Sig.",contr,"F","Df1","Df2",
@@ -1413,7 +1413,7 @@ predict_rma <- function(fit, post_rma_fit, target_effect = 0, condition = c("or 
   
   upper_ave_eff <- post_rma_fit$Upper
   
-  ave_eff <- post_rma_fit$Mean
+  ave_eff <- if(!is.null(post_rma_fit$Mean)) post_rma_fit$Mean else post_rma_fit$Estimate
   
   ci <- as.data.frame(confint.rma.mv(fit))
   
@@ -1432,10 +1432,8 @@ predict_rma <- function(fit, post_rma_fit, target_effect = 0, condition = c("or 
   data.frame(Term=Term, Target_Effect = paste(target_effect, cond, collapse = " "), Probability = Probability, 
              Min = min_Probability, Max = max_Probability)
   
-}                                  
-
-                
-                
+} 
+              
 #M==============================================================================================================================================
                 
 sense_rma <- function(fit, post_rma_fit = NULL, var_name, 
