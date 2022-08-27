@@ -1377,7 +1377,7 @@ contr_rma <- function(post_rma_fit, contr_index){
 
 #===================================================================================================================================================
                 
-predict_rma <- function(fit, post_rma_fit, target_effect = 0, condition = c("or larger", "or smaller"), none_names = NULL){
+predict_rma <- function(fit, post_rma_fit, target_effect = 0, condition = c("or larger", "or smaller"), gain = FALSE, none_names = NULL){
   
   if(!inherits(fit, "rma.mv")) stop("Model is not 'rma.mv()'.", call. = FALSE)
   
@@ -1418,7 +1418,7 @@ predict_rma <- function(fit, post_rma_fit, target_effect = 0, condition = c("or 
   ci <- as.data.frame(confint.rma.mv(fit))
   
   #total_sd: estimate, lower, upper
-  total_sd <- sqrt(colSums(ci[odds_.(seq_len(nrow(ci))),]))
+  total_sd <- if(!gain) sqrt(colSums(ci[odds_.(seq_len(nrow(ci))),])) else sqrt(2)*ci[nrow(ci),]
   
   # Probability at the estimates
   Probability <- paste0(formatC(round(pnorm(target_effect, ave_eff, total_sd[1], lower.tail=lower.tail), 4)*1e2,digits = 2, format = "f"),"%")
@@ -1432,7 +1432,7 @@ predict_rma <- function(fit, post_rma_fit, target_effect = 0, condition = c("or 
   data.frame(Term=Term, Target_Effect = paste(target_effect, cond, collapse = " "), Probability = Probability, 
              Min = min_Probability, Max = max_Probability)
   
-} 
+}
               
 #M==============================================================================================================================================
                 
