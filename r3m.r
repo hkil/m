@@ -1417,8 +1417,10 @@ predict_rma <- function(fit, post_rma_fit, target_effect = 0, condition = c("or 
   
   ci <- as.data.frame(confint.rma.mv(fit))
   
+  all_lvls <- ci[odds_.(seq_len(nrow(ci))), , drop=FALSE]
+  
   #total_sd: estimate, lower, upper
-  total_sd <- if(!gain) sqrt(colSums(ci[odds_.(seq_len(nrow(ci))),])) else sqrt(2)*ci[nrow(ci),]
+  total_sd <- if(!gain) sqrt(colSums(all_lvls)) else sqrt(2) * sqrt(colSums(all_lvls[-1, ,drop=FALSE]))
   
   # Probability at the estimates
   Probability <- paste0(formatC(round(pnorm(target_effect, ave_eff, total_sd[1], lower.tail=lower.tail), 4)*1e2,digits = 2, format = "f"),"%")
