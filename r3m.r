@@ -1440,7 +1440,7 @@ predict_rma <- function(fit, post_rma_fit, target_effect = 0, condition = c("or 
                 
 sense_rma <- function(fit, post_rma_fit = NULL, var_name, 
                       r = (3:7)*.1, cluster = NULL, clean_names = NULL,
-                      regression = NULL, label_lines = TRUE,
+                      regression = NULL, label_lines = TRUE, none_names=NULL,
                       cex_labels = .55, plot = TRUE, digits = 3, ...){
   
   
@@ -1537,7 +1537,7 @@ if(!is.null(post_rma_fit)){
     
     vv <- nms[!nms %in% c("Mean","SE","Df","Lower","Upper","t",      
                           "p-value","Sig.","Contrast","F","Df1","Df2",
-                          "Estimate","m","Block Contrast","(M)UTOS Term", none_names=NULL)]
+                          "Estimate","m","Block Contrast","(M)UTOS Term", none_names=none_names)]
     
     Term <-sapply(seq_len(nrow(post_rma_fit)), 
                   function(i) paste0(as.vector(unlist(post_rma_fit[vv][i,])), collapse = " "))
