@@ -1412,7 +1412,7 @@ predict_rma <- function(fit, post_rma_fit, target_effect = 0, condition = c("or 
   all_lvls <- ci[odds_.(seq_len(nrow(ci))), , drop=FALSE]
   
   #total_sd: estimate, lower, upper
-  total_sd <- if(!gain) sqrt(colSums(all_lvls)) else sqrt(2) * sqrt(colSums(all_lvls[-1, ,drop=FALSE]))
+  total_sd <- if(!gain) sqrt(colSums(all_lvls)) else sqrt(2)*ci[nrow(ci),] #sqrt(2) * sqrt(colSums(all_lvls[-1, ,drop=FALSE]))
   
   # Probability at the estimates
   Probability <- paste0(formatC(round(pnorm(target_effect, ave_eff, total_sd[1], lower.tail=lower.tail), 4)*1e2,digits = 2, format = "f"),"%")
@@ -1438,7 +1438,9 @@ sense_rma <- function(fit, post_rma_fit = NULL, var_name,
   
   if(!inherits(fit, "rma.mv")) stop("Model is not 'rma.mv()'.", call. = FALSE)
   
-  if(!is.null(post_rma_fit) & !inherits(post_rma_fit, "post_rma")) stop("post_rma_fit is not 'post_rma()'.", call. = FALSE)     
+  if(!is.null(post_rma_fit) & !inherits(post_rma_fit, "post_rma")) stop("post_rma_fit is not 'post_rma()'.", call. = FALSE) 
+  
+  if(fit$withG || fit$withH || fit$withR) stop("These models not yet supported.", call. = FALSE)
   
   dat <- clubSandwich:::getData(fit)
   
