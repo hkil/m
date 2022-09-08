@@ -699,7 +699,7 @@ results_rma <- function(fit, digits = 3, robust = TRUE, blank_sign = "",
   QM <- FALSE
   sig <- FALSE
   drop_cols <- 1:7
-  drop_rows <- 1:nrow(res)
+  drop_rows <- 1:(nrow(res)+1)
   }
   
   if(QE){
