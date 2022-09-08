@@ -623,7 +623,7 @@ results_rma <- function(fit, digits = 3, robust = TRUE, blank_sign = "",
                         cat_shown = 1, shift_up = NULL, shift_down = NULL, 
                         drop_rows = NULL, drop_cols = NULL, QM = TRUE, 
                         QE = FALSE, sig = TRUE, clean_names = NULL, 
-                        tidy = FALSE, tol_large = 1e4){
+                        tidy = FALSE, tol_large = 1e4, random_only = FALSE){
   
   if(!inherits(fit, "rma.mv")) stop("Model is not 'rma.mv()'.", call. = FALSE)
   
@@ -694,6 +694,14 @@ results_rma <- function(fit, digits = 3, robust = TRUE, blank_sign = "",
   
   if(robust & nrow(res) != nrow(res_org)) message("Note:",dQuote(toString(setdiff(rownames(res_org),rownames(res)))), " dropped due to inestimablity under Robust estimation.\n")
   
+  if(random_only) 
+  { QE <- FALSE  
+  QM <- FALSE
+  sig <- FALSE
+  drop_cols <- 1:7
+  drop_rows <- 1:nrow(res)
+  }
+  
   if(QE){
     qe <- data.frame(Estimate = fit$QE, Df = nobs.rma(fit), 
                      pval = fit$QEp, row.names = "QE") %>%
@@ -710,12 +718,12 @@ results_rma <- function(fit, digits = 3, robust = TRUE, blank_sign = "",
     
     if(robust){
       
-    if(bad || !bad && is.na(mc$p_val)) { 
-      robust <- FALSE
-      message("Note: Robust QM unavailable,likely: \n1- Some moderators in <2 clusters OR/AND \n2- High # of coefficients vs. # of highest clusters.\nQM results are model-based.\n")
-    }
-    
-    if(!bad && mc$Fstat>tol_large) { message("Note: Robust QM is unreasonably large, likely robust estimation is unfit for the model (use 'robust=FALSE').") }
+      if(bad || !bad && is.na(mc$p_val)) { 
+        robust <- FALSE
+        message("Note: Robust QM unavailable,likely: \n1- Some moderators in <2 clusters OR/AND \n2- High # of coefficients vs. # of highest clusters.\nQM results are model-based.\n")
+      }
+      
+      if(!bad && mc$Fstat>tol_large) { message("Note: Robust QM is unreasonably large, likely robust estimation is unfit for the model (use 'robust=FALSE').") }
     }
     
     qm <- if(robust) {
@@ -861,8 +869,7 @@ results_rma <- function(fit, digits = 3, robust = TRUE, blank_sign = "",
   if(!is.null(shift_up)) out <- shift_rows(out, shift_up)
   if(!is.null(shift_down)) out <- shift_rows(out, shift_down, up = FALSE)
   if(!is.null(drop_rows)) out <- out[-drop_rows, ]
-  
-  out <- dplyr::select(out, -tidyselect::all_of(drop_cols))
+  if(!is.null(drop_cols)) out <- dplyr::select(out, -tidyselect::all_of(drop_cols))
   
   if(tidy) out <- cbind(Terms = rownames(out), set_rownames_(out, NULL))
   
