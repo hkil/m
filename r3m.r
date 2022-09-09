@@ -798,7 +798,7 @@ results_rma <- function(fit, digits = 3, robust = TRUE, blank_sign = "",
     is_diag <- fit$struct[1] == "DIAG"
     is_simple <- length(fit$tau2) == 1
     
-    rnm <- paste("Level:", tail(fit$g.names,1))
+    rnm <- paste("Outer:", tail(fit$g.names,1))
     clnm <- clean_GH_names(fit)
     
     d2 <- data.frame(Tau = sqrt(fit$tau2), 
@@ -827,7 +827,7 @@ results_rma <- function(fit, digits = 3, robust = TRUE, blank_sign = "",
     is_diag <- fit$struct[2] == "DIAG"
     is_simple <- length(fit$gamma2) == 1
     
-    rnm <- paste("Level:", paste0(tail(fit$h.names,1)," "))
+    rnm <- paste("Outer:", paste0(tail(fit$h.names,1)," "))
     
     clnm <- clean_GH_names(fit, G=FALSE)
     
