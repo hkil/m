@@ -459,47 +459,6 @@ shorten_ <- function(vec, n = 3) {
        sub(sprintf("^(([^,]+, ){%s}).*, ([^,]+)$", n), "\\1...,\\3", toString(vec)))  
 } 
 
-# H=================================================================================================================================================  
-
-plot.efflist <- function (x, selection, rows, cols, graphics = TRUE, 
-                          lattice, rug = FALSE, multiline = TRUE, ...) 
-{
-  lattice <- if (missing(lattice)) 
-    list()
-  else lattice
-  if (!missing(selection)) {
-    if (is.character(selection)) 
-      selection <- gsub(" ", "", selection)
-    pp <- plot(x[[selection]], lattice = lattice, rug = rug, multiline=multiline, ...)
-    pp$x.scales$tck=c(1,0)
-    pp$y.scales$tck=c(1,0)
-    return(pp)
-  }
-  effects <- gsub(":", "*", names(x))
-  neffects <- length(x)
-  mfrow <- mfrow(neffects)
-  if (missing(rows) || missing(cols)) {
-    rows <- mfrow[1]
-    cols <- mfrow[2]
-  }
-  for (i in 1:rows) {
-    for (j in 1:cols) {
-      if ((i - 1) * cols + j > neffects) 
-        break
-      more <- !((i - 1) * cols + j == neffects)
-      lattice[["array"]] <- list(row = i, col = j, 
-                                 nrow = rows, ncol = cols, more = more)
-      pp <- plot(x[[(i - 1) * cols + j]], lattice = lattice, rug = rug, multiline = multiline,
-                 ...)
-      # hack to turn off opposite side tick marks
-      pp$x.scales$tck=c(1,0)
-      pp$y.scales$tck=c(1,0)
-      print(pp)
-    }
-  }
-}
-environment(plot.efflist) <- asNamespace("effects")
-
 # M======================================================================================================================================================  
 
 plot_rma <- function(fit, full=TRUE, multiline=TRUE, 
@@ -1600,4 +1559,43 @@ suppressWarnings(
 
 options(dplyr.summarise.inform = FALSE)                        
 
+# H=================================================================================================================================================  
 
+plot.efflist <- function (x, selection, rows, cols, graphics = TRUE, 
+                          lattice, rug = FALSE, multiline = TRUE, ...) 
+{
+  lattice <- if (missing(lattice)) 
+    list()
+  else lattice
+  if (!missing(selection)) {
+    if (is.character(selection)) 
+      selection <- gsub(" ", "", selection)
+    pp <- plot(x[[selection]], lattice = lattice, rug = rug, multiline=multiline, ...)
+    pp$x.scales$tck=c(1,0)
+    pp$y.scales$tck=c(1,0)
+    return(pp)
+  }
+  effects <- gsub(":", "*", names(x))
+  neffects <- length(x)
+  mfrow <- mfrow(neffects)
+  if (missing(rows) || missing(cols)) {
+    rows <- mfrow[1]
+    cols <- mfrow[2]
+  }
+  for (i in 1:rows) {
+    for (j in 1:cols) {
+      if ((i - 1) * cols + j > neffects) 
+        break
+      more <- !((i - 1) * cols + j == neffects)
+      lattice[["array"]] <- list(row = i, col = j, 
+                                 nrow = rows, ncol = cols, more = more)
+      pp <- plot(x[[(i - 1) * cols + j]], lattice = lattice, rug = rug, multiline = multiline,
+                 ...)
+      # hack to turn off opposite side tick marks
+      pp$x.scales$tck=c(1,0)
+      pp$y.scales$tck=c(1,0)
+      print(pp)
+    }
+  }
+}
+environment(plot.efflist) <- asNamespace("effects")
