@@ -1538,7 +1538,18 @@ if(!is.null(post_rma_fit)){
   out <- cbind(out, sd = sapply(1:nrow(out), function(i) sd(out[i,])))
   roundi(rownames_to_column(out, "Term"), digits = digits)
 }                
-                
+ 
+#================================================================================================================================================
+                                
+r2z_tran <- list(
+  linkfun = function(mu) atanh(mu),
+  linkinv = function(eta) tanh(eta),
+  mu.eta = function(eta) 0.5*((1/(1-eta)+(1+eta)/(1-eta)^2)/((1+eta)/(1-eta))),
+  valideta = function (eta) 
+    all(is.finite(eta)) && all(eta > -1 & eta < 1),
+  name = "r2z"
+)                                
+                                
 #======================== WCF Meta Dataset ======================================================================================================                
                 
 wcf <- read.csv("https://raw.githubusercontent.com/hkil/m/master/wcf.csv")
