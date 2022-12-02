@@ -1020,7 +1020,7 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
   
   infer <- c(ci, p_value)
   
-  lookup <- c(Contrast="contrast",Estimate="estimate","Mean"="emmean",t="t.ratio",
+  lookup <- c(Contrast="contrast",Estimate="estimate","Mean"="emmean","Mean(Org. Scale)"="response",t="t.ratio",
               Df="df","p-value"="p.value",Lower="lower.CL",Upper="upper.CL",
               Df1="df1", Df2="df2","F"="F.ratio",m="model term")
   
