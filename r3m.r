@@ -954,7 +954,7 @@ comb.facs <- function(object, facs, new.name = paste(facs, collapse = ".")) {
 # M=================================================================================================================================================
 
 post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE, ci = TRUE, block_vars = NULL,
-                     adjust = "none", mutos = FALSE, mutos_contrast = FALSE, compare = FALSE, plot = FALSE, p_value = TRUE,
+                     adjust = "none", mutos = FALSE, mutos_contrast = FALSE, compare = FALSE, plot_pairwise = FALSE, p_value = TRUE,
                      reverse = FALSE, digits = 3, xlab = "Estimated Effect", shift_up = NULL, shift_down = NULL, 
                      drop_rows = NULL, mutos_name = "(M)UTOS Term", drop_cols = NULL, contrast_contrast = FALSE, 
                      na.rm = TRUE, robust = FALSE, cluster, show0df = FALSE, sig = TRUE, contr, 
@@ -1060,7 +1060,7 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
     
     methd <- as.character(specs[2])
     
-    if(plot) print(plot(ems, by = by, comparisons = compare, horizontal = horiz, adjust = adjust, xlab = xlab)) 
+    if(plot_pairwise) print(plot(ems, by = by, comparisons = compare, horizontal = horiz, adjust = adjust, xlab = xlab)) 
     
     pp <- contrast(ems, method = methd, each="simple", infer=infer, reverse=reverse, adjust=adjust)[[if(!contrast_contrast) 1 else 2]]
     
@@ -1137,7 +1137,7 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
   if(!is.null(drop_cols)) out <- dplyr::select(out, -tidyselect::all_of(drop_cols))
   if(!is.null(get_cols)) out <- dplyr::select(out, tidyselect::all_of(get_cols))
   
-  out <- list(table = out, specs = specs, call = cl, fit = fit)
+  out <- list(table = out, specs = specs, call = cl, fit = fit, ems = ems)
   class(out) <- "post_rma"
   return(out)
 }                   
@@ -1541,6 +1541,16 @@ if(!is.null(post_rma_fit)){
   roundi(rownames_to_column(out, "Term"), digits = digits)
 }                
  
+#================================================================================================================================================
+ 
+plot_post_rma <- function(post_rma_fit, formula, ...){
+  
+  if(!inherits(post_rma_fit, "post_rma")) stop("post_rma_fit is not 'post_rma()'.", call. = FALSE)
+  
+  emmip(object=post_rma_fit$ems, formula=formula, ...)
+  
+}                                
+                                
 #================================================================================================================================================
                                 
 r2z_tran <- list(
