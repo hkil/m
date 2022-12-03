@@ -1324,6 +1324,8 @@ sizetree2 <- function (x, left = 0, top, right = 1, lastcenter = NA,
                 
 contr_rma <- function(post_rma_fit, contr_index){
   
+  if(!inherits(post_rma_fit, "post_rma")) stop("post_rma_fit is not 'post_rma()'.", call. = FALSE)
+  
   post_rma_fit <- post_rma_fit$table
   
   all_emms <- rep(0, nrow(post_rma_fit))
