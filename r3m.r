@@ -1339,7 +1339,7 @@ contr_rma <- function(post_rma_fit, contr_index){
 
 #===================================================================================================================================================
                 
-predict_rma <- function(post_rma_fit, target_effect = 0, condition = c("or larger", "or smaller"), gain = FALSE, none_names = NULL, ...){
+prob_rma <- function(post_rma_fit, target_effect = 0, condition = c("or larger", "or smaller"), gain = FALSE, none_names = NULL, ...){
   
   fit <- post_rma_fit$rma.mv_fit
   
