@@ -1400,13 +1400,15 @@ predict_rma <- function(post_rma_fit, target_effect = 0, condition = c("or large
               
 #M==============================================================================================================================================
                 
-sense_rma <- function(post_rma_fit = NULL, 
-                      r = (3:7)*.1, cluster = NULL, clean_names = NULL,
-                      regression = NULL, label_lines = TRUE, none_names=NULL,
-                      cex_labels = .55, plot = FALSE, digits = 3, ...){
+sense_rma <- function(post_rma_fit = NULL, fit = NULL, 
+                       r = (3:7)*.1, cluster = NULL, clean_names = NULL,
+                       regression = NULL, label_lines = TRUE, none_names=NULL,
+                       cex_labels = .55, plot = TRUE, digits = 3, ...){
   
   
-  fit <- post_rma_fit$rma.mv_fit
+  if(is.null(fit) & is.null(post_rma_fit)) stop("Provide either 'fit=' or 'post_rma_fit='.", call. = TRUE)
+  if(!is.null(fit) & !inherits(fit, "rma.mv")) stop("Model is not 'rma.mv()'.", call. = FALSE)
+  if(is.null(fit)) fit <- post_rma_fit$rma.mv_fit
   
   var_name <- as.list(as.character(fit$call))[[3]]
   
@@ -1545,7 +1547,7 @@ sense_rma <- function(post_rma_fit = NULL,
   roundi(rownames_to_column(out, "Term"), digits = digits)
 }               
  
-#================================================================================================================================================
+#M================================================================================================================================================
  
 plot_post_rma <- function(post_rma_fit, formula, ylab, ...){
   
@@ -1557,7 +1559,7 @@ plot_post_rma <- function(post_rma_fit, formula, ylab, ...){
   
 }                               
                                 
-#================================================================================================================================================
+#M================================================================================================================================================
                                 
 r2z_tran <- list(
   linkfun = function(mu) atanh(mu),
@@ -1587,44 +1589,3 @@ suppressWarnings(
   }))
 
 options(dplyr.summarise.inform = FALSE)                        
-
-# H=================================================================================================================================================  
-
-plot.efflist <- function (x, selection, rows, cols, graphics = TRUE, 
-                          lattice, rug = FALSE, multiline = TRUE, ...) 
-{
-  lattice <- if (missing(lattice)) 
-    list()
-  else lattice
-  if (!missing(selection)) {
-    if (is.character(selection)) 
-      selection <- gsub(" ", "", selection)
-    pp <- plot(x[[selection]], lattice = lattice, rug = rug, multiline=multiline, ...)
-    pp$x.scales$tck=c(1,0)
-    pp$y.scales$tck=c(1,0)
-    return(pp)
-  }
-  effects <- gsub(":", "*", names(x))
-  neffects <- length(x)
-  mfrow <- mfrow(neffects)
-  if (missing(rows) || missing(cols)) {
-    rows <- mfrow[1]
-    cols <- mfrow[2]
-  }
-  for (i in 1:rows) {
-    for (j in 1:cols) {
-      if ((i - 1) * cols + j > neffects) 
-        break
-      more <- !((i - 1) * cols + j == neffects)
-      lattice[["array"]] <- list(row = i, col = j, 
-                                 nrow = rows, ncol = cols, more = more)
-      pp <- plot(x[[(i - 1) * cols + j]], lattice = lattice, rug = rug, multiline = multiline,
-                 ...)
-      # hack to turn off opposite side tick marks
-      pp$x.scales$tck=c(1,0)
-      pp$y.scales$tck=c(1,0)
-      print(pp)
-    }
-  }
-}
-environment(plot.efflist) <- asNamespace("effects")
