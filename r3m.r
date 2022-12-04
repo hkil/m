@@ -1545,13 +1545,15 @@ if(!is.null(post_rma_fit)){
  
 #================================================================================================================================================
  
-plot_post_rma <- function(post_rma_fit, formula, ...){
+plot_post_rma <- function(post_rma_fit, formula, ylab, ...){
   
   if(!inherits(post_rma_fit, "post_rma")) stop("post_rma_fit is not 'post_rma()'.", call. = FALSE)
   
-  emmip(object=post_rma_fit$ems, formula=formula, ...)
+  if(missing(ylab)) ylab <- paste0("Effect Size (",as.character(fixed_form_rma(post_rma_fit$rma.mv_fit))[2],")")
   
-}                                
+  emmip(object=post_rma_fit$ems, formula=formula, ylab=ylab, ...)
+  
+}                               
                                 
 #================================================================================================================================================
                                 
