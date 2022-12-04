@@ -1400,13 +1400,15 @@ predict_rma <- function(post_rma_fit, target_effect = 0, condition = c("or large
               
 #M==============================================================================================================================================
                 
-sense_rma <- function(fit, post_rma_fit = NULL, var_name, 
+sense_rma <- function(post_rma_fit = NULL, 
                       r = (3:7)*.1, cluster = NULL, clean_names = NULL,
                       regression = NULL, label_lines = TRUE, none_names=NULL,
                       cex_labels = .55, plot = TRUE, digits = 3, ...){
   
   
-  if(!inherits(fit, "rma.mv")) stop("Model is not 'rma.mv()'.", call. = FALSE)
+  fit <- post_rma_fit$rma.mv_fit
+  
+  var_name <- as.list(as.character(fit$call))[[3]]
   
   if(!is.null(post_rma_fit) & !inherits(post_rma_fit, "post_rma")) stop("post_rma_fit is not 'post_rma()'.", call. = FALSE) 
   
@@ -1420,38 +1422,38 @@ sense_rma <- function(fit, post_rma_fit = NULL, var_name,
     
   } else if(is.null(regression) & is.null(post_rma_fit)) TRUE else regression 
   
-    
-if(regression){
-    
-  lm_fit <- lm(fixed_form_rma(fit), data = dat, na.action = "na.omit")
   
-  cl <- clean_reg(lm_fit, names(coef(lm_fit)))
-  
-  if(is.null(clean_names)){
+  if(regression){
     
-    if(any_num_vec(cl)) {
+    lm_fit <- lm(fixed_form_rma(fit), data = dat, na.action = "na.omit")
+    
+    cl <- clean_reg(lm_fit, names(coef(lm_fit)))
+    
+    if(is.null(clean_names)){
       
-      clean_names <- FALSE
-      
-    } else { 
-      
-      clean_names <- TRUE
-      
-    }
-  } 
-  
-  if(clean_names) names(lm_fit$coefficients) <- cl
-  if(clean_names) fit <- clean_reg_names(fit)
- }   
+      if(any_num_vec(cl)) {
+        
+        clean_names <- FALSE
+        
+      } else { 
+        
+        clean_names <- TRUE
+        
+      }
+    } 
     
+    if(clean_names) names(lm_fit$coefficients) <- cl
+    if(clean_names) fit <- clean_reg_names(fit)
+  }   
+  
+  
+  
+  if(!is.null(post_rma_fit)){
     
-  
-if(!is.null(post_rma_fit)){
-  
-  specs <- post_rma_fit$specs
-  
-  post_rma_fit <- post_rma_fit$table
-}
+    specs <- post_rma_fit$specs
+    
+    post_rma_fit <- post_rma_fit$table
+  }
   
   cluster_name <- if(is.null(cluster)) strsplit(fit$s.names,"/",fixed=TRUE)[[1]] else cluster
   
@@ -1497,17 +1499,17 @@ if(!is.null(post_rma_fit)){
     
     if(!is.null(post_rma_fit)){
       
-    nms <- names(post_rma_fit)
-    
-    vv <- nms[!nms %in% c("Mean","SE","Df","Lower","Upper","t",      
-                          "p-value","Sig.","Contrast","F","Df1","Df2",
-                          "Estimate","m","Block Contrast","(M)UTOS Term", none_names=none_names)]
-    
-    Term <-sapply(seq_len(nrow(post_rma_fit)), 
-                  function(i) paste0(as.vector(unlist(post_rma_fit[vv][i,])), collapse = " "))
-    
-    post_rma_list <- lapply(model_list, function(i) setNames(as.numeric(post_rma(i, specs)$table$Mean),Term))
-    
+      nms <- names(post_rma_fit)
+      
+      vv <- nms[!nms %in% c("Mean","SE","Df","Lower","Upper","t",      
+                            "p-value","Sig.","Contrast","F","Df1","Df2",
+                            "Estimate","m","Block Contrast","(M)UTOS Term", none_names=none_names)]
+      
+      Term <-sapply(seq_len(nrow(post_rma_fit)), 
+                    function(i) paste0(as.vector(unlist(post_rma_fit[vv][i,])), collapse = " "))
+      
+      post_rma_list <- lapply(model_list, function(i) setNames(as.numeric(post_rma(i, specs)$table$Mean),Term))
+      
     } else {
       
       stop("Please provide a 'post_rma_fit' or use 'regression=TRUE'.", call. = FALSE)
@@ -1541,7 +1543,7 @@ if(!is.null(post_rma_fit)){
   out <- rbind(output, Total_variation_in_SD = total_hetros)
   out <- cbind(out, sd = sapply(1:nrow(out), function(i) sd(out[i,])))
   roundi(rownames_to_column(out, "Term"), digits = digits)
-}                
+}               
  
 #================================================================================================================================================
  
