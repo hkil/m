@@ -1503,7 +1503,7 @@ sense_rma <- function(post_rma_fit = NULL, fit = NULL,
       
       nms <- names(post_rma_fit)
       
-      vv <- nms[!nms %in% c("Mean","SE","Df","Lower","Upper","t",      
+      vv <- nms[!nms %in% c("Mean","Mean(Org. Scale)","SE","Df","Lower","Upper","t",      
                             "p-value","Sig.","Contrast","F","Df1","Df2",
                             "Estimate","m","Block Contrast","(M)UTOS Term", none_names=none_names)]
       
