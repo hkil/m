@@ -991,6 +991,8 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
   
   is_singular <- anyNA(coef(lm_fit))
   
+  rma.mv_fit <- fit
+  
   fit <- rma2gls(fit)
   
   specs_org <- specs
@@ -1137,7 +1139,7 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
   if(!is.null(drop_cols)) out <- dplyr::select(out, -tidyselect::all_of(drop_cols))
   if(!is.null(get_cols)) out <- dplyr::select(out, tidyselect::all_of(get_cols))
   
-  out <- list(table = out, specs = specs, call = cl, fit = fit, ems = ems)
+  out <- list(table = out, specs = specs, call = cl, fit = fit, rma.mv_fit = rma.mv_fit, ems = ems)
   class(out) <- "post_rma"
   return(out)
 }                   
