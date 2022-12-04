@@ -1339,9 +1339,9 @@ contr_rma <- function(post_rma_fit, contr_index){
 
 #===================================================================================================================================================
                 
-predict_rma <- function(fit, post_rma_fit, target_effect = 0, condition = c("or larger", "or smaller"), gain = FALSE, none_names = NULL){
+predict_rma <- function(post_rma_fit, target_effect = 0, condition = c("or larger", "or smaller"), gain = FALSE, none_names = NULL, ...){
   
-  if(!inherits(fit, "rma.mv")) stop("Model is not 'rma.mv()'.", call. = FALSE)
+  fit <- post_rma_fit$rma.mv_fit
   
   if(!inherits(post_rma_fit, "post_rma")) stop("post_rma_fit is not 'post_rma()'.", call. = FALSE)    
   
@@ -1377,7 +1377,7 @@ predict_rma <- function(fit, post_rma_fit, target_effect = 0, condition = c("or 
   
   ave_eff <- if(!is.null(post_rma_fit$Mean)) post_rma_fit$Mean else post_rma_fit$Estimate
   
-  ci <- as.data.frame(confint.rma.mv(fit))
+  ci <- as.data.frame(confint.rma.mv(fit, ...))
   
   all_lvls <- ci[odds_.(seq_len(nrow(ci))), , drop=FALSE]
   
