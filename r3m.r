@@ -1403,7 +1403,7 @@ predict_rma <- function(post_rma_fit, target_effect = 0, condition = c("or large
 sense_rma <- function(post_rma_fit = NULL, 
                       r = (3:7)*.1, cluster = NULL, clean_names = NULL,
                       regression = NULL, label_lines = TRUE, none_names=NULL,
-                      cex_labels = .55, plot = TRUE, digits = 3, ...){
+                      cex_labels = .55, plot = FALSE, digits = 3, ...){
   
   
   fit <- post_rma_fit$rma.mv_fit
