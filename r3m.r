@@ -1355,7 +1355,7 @@ predict_rma <- function(fit, post_rma_fit, target_effect = 0, condition = c("or 
                                                                 "poly","trt.vs.ctrl","trt.vs.ctrlk","trt.vs.ctrl1",
                                                                 "dunnett","mean_chg","eff","del.eff","identity") %in% as.character(specs)) "Contrast" else NULL
   
-  vv <- nms[!nms %in% c("Mean","SE","Df","Lower","Upper","t",      
+  vv <- nms[!nms %in% c("Mean","Mean(Org. Scale)","SE","Df","Lower","Upper","t",      
                         "p-value","Sig.",contr,"F","Df1","Df2",
                         "Estimate","m","Block Contrast","(M)UTOS Term", none_names)]
   
