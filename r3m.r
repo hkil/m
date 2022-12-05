@@ -1549,13 +1549,13 @@ sense_rma <- function(post_rma_fit = NULL, fit = NULL,
  
 #M================================================================================================================================================
  
-plot_post_rma <- function(post_rma_fit, formula, ylab, ...){
+plot_post_rma <- function(post_rma_fit, formula, ylab, CIarg = list(lwd = .5, alpha = 1), ...){
   
   if(!inherits(post_rma_fit, "post_rma")) stop("post_rma_fit is not 'post_rma()'.", call. = FALSE)
   
   if(missing(ylab)) ylab <- paste0("Effect Size (",as.character(fixed_form_rma(post_rma_fit$rma.mv_fit))[2],")")
   
-  emmip(object=post_rma_fit$ems, formula=formula, ylab=ylab, ...) +
+  emmip(object=post_rma_fit$ems, formula=formula, ylab=ylab, CIarg=CIarg, ...) +
   theme(legend.position = "top")
   
 }                               
