@@ -1022,7 +1022,7 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
   
   infer <- c(ci, p_value)
   
-  lookup <- c(Contrast="contrast",Estimate="estimate","Mean"="emmean","Mean(Org. Scale)"="response",t="t.ratio",
+  lookup <- c(Contrast="contrast",Estimate="estimate","Mean"="emmean","Response"="response",t="t.ratio",
               Df="df","p-value"="p.value",Lower="lower.CL",Upper="upper.CL",
               Df1="df1", Df2="df2","F"="F.ratio",m="model term")
   
@@ -1357,7 +1357,7 @@ prob_rma <- function(post_rma_fit, target_effect = 0, condition = c("or larger",
                                                                 "poly","trt.vs.ctrl","trt.vs.ctrlk","trt.vs.ctrl1",
                                                                 "dunnett","mean_chg","eff","del.eff","identity") %in% as.character(specs)) "Contrast" else NULL
   
-  vv <- nms[!nms %in% c("Mean","Mean(Org. Scale)","SE","Df","Lower","Upper","t",      
+  vv <- nms[!nms %in% c("Mean","Response","SE","Df","Lower","Upper","t",      
                         "p-value","Sig.",contr,"F","Df1","Df2",
                         "Estimate","m","Block Contrast","(M)UTOS Term", none_names)]
   
@@ -1375,7 +1375,7 @@ prob_rma <- function(post_rma_fit, target_effect = 0, condition = c("or larger",
   
   upper_ave_eff <- post_rma_fit$Upper
   
-  ave_eff <- if(!is.null(post_rma_fit$Mean)) post_rma_fit$Mean else post_rma_fit$Estimate
+  ave_eff <- if(!is.null(post_rma_fit$Mean)) post_rma_fit$Mean else if(!is.null(post_rma_fit$Response)) post_rma_fit$Response else post_rma_fit$Estimate
   
   ci <- as.data.frame(confint.rma.mv(fit, ...))
   
@@ -1448,8 +1448,6 @@ sense_rma <- function(post_rma_fit = NULL, fit = NULL,
     if(clean_names) fit <- clean_reg_names(fit)
   }   
   
-  
-  
   if(!is.null(post_rma_fit)){
     
     specs <- post_rma_fit$specs
@@ -1503,7 +1501,7 @@ sense_rma <- function(post_rma_fit = NULL, fit = NULL,
       
       nms <- names(post_rma_fit)
       
-      vv <- nms[!nms %in% c("Mean","Mean(Org. Scale)","SE","Df","Lower","Upper","t",      
+      vv <- nms[!nms %in% c("Mean","Response","SE","Df","Lower","Upper","t",      
                             "p-value","Sig.","Contrast","F","Df1","Df2",
                             "Estimate","m","Block Contrast","(M)UTOS Term", none_names=none_names)]
       
