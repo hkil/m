@@ -1400,20 +1400,15 @@ prob_rma <- function(post_rma_fit, target_effect = 0, condition = c("or larger",
               
 #M==============================================================================================================================================
                 
-sense_rma <- function(post_rma_fit = NULL, fit = NULL, 
-                       r = (3:7)*.1, cluster = NULL, clean_names = NULL,
-                       regression = NULL, label_lines = TRUE, none_names=NULL,
-                       cex_labels = .55, plot = TRUE, digits = 3, ...){
-  
+sense_rma <- function(post_rma_fit = NULL, var_name, fit = NULL, 
+                      r = (3:7)*.1, cluster = NULL, clean_names = NULL,
+                      regression = NULL, label_lines = TRUE, none_names=NULL,
+                      cex_labels = .55, plot = TRUE, digits = 3, ...){
   
   if(is.null(fit) & is.null(post_rma_fit)) stop("Provide either 'fit=' or 'post_rma_fit='.", call. = TRUE)
   if(!is.null(fit) & !inherits(fit, "rma.mv")) stop("Model is not 'rma.mv()'.", call. = FALSE)
   if(is.null(fit)) fit <- post_rma_fit$rma.mv_fit
-  
-  var_name <- as.list(as.character(fit$call))[[3]]
-  
   if(!is.null(post_rma_fit) & !inherits(post_rma_fit, "post_rma")) stop("post_rma_fit is not 'post_rma()'.", call. = FALSE) 
-  
   if(fit$withG || fit$withH || fit$withR) stop("These models not yet supported.", call. = FALSE)
   
   dat <- clubSandwich:::getData(fit)
@@ -1508,7 +1503,13 @@ sense_rma <- function(post_rma_fit = NULL, fit = NULL,
       Term <-sapply(seq_len(nrow(post_rma_fit)), 
                     function(i) paste0(as.vector(unlist(post_rma_fit[vv][i,])), collapse = " "))
       
-      post_rma_list <- lapply(model_list, function(i) setNames(as.numeric(post_rma(i, specs)$table$Mean),Term))
+      ty <- if(!is.null(post_rma_fit$Mean)) 1 else if(!is.null(post_rma_fit$Estimate)) 2 else 3
+      
+      
+      post_rma_list <- lapply(model_list, function(i) 
+        setNames(as.numeric(post_rma(i, specs)$table[[if(ty == 1) "Mean" 
+                                                      else if(ty == 2) "Estimate" 
+                                                      else "Response"]]),Term))
       
     } else {
       
@@ -1543,7 +1544,7 @@ sense_rma <- function(post_rma_fit = NULL, fit = NULL,
   out <- rbind(output, Total_variation_in_SD = total_hetros)
   out <- cbind(out, sd = sapply(1:nrow(out), function(i) sd(out[i,])))
   roundi(rownames_to_column(out, "Term"), digits = digits)
-}               
+}                
  
 #M================================================================================================================================================
  
