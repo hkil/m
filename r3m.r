@@ -933,7 +933,7 @@ smooth_vi <- function(data, study, vi, digits = 8, fun = sd, ylab = "Studies", x
 
 comb.facs <- function(object, facs, new.name = paste(facs, collapse = ".")) {
   
-  if((length(facs) < 1))
+  if((length(facs) < 2))
     stop("Block test needs at least two categorical variables.", call. = FALSE)
   levs = object@levels
   if(any(sapply(facs, function(x) !(x %in% names(levs)))))
