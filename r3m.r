@@ -957,10 +957,13 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
                      adjust = "none", mutos = FALSE, mutos_contrast = FALSE, compare = FALSE, plot_pairwise = FALSE, p_value = TRUE,
                      reverse = FALSE, digits = 3, xlab = "Estimated Effect", shift_up = NULL, shift_down = NULL, 
                      drop_rows = NULL, mutos_name = "(M)UTOS Term", drop_cols = NULL, contrast_contrast = FALSE, 
-                     na.rm = TRUE, robust = FALSE, cluster, show0df = FALSE, sig = TRUE, contr, 
+                     na.rm = TRUE, robust = FALSE, cluster, show0df = FALSE, sig = TRUE, contr,
                      get_rows = NULL, get_cols = NULL, ...){
   
   if(!inherits(fit, "rma.mv")) stop("Model is not 'rma.mv()'.", call. = FALSE)
+  
+  dot_args <- list(...)
+  dot_args_nm <- names(dot_args)
   
   cl <- match.call()
   
@@ -1028,6 +1031,9 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
   
   names(lookup)[12] <- if(is.null(block_vars)) paste(mutos_name, "Contrast") else "Block Contrast"
   
+  tran. <- if('tran' %in% dot_args_nm) dot_args$tran else FALSE           
+  type. <- if('type' %in% dot_args_nm) dot_args$type else FALSE
+  
   is_contr <- !missing(contr)            
   
   ems <- try(if(is.null(cont_var)){
@@ -1047,6 +1053,7 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
     }
     
   }, silent = TRUE)
+  
   
   if(inherits(ems,"try-error")) return(message("Error: Wrong specification OR no relavant data for the comparisons found."))
   
@@ -1139,10 +1146,12 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
   if(!is.null(drop_cols)) out <- dplyr::select(out, -tidyselect::all_of(drop_cols))
   if(!is.null(get_cols)) out <- dplyr::select(out, tidyselect::all_of(get_cols))
   
-  out <- list(table = out, specs = specs, call = cl, fit = fit, rma.mv_fit = rma.mv_fit, ems = ems)
+  out <- list(table = out, specs = specs, call = cl, fit = fit, rma.mv_fit = rma.mv_fit, ems = ems,
+              tran. = tran., type. = type.)
+  
   class(out) <- "post_rma"
   return(out)
-}                   
+}                  
 
 # M=================================================================================================================================================
 
