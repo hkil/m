@@ -1414,11 +1414,15 @@ sense_rma <- function(post_rma_fit = NULL, var_name, fit = NULL,
                       regression = NULL, label_lines = TRUE, none_names=NULL,
                       cex_labels = .55, plot = TRUE, digits = 3, ...){
   
+
   if(is.null(fit) & is.null(post_rma_fit)) stop("Provide either 'fit=' or 'post_rma_fit='.", call. = TRUE)
   if(!is.null(fit) & !inherits(fit, "rma.mv")) stop("Model is not 'rma.mv()'.", call. = FALSE)
   if(is.null(fit)) fit <- post_rma_fit$rma.mv_fit
   if(!is.null(post_rma_fit) & !inherits(post_rma_fit, "post_rma")) stop("post_rma_fit is not 'post_rma()'.", call. = FALSE) 
   if(fit$withG || fit$withH || fit$withR) stop("These models not yet supported.", call. = FALSE)
+  
+  tran. <- post_rma_fit$tran.
+  type. <- post_rma_fit$type.
   
   dat <- clubSandwich:::getData(fit)
   
@@ -1490,14 +1494,13 @@ sense_rma <- function(post_rma_fit = NULL, var_name, fit = NULL,
       
       mn <- mean(seq_len(length(fixed_eff_list)))
       
-      if(label_lines) text(mn, as.data.frame(fixed_effs)[,mn], rownames(fit$b),
+      if(label_lines) text(mn, as.data.frame(fixed_eff_list)[,mn], rownames(fit$b),
                            cex = cex_labels)
     }
     
     output <- as.data.frame(t(do.call(rbind, fixed_eff_list)))
     
     setNames(output, xaxis_lab)
-    
     
   } else {
     
@@ -1512,15 +1515,13 @@ sense_rma <- function(post_rma_fit = NULL, var_name, fit = NULL,
       Term <-sapply(seq_len(nrow(post_rma_fit)), 
                     function(i) paste0(as.vector(unlist(post_rma_fit[vv][i,])), collapse = " "))
       
-      ty <- if(!is.null(post_rma_fit$Mean)) 1 else if(!is.null(post_rma_fit$Estimate)) 2 else 3
+      ave_col <- if(!is.null(post_rma_fit$Mean)) "Mean" else 
+        if(!is.null(post_rma_fit$Estimate)) "Estimate" else "Response"
       
-      
-      post_rma_list <- lapply(model_list, function(i) 
-        setNames(as.numeric(post_rma(i, specs)$table[[if(ty == 1) "Mean" 
-                                                      else if(ty == 2) "Estimate" 
-                                                      else "Response"]]),Term))
-      
-    } else {
+post_rma_list <- lapply(model_list, function(i) 
+        setNames(as.numeric(post_rma(i, specs, tran = tran., type = type.)$table[[ave_col]]),Term))
+    
+} else {
       
       stop("Please provide a 'post_rma_fit' or use 'regression=TRUE'.", call. = FALSE)
       
