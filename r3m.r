@@ -1350,9 +1350,10 @@ contr_rma <- function(post_rma_fit, contr_index){
                 
 prob_rma <- function(post_rma_fit, target_effect = 0, condition = c("or larger", "or smaller"), gain = FALSE, none_names = NULL, ...){
   
-  fit <- post_rma_fit$rma.mv_fit
   
-  if(!inherits(post_rma_fit, "post_rma")) stop("post_rma_fit is not 'post_rma()'.", call. = FALSE)    
+  if(!inherits(post_rma_fit, "post_rma")) stop("post_rma_fit is not 'post_rma()'.", call. = FALSE)   
+  
+  fit <- post_rma_fit$rma.mv_fit
   
   if(fit$withG || fit$withH || fit$withR) stop("These models not yet supported.", call. = FALSE)
   
