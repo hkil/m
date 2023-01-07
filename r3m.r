@@ -58,6 +58,42 @@ get_vars_ <- function(gls_fit, as_fml = TRUE){
   if(as_fml) sapply(paste0("~",m), as.formula) else m
 }
 
+# H===============================================================================================================================
+                     
+get_data_ <- function (object) 
+{
+  if ("data" %in% names(object)) {
+    data <- object$data
+  }
+  else {
+    dat_name <- object$call$data
+    envir_names <- sys.frames()
+    ind <- sapply(envir_names, function(e) exists(as.character(dat_name), 
+                                                  envir = e))
+    e <- envir_names[[min(which(ind))]]
+    data <- eval(dat_name, envir = e)
+  }
+  if (is.null(data)) 
+    return(data)
+  naAct <- object[["na.action"]]
+  if (!is.null(naAct)) {
+    data <- if (inherits(naAct, "omit")) {
+      data[-naAct, ]
+    }
+    else if (inherits(naAct, "exclude")) {
+      data
+    }
+    else eval(object$call$na.action)(data)
+  }
+  subset <- object$call$subset
+  if (!is.null(subset)) {
+    subset <- eval(asOneSidedFormula(subset)[[2]], data)
+    data <- data[subset, ]
+  }
+  data
+}                 
+                 
+                 
 # H=============================================================================================================================== 
 
 odds_. <- function(x) subset(x, x %% 2 != 0)
