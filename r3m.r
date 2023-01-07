@@ -1569,6 +1569,49 @@ plot_post_rma <- function(post_rma_fit, formula, ylab, CIs = FALSE, CIarg = list
   theme(legend.position = "top")
   
 }                               
+
+#M================================================================================================================================================
+                                
+contrast_rma <- function(post_rma_fit, method, type,
+                         digits = 2, ci=TRUE, 
+                         p_value=TRUE, adjust="none",
+                         na.rm = TRUE, sig=TRUE, ...){
+  
+if(!inherits(post_rma_fit, "post_rma")) stop("post_rma_fit is not 'post_rma()'.", call. = FALSE)
+  
+  
+  infer <- c(ci, p_value)
+  
+  lookup <- c(Contrast="contrast",Estimate="estimate","Mean"="emmean","Response"="response",t="t.ratio",
+              Df="df","p-value"="p.value",Lower="lower.CL",Upper="upper.CL",
+              Df1="df1", Df2="df2","F"="F.ratio",m="model term")
+  
+  con <- contrast(post_rma_fit$ems, method = method, type = type, infer = infer, ...)
+  
+  out <- as.data.frame(con, adjust = adjust) %>% 
+    dplyr::rename(tidyselect::any_of(lookup)) %>% 
+    dplyr::select(-tidyselect::any_of("note"))
+  
+  p.values <- as.numeric(out$"p-value")
+  
+  if(all(is.na(p.values))) { 
+    return(message("Error: No relavant data for the comparisons found."))
+  }
+  
+  if(sig){
+    Signif <- symnum(p.values, corr = FALSE, 
+                     na = FALSE, cutpoints = 
+                       c(0, 0.001, 0.01, 0.05, 0.1, 1), 
+                     symbols = c("***", "**", "*", ".", " "))
+    
+    out <- tibble::add_column(out, Sig. = Signif, .after = "p-value")
+  }
+  
+  if(na.rm) out <- na.omit(out)
+  
+  roundi(out, digits = digits)
+}                                
+                                
                                 
 #M================================================================================================================================================
                                 
