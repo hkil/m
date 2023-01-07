@@ -59,15 +59,15 @@ get_vars_ <- function(gls_fit, as_fml = TRUE){
 }
 
 # H=============================================================================================================================== 
-                 
- odds_. <- function(x) subset(x, x %% 2 != 0)
-                 
+
+odds_. <- function(x) subset(x, x %% 2 != 0)
+
 # H===============================================================================================================================
-              
+
 print.post_rma <- function(post_rma_call){
   print(post_rma_call$table)
 }                 
-                 
+
 # H=============================================================================================================================== 
 
 full_clean <- function(data) rm.colrowNA(trim_(data))           
@@ -75,9 +75,9 @@ full_clean <- function(data) rm.colrowNA(trim_(data))
 # H===============================================================================================================================
 
 odiag <- function(x) suppressMessages(x[col(x) != row(x)])                   
-               
+
 # H===============================================================================================================================
-                 
+
 shift_rows <- function(data, user_index, up = TRUE){
   
   indx <- seq_len(nrow(data))
@@ -342,7 +342,7 @@ interactive_outlier <- function(fit, cook = NULL, st_del_res_z = NULL,
 {
   
   if(!inherits(fit,c("rma.mv"))) stop("Model is not 'rma.mv'.", call. = FALSE)
-  datziola <- clubSandwich:::getData(fit) %>%
+  datziola <- clubSandwich:::get_data(fit) %>%
     mutate(obsss = fit$slab)
   
   hat <- hatvalues.rma.mv(fit)
@@ -473,7 +473,7 @@ plot_rma <- function(fit, full=TRUE, multiline=TRUE,
   
   if(!inherits(fit,c("rma.mv","rma","rma.uni"))) stop("Model is not 'rma()' or 'rma.mv()'.", call. = FALSE)
   
-  lm_fit <- lm(fixed_form_rma(fit), data = clubSandwich:::getData(fit), na.action = "na.omit")
+  lm_fit <- lm(fixed_form_rma(fit), data = clubSandwich:::get_data(fit), na.action = "na.omit")
   
   is_singular <- anyNA(coef(lm_fit))
   
@@ -534,7 +534,7 @@ random_left <- function(random_fml) {
 
 rma2gls <- function(fit){
   
-  data_. <- clubSandwich:::getData(fit)
+  data_. <- clubSandwich:::get_data(fit)
   form_. <- fixed_form_rma(fit)
   
   rownames(fit$b)[rownames(fit$b) %in% "intrcpt"] <- "(Intercept)"
@@ -589,7 +589,7 @@ results_rma <- function(fit, digits = 3, robust = TRUE, blank_sign = "",
   fixed_eff <- is.null(fit$random)
   cr <- if(!fixed_eff) is_crossed(fit) else FALSE
   
-  lm_fit <- lm(fixed_form_rma(fit), data = clubSandwich:::getData(fit), na.action = "na.omit")
+  lm_fit <- lm(fixed_form_rma(fit), data = clubSandwich:::get_data(fit), na.action = "na.omit")
   
   cl <- clean_reg(lm_fit, names(coef(lm_fit)))
   
@@ -986,7 +986,7 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
     }
   }
   
-  data_. <- clubSandwich:::getData(fit)
+  data_. <- clubSandwich:::get_data(fit)
   fml <- fixed_form_rma(fit)
   lm_fit <- lm(fml, data = data_.)
   lm_fit$call$data <- data_.
@@ -1245,8 +1245,8 @@ R2_rma <- function(..., robust = TRUE, digits = 3,
 # H=================================================================================================================================================
 
 sizetree2 <- function (x, left = 0, top, right = 1, lastcenter = NA,
-                    showval = TRUE, showcount = FALSE, stacklabels = TRUE, firstcall = TRUE,
-                    col = NULL, border = NA, toplab = NULL, base.cex = 1, cex_top = 1, ...) 
+                       showval = TRUE, showcount = FALSE, stacklabels = TRUE, firstcall = TRUE,
+                       col = NULL, border = NA, toplab = NULL, base.cex = 1, cex_top = 1, ...) 
 {
   dimx <- dim(x)
   colname <- names(x)[1]
@@ -1307,9 +1307,9 @@ sizetree2 <- function (x, left = 0, top, right = 1, lastcenter = NA,
               newcol[[1]] <- NULL
               nextx <- subset(x, x[, 1] == xvalue, 2:dimx[2])
               sizetree2(nextx, right, top, right + 1, 
-                       lastcenter = top - xfreq[bar]/2, showval = showval,
-                       showcount = showcount, stacklabels = stacklabels, firstcall = FALSE,
-                       col = newcol, border = border, base.cex = base.cex)
+                        lastcenter = top - xfreq[bar]/2, showval = showval,
+                        showcount = showcount, stacklabels = stacklabels, firstcall = FALSE,
+                        col = newcol, border = border, base.cex = base.cex)
             }
           }
         }
@@ -1332,7 +1332,7 @@ sizetree2 <- function (x, left = 0, top, right = 1, lastcenter = NA,
 }
 
 #================================================================================================================================================
-                
+
 contr_rma <- function(post_rma_fit, contr_index){
   
   if(!inherits(post_rma_fit, "post_rma")) stop("post_rma_fit is not 'post_rma()'.", call. = FALSE)
@@ -1347,7 +1347,7 @@ contr_rma <- function(post_rma_fit, contr_index){
 }                
 
 #===================================================================================================================================================
-                
+
 prob_rma <- function(post_rma_fit, target_effect = 0, condition = c("or larger", "or smaller"), gain = FALSE, none_names = NULL, ...){
   
   
@@ -1407,15 +1407,15 @@ prob_rma <- function(post_rma_fit, target_effect = 0, condition = c("or larger",
              Min = min_Probability, Max = max_Probability)
   
 }
-              
+
 #M==============================================================================================================================================
-                
+
 sense_rma <- function(post_rma_fit = NULL, var_name, fit = NULL, 
                       r = (3:7)*.1, cluster = NULL, clean_names = NULL,
                       regression = NULL, label_lines = TRUE, none_names=NULL,
                       cex_labels = .55, plot = TRUE, digits = 3, ...){
   
-
+  
   if(is.null(fit) & is.null(post_rma_fit)) stop("Provide either 'fit=' or 'post_rma_fit='.", call. = TRUE)
   if(!is.null(fit) & !inherits(fit, "rma.mv")) stop("Model is not 'rma.mv()'.", call. = FALSE)
   if(is.null(fit)) fit <- post_rma_fit$rma.mv_fit
@@ -1425,7 +1425,7 @@ sense_rma <- function(post_rma_fit = NULL, var_name, fit = NULL,
   tran. <- post_rma_fit$tran.
   type. <- post_rma_fit$type.
   
-  dat <- clubSandwich:::getData(fit)
+  dat <- clubSandwich:::get_data(fit)
   
   regression <- if(is.null(regression) & !is.null(post_rma_fit)) {
     
@@ -1519,10 +1519,10 @@ sense_rma <- function(post_rma_fit = NULL, var_name, fit = NULL,
       ave_col <- if(!is.null(post_rma_fit$Mean)) "Mean" else 
         if(!is.null(post_rma_fit$Estimate)) "Estimate" else "Response"
       
-post_rma_list <- lapply(model_list, function(i) 
+      post_rma_list <- lapply(model_list, function(i) 
         setNames(as.numeric(post_rma(i, specs, tran = tran., type = type.)$table[[ave_col]]),Term))
-    
-} else {
+      
+    } else {
       
       stop("Please provide a 'post_rma_fit' or use 'regression=TRUE'.", call. = FALSE)
       
@@ -1556,9 +1556,9 @@ post_rma_list <- lapply(model_list, function(i)
   out <- cbind(out, sd = sapply(1:nrow(out), function(i) sd(out[i,])))
   roundi(rownames_to_column(out, "Term"), digits = digits)
 }                
- 
+
 #M================================================================================================================================================
- 
+
 plot_post_rma <- function(post_rma_fit, formula, ylab, CIs = FALSE, CIarg = list(lwd = .5, alpha = 1), ...){
   
   if(!inherits(post_rma_fit, "post_rma")) stop("post_rma_fit is not 'post_rma()'.", call. = FALSE)
@@ -1566,18 +1566,18 @@ plot_post_rma <- function(post_rma_fit, formula, ylab, CIs = FALSE, CIarg = list
   if(missing(ylab)) ylab <- paste0("Effect Size (",as.character(fixed_form_rma(post_rma_fit$rma.mv_fit))[2],")")
   
   emmip(object=post_rma_fit$ems, formula=formula, ylab=ylab, CIs=CIs, CIarg=CIarg, ...) +
-  theme(legend.position = "top")
+    theme(legend.position = "top")
   
 }                               
 
 #M================================================================================================================================================
-                                
+
 contrast_rma <- function(post_rma_fit, method, type,
                          digits = 2, ci=TRUE, 
                          p_value=TRUE, adjust="none",
                          na.rm = TRUE, sig=TRUE, ...){
   
-if(!inherits(post_rma_fit, "post_rma")) stop("post_rma_fit is not 'post_rma()'.", call. = FALSE)
+  if(!inherits(post_rma_fit, "post_rma")) stop("post_rma_fit is not 'post_rma()'.", call. = FALSE)
   
   
   infer <- c(ci, p_value)
@@ -1611,10 +1611,10 @@ if(!inherits(post_rma_fit, "post_rma")) stop("post_rma_fit is not 'post_rma()'."
   
   roundi(out, digits = digits)
 }                                
-                                
-                                
+
+
 #M================================================================================================================================================
-                                
+
 r2z_tran <- list(
   linkfun = function(mu) atanh(mu),
   linkinv = function(eta) tanh(eta),
@@ -1623,11 +1623,11 @@ r2z_tran <- list(
     all(is.finite(eta)) && all(eta > -1) && all(eta < 1),
   name = "r2z"
 )                                
-                                
+
 #======================== WCF Meta Dataset ======================================================================================================                
-                
+
 wcf <- read.csv("https://raw.githubusercontent.com/hkil/m/master/wcf.csv")
-                
+
 #=================================================================================================================================================
 
 needzzsf <- c('metafor', 'clubSandwich', 'nlme', 'effects', 'lexicon', 'plotrix', 'rlang', 'emmeans','tidyverse')      
