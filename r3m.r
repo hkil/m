@@ -1600,8 +1600,7 @@ plot_post_rma <- function(post_rma_fit, formula, ylab, CIs = FALSE, CIarg = list
   
   if(missing(ylab)) ylab <- paste0("Effect Size (",as.character(fixed_form_rma(post_rma_fit$rma.mv_fit))[2],")")
   
-  emmip(object=post_rma_fit$ems, formula=formula, ylab=ylab, CIs=CIs, CIarg=CIarg, ...) +
-    theme(legend.position = "top")
+  emmip(object=post_rma_fit$ems, formula=formula, ylab=ylab, CIs=CIs, CIarg=CIarg, ...)
   
 }                               
 
