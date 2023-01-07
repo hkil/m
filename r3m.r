@@ -59,7 +59,7 @@ get_vars_ <- function(gls_fit, as_fml = TRUE){
 }
 
 # H===============================================================================================================================
-                     
+
 get_data_ <- function (object) 
 {
   if ("data" %in% names(object)) {
@@ -92,8 +92,7 @@ get_data_ <- function (object)
   }
   data
 }                 
-                 
-                 
+
 # H=============================================================================================================================== 
 
 odds_. <- function(x) subset(x, x %% 2 != 0)
@@ -378,7 +377,7 @@ interactive_outlier <- function(fit, cook = NULL, st_del_res_z = NULL,
 {
   
   if(!inherits(fit,c("rma.mv"))) stop("Model is not 'rma.mv'.", call. = FALSE)
-  datziola <- clubSandwich:::get_data(fit) %>%
+  datziola <- get_data_(fit) %>%
     mutate(obsss = fit$slab)
   
   hat <- hatvalues.rma.mv(fit)
@@ -509,7 +508,7 @@ plot_rma <- function(fit, full=TRUE, multiline=TRUE,
   
   if(!inherits(fit,c("rma.mv","rma","rma.uni"))) stop("Model is not 'rma()' or 'rma.mv()'.", call. = FALSE)
   
-  lm_fit <- lm(fixed_form_rma(fit), data = clubSandwich:::get_data(fit), na.action = "na.omit")
+  lm_fit <- lm(fixed_form_rma(fit), data = get_data_(fit), na.action = "na.omit")
   
   is_singular <- anyNA(coef(lm_fit))
   
@@ -570,7 +569,7 @@ random_left <- function(random_fml) {
 
 rma2gls <- function(fit){
   
-  data_. <- clubSandwich:::get_data(fit)
+  data_. <- get_data_(fit)
   form_. <- fixed_form_rma(fit)
   
   rownames(fit$b)[rownames(fit$b) %in% "intrcpt"] <- "(Intercept)"
@@ -625,7 +624,7 @@ results_rma <- function(fit, digits = 3, robust = TRUE, blank_sign = "",
   fixed_eff <- is.null(fit$random)
   cr <- if(!fixed_eff) is_crossed(fit) else FALSE
   
-  lm_fit <- lm(fixed_form_rma(fit), data = clubSandwich:::get_data(fit), na.action = "na.omit")
+  lm_fit <- lm(fixed_form_rma(fit), data = get_data_(fit), na.action = "na.omit")
   
   cl <- clean_reg(lm_fit, names(coef(lm_fit)))
   
@@ -1022,7 +1021,7 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
     }
   }
   
-  data_. <- clubSandwich:::get_data(fit)
+  data_. <- get_data_(fit)
   fml <- fixed_form_rma(fit)
   lm_fit <- lm(fml, data = data_.)
   lm_fit$call$data <- data_.
@@ -1461,7 +1460,7 @@ sense_rma <- function(post_rma_fit = NULL, var_name, fit = NULL,
   tran. <- post_rma_fit$tran.
   type. <- post_rma_fit$type.
   
-  dat <- clubSandwich:::get_data(fit)
+  dat <- get_data_(fit)
   
   regression <- if(is.null(regression) & !is.null(post_rma_fit)) {
     
