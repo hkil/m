@@ -1663,7 +1663,7 @@ con_rma <- function(post_rma_fit, method, type,
 contrast_rma <- function(post_rma_fit, con_list, ...)
   {
   
-con_indx <- lapply(con_list, function(i) contr_rma(post_rma_fit, i))
+con_indx <- lapply(con_list, contr_rma, post_rma_fit = post_rma_fit)
   
 con_rma(post_rma_fit, con_indx, ...)
   
