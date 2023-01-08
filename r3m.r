@@ -105,6 +105,12 @@ print.post_rma <- function(post_rma_call){
 
 # H=============================================================================================================================== 
 
+print.contrast_rma <- function(contrast_rma_call){
+  print(contrast_rma_call$table)
+}                  
+                  
+# H=============================================================================================================================== 
+
 full_clean <- function(data) rm.colrowNA(trim_(data))           
 
 # H===============================================================================================================================
@@ -1607,12 +1613,11 @@ plot_post_rma <- function(post_rma_fit, formula, ylab, CIs = FALSE, CIarg = list
 #M================================================================================================================================================
 
 contrast_rma <- function(post_rma_fit, method, type,
-                         digits = 2, ci=TRUE, 
-                         p_value=TRUE, adjust="none",
-                         na.rm = TRUE, sig=TRUE, ...){
+                         digits = 3, ci = TRUE, 
+                         p_value = TRUE, adjust = "none",
+                         na.rm = TRUE, sig = TRUE, ...){
   
   if(!inherits(post_rma_fit, "post_rma")) stop("post_rma_fit is not 'post_rma()'.", call. = FALSE)
-  
   
   infer <- c(ci, p_value)
   
@@ -1643,8 +1648,15 @@ contrast_rma <- function(post_rma_fit, method, type,
   
   if(na.rm) out <- na.omit(out)
   
-  roundi(out, digits = digits)
-}                                
+  out <- roundi(out, digits = digits)
+  
+  out <- list(table = out, specs = post_rma_fit$specs, call = post_rma_fit$call, fit = post_rma_fit$fit, rma.mv_fit = post_rma_fit$rma.mv_fit, ems = post_rma_fit$ems,
+              tran. = post_rma_fit$tran., type. = post_rma_fit$type.)
+  
+  class(out) <- "contrast_rma"
+  
+  return(out)
+}                          
 
 
 #M================================================================================================================================================
