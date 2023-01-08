@@ -1070,7 +1070,7 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
               Df="df","p-value"="p.value",Lower="lower.CL",Upper="upper.CL",
               Df1="df1", Df2="df2","F"="F.ratio",m="model term")
   
-  names(lookup)[12] <- if(is.null(block_vars)) paste(mutos_name, "Contrast") else "Block Contrast"
+   if(!is.null(block_vars)) names(lookup)[12] <- "F (Block Contrast)"
   
   tran. <- if('tran' %in% dot_args_nm) dot_args$tran else FALSE           
   type. <- if('type' %in% dot_args_nm) dot_args$type else FALSE
@@ -1122,11 +1122,15 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
     
     if(mutos_contrast) {  
       
+      message("Testing contrasts among EMMs against zero.")
+      
       fit_used <- if(is.null(specs_org)) fit else ems
       
       joint_tests(fit_used, by = by, adjust = adjust, show0df = show0df, ...)
       
     } else if (mutos){
+      
+      message("Testing EMMs (rather than contrasts among them) against zero.")
       
       if(is.null(specs_org)){
         
@@ -1144,6 +1148,9 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
       
       com <- comb.facs(ems, block_vars)
       
+      message("Jointly testing if the EMMs *across* multiple
+       categorical predictors are equal to each other.")
+      
       joint_tests(com)
       
     } else {
@@ -1156,7 +1163,7 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
     dplyr::rename(tidyselect::any_of(lookup)) %>% 
     dplyr::select(-tidyselect::any_of("note"))
   
-  if(!is.null(block_vars)) out <- subset(out,`Block Contrast`==paste0(block_vars, collapse="."))
+  if(!is.null(block_vars)) out <- filter(out,m==paste0(block_vars, collapse="."))
   
   out <- set_rownames_(out,NULL)
   
