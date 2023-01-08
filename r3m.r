@@ -105,8 +105,8 @@ print.post_rma <- function(post_rma_call){
 
 # H=============================================================================================================================== 
 
-print.contrast_rma <- function(contrast_rma_call){
-  print(contrast_rma_call$table)
+print.con_rma <- function(con_rma_call){
+  print(con_rma_call$table)
 }                  
                   
 # H=============================================================================================================================== 
@@ -1612,7 +1612,7 @@ plot_post_rma <- function(post_rma_fit, formula, ylab, CIs = FALSE, CIarg = list
 
 #M================================================================================================================================================
 
-contrast_rma <- function(post_rma_fit, method, type,
+con_rma <- function(post_rma_fit, method, type,
                          digits = 3, ci = TRUE, 
                          p_value = TRUE, adjust = "none",
                          na.rm = TRUE, sig = TRUE, ...){
