@@ -1392,7 +1392,7 @@ contr_rma <- function(post_rma_fit, contr_index){
 prob_rma <- function(post_rma_fit, target_effect = 0, condition = c("or larger", "or smaller"), gain = FALSE, none_names = NULL, ...){
   
   
-  if(!inherits(post_rma_fit, "post_rma")) stop("post_rma_fit is not 'post_rma()'.", call. = FALSE)   
+  if(!inherits(post_rma_fit, c("post_rma","contrast_rma"))) stop("post_rma_fit is not 'post_rma()' or 'contrast_rma()'.", call. = FALSE)   
   
   fit <- post_rma_fit$rma.mv_fit
   
@@ -1405,8 +1405,8 @@ prob_rma <- function(post_rma_fit, target_effect = 0, condition = c("or larger",
   nms <- names(post_rma_fit)
   
   contr <- if(any("contr" %in% as.character(post_rma_fit$call)) || any(c("pairwise","revpairwise","tukey","consec",
-                                                                "poly","trt.vs.ctrl","trt.vs.ctrlk","trt.vs.ctrl1",
-                                                                "dunnett","mean_chg","eff","del.eff","identity") %in% as.character(specs))) "Contrast" else NULL
+                                                                         "poly","trt.vs.ctrl","trt.vs.ctrlk","trt.vs.ctrl1",
+                                                                         "dunnett","mean_chg","eff","del.eff","identity") %in% as.character(specs))) "Contrast" else NULL
   
   vv <- nms[!nms %in% c("Mean","Response","SE","Df","Lower","Upper","t",      
                         "p-value","Sig.",contr,"F","Df1","Df2",
