@@ -1070,14 +1070,14 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
               Df="df","p-value"="p.value",Lower="lower.CL",Upper="upper.CL",
               Df1="df1", Df2="df2","F"="F.ratio",m="model term")
   
-   if(!is.null(block_vars)) names(lookup)[12] <- "F (Block Contrast)"
+  if(!is.null(block_vars)) names(lookup)[12] <- "F (Block Contrast)"
   
   tran. <- if('tran' %in% dot_args_nm) dot_args$tran else FALSE           
   type. <- if('type' %in% dot_args_nm) dot_args$type else FALSE
   
   is_contr <- !missing(contr)            
   
-  ems <- try(if(is.null(cont_var)){
+  ems <- suppressWarnings(suppressMessages(try(if(is.null(cont_var)){
     
     emmeans(object = fit, specs = specs, infer = infer, adjust = adjust, contr = contr, ...)
     
@@ -1093,7 +1093,7 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
       
     }
     
-  }, silent = TRUE)
+  }, silent = TRUE)))
   
   
   if(inherits(ems,"try-error")) return(message("Error: Wrong specification OR no relavant data for the comparisons found."))
@@ -1110,11 +1110,14 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
     
     methd <- as.character(specs[2])
     
+    ems <- ems[[if(!contrast_contrast) 1 else 2]]
+    
     if(plot_pairwise) print(plot(ems, by = by, comparisons = compare, horizontal = horiz, adjust = adjust, xlab = xlab)) 
     
-    pp <- contrast(ems, method = methd, each="simple", infer=infer, reverse=reverse, adjust=adjust)[[if(!contrast_contrast) 1 else 2]]
+    pp <- if(isFALSE(tran.)) contrast(ems, method = methd, each="simple", infer=infer, reverse=reverse, adjust=adjust,...) 
+    else contrast(regrid(ems), method = methd, each="simple", infer=infer, reverse=reverse, adjust=adjust,...)
     
-    if(!is_contr) pp else contrast(pp, contr)
+    if(!is_contr) pp else contrast(pp, contr, ...)
     
   }
   
@@ -1149,7 +1152,7 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
       com <- comb.facs(ems, block_vars)
       
       message("Jointly testing if the EMMs *across* multiple
-       categorical predictors are equal to each other.")
+       categorical predictors (blocks) are equal to each other.")
       
       joint_tests(com)
       
