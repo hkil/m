@@ -1398,9 +1398,9 @@ prob_rma <- function(post_rma_fit, target_effect = 0, condition = c("or larger",
   
   nms <- names(post_rma_fit)
   
-  contr <- if("contr" %in% as.character(post_rma_fit$call) || c("pairwise","revpairwise","tukey","consec",
+  contr <- if(any("contr" %in% as.character(post_rma_fit$call)) || any(c("pairwise","revpairwise","tukey","consec",
                                                                 "poly","trt.vs.ctrl","trt.vs.ctrlk","trt.vs.ctrl1",
-                                                                "dunnett","mean_chg","eff","del.eff","identity") %in% as.character(specs)) "Contrast" else NULL
+                                                                "dunnett","mean_chg","eff","del.eff","identity") %in% as.character(specs))) "Contrast" else NULL
   
   vv <- nms[!nms %in% c("Mean","Response","SE","Df","Lower","Upper","t",      
                         "p-value","Sig.",contr,"F","Df1","Df2",
