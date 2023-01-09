@@ -910,32 +910,6 @@ smooth_vi <- function(data, study, vi, digits = 8, fun = sd, ylab = "Studies", x
   return(invisible(if(return_list) out else dplyr::bind_rows(out, .id = "Bar")))
 }
 
-
-# H=================================================================================================================================================
-
-# Testing jointly whether EMMs *across* multiple
-# categorical variables in a MUTOS block are equal to each other or not?
-
-comb.facs <- function(object, facs, new.name = paste(facs, collapse = ".")) {
-  
-  if((length(facs) < 2))
-    stop("Block test needs at least two categorical variables.", call. = FALSE)
-  levs = object@levels
-  if(any(sapply(facs, function(x) !(x %in% names(levs)))))
-    stop("Categorical variables not found.", call. = FALSE)
-  grid = object@grid
-  idx = sapply(facs, function(x) which(names(levs) == x))
-  levs[[new.name]] = do.call(paste, c(do.call(expand.grid, levs[idx]), sep = ":"))
-  grid[[new.name]] = do.call(paste, c(grid[idx], sep = ":"))
-  levs[idx] = grid[idx] = NULL
-  object@levels = levs
-  object@grid = grid
-  object@roles$predictors = c(object@roles$predictors[-idx], new.name)
-  ord = emmeans:::.std.order(grid, levs)
-  object[ord]
-}
-
-
 # M=================================================================================================================================================
 
 post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE, ci = TRUE, block_vars = NULL,
@@ -1093,7 +1067,7 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
       
     } else if(!is.null(block_vars)){ 
       
-      com <- comb.facs(ems, block_vars)
+      com <- comb_facs(ems, block_vars)
       
       message("Jointly testing if the EMMs *across* multiple
        categorical predictors (blocks) are equal to each other.")
