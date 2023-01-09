@@ -1628,7 +1628,7 @@ plot_post_rma <- function(post_rma_fit, formula, ylab, CIs = FALSE, CIarg = list
 
 #M================================================================================================================================================
 
-con_rma <- function(post_rma_fit, method, tran, type,
+con_rma <- function(post_rma_fit, method, type,
                     digits = 3, ci = TRUE, 
                     p_value = TRUE, adjust = "none",
                     na.rm = TRUE, sig = TRUE, ...){
@@ -1641,7 +1641,7 @@ con_rma <- function(post_rma_fit, method, tran, type,
               Df="df","p-value"="p.value",Lower="lower.CL",Upper="upper.CL",
               Df1="df1", Df2="df2","F"="F.ratio",m="model term")
   
-  con <- contrast(regrid(post_rma_fit$ems), method = method, type = type, tran=tran, infer = infer, ...)
+  con <- contrast(regrid(post_rma_fit$ems), method = method, type = type, infer = infer, ...)
   
   out <- as.data.frame(con, adjust = adjust) %>% 
     dplyr::rename(tidyselect::any_of(lookup)) %>% 
