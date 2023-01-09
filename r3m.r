@@ -506,69 +506,7 @@ shorten_ <- function(vec, n = 3) {
        sub(sprintf("^(([^,]+, ){%s}).*, ([^,]+)$", n), "\\1...,\\3", toString(vec)))  
 } 
 
-# M======================================================================================================================================================  
-
-plot_rma <- function(fit, full=TRUE, multiline=TRUE, 
-                     confint = list(style="auto"), x.var, 
-                     key.args= list(space="top",cex=.7,cex.title=.8), main=NA,
-                     index=NULL, xlab, ylab, z.var, colors, cex, lty, 
-                     lwd, ylim, xlim, factor.names, band.transparency, 
-                     band.colors, grid=TRUE, axes, lattice, rotx, roty,
-                     symbols=list(pch = 19), ticks.x, lines=TRUE, robust=FALSE,
-                     cluster, plot=TRUE, dots=FALSE, ...) 
-{
-  
-  if(!inherits(fit,c("rma.mv","rma","rma.uni"))) stop("Model is not 'rma()' or 'rma.mv()'.", call. = FALSE)
-  
-  lm_fit <- lm(fixed_form_rma(fit), data = get_data_(fit), na.action = "na.omit")
-  
-  is_singular <- anyNA(coef(lm_fit))
-  
-  fit2 <- rma2gls(fit)
-  
-  if(is_singular) { 
-    
-    fit2$coefficients <- replace(lm_fit$coefficients, !is.na(lm_fit$coefficients), fit2$coefficients)
-  }
-  
-  x <- if(!full) allEffects(fit2, ...) else predictorEffects(fit2, ...)
-  
-  x <- Filter(function(i) !all(is.na(i$fit)), x)
-  
-  if(!is.null(index)){ 
-    
-    len <- length(x)  
-    index <- index[index <= len & index >= 1] 
-    if(length(index)==0) index <- NULL
-  }            
-  
-  x <- if(!is.null(index)) x[index] else x
-  
-  if(plot){   
-    
-    if(missing(ylab)) ylab <- paste0("Effect Size (",as.character(fixed_form_rma(fit))[2],")")
-    
-    xcv <- plot(x, multiline=multiline, main=main, rug=FALSE, dots=dots,
-                confint=confint, x.var=x.var, z.var=z.var, key.args=key.args, 
-                xlab=xlab, ylab=ylab, colors=colors, cex=cex, lty=lty, 
-                lwd=lwd, ylim=ylim, xlim=xlim, factor.names=factor.names, band.transparency=band.transparency, 
-                band.colors=band.colors, grid=grid, lattice=lattice, axes=axes, rotx=rotx, roty=roty, symbols=symbols,
-                ticks.x=ticks.x, lines=lines)
-    
-    xcv$x.scales$tck=c(1,0)
-    xcv$y.scales$tck=c(1,0)
-    
-    return(invisible(as.data.frame(x)))
-    
-    xcv 
-    
-  } else {
-    
-    return(invisible(as.data.frame(x)))
-  }
-}
-
-
+          
 # H=================================================================================================================================================
 
 random_left <- function(random_fml) {
@@ -1684,6 +1622,22 @@ con_indx <- lapply(con_list, contr_rma, post_rma_fit = post_rma_fit)
 con_rma(post_rma_fit, con_indx, ...)
   
 }
+
+# M======================================================================================================================================================  
+
+plot_rma <- function(fit, formula, ylab, CIs = TRUE, CIarg = list(lwd = .5, alpha = 1), ...){
+  
+  if(!inherits(fit, c("post_rma", "rma.mv"))) stop("fit is not 'post_rma()' or 'rma.mv()'.", call. = FALSE)
+  
+  is_post_rma <- inherits(fit, "post_rma")
+  
+  if(missing(ylab)) ylab <- paste0("Effect Size (",as.character(fixed_form_rma(if(is_post_rma) fit$rma.mv_fit else fit))[2],")")
+  
+  fit <- if(!is_post_rma) rma2gls(fit) else fit
+  
+  emmip(object=if(is_post_rma)regrid(fit$ems) else fit, formula=formula, ylab=ylab, CIs=CIs, CIarg=CIarg, ...)
+  
+}                                                 
                                 
 #M================================================================================================================================================
 
