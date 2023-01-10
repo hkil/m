@@ -988,7 +988,7 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
               Df="df","p-value"="p.value",Lower="lower.CL",Upper="upper.CL",
               Df1="df1", Df2="df2","F"="F.ratio",m="model term")
   
-  if(!is.null(block_vars)) names(lookup)[12] <- "F (Block Contrast)"
+  if(!is.null(block_vars)) names(lookup)[13] <- "Block Term"
   
   tran. <- if('tran' %in% dot_args_nm) dot_args$tran else FALSE           
   type. <- if('type' %in% dot_args_nm) dot_args$type else FALSE
@@ -1084,7 +1084,7 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
     dplyr::rename(tidyselect::any_of(lookup)) %>% 
     dplyr::select(-tidyselect::any_of("note"))
   
-  if(!is.null(block_vars)) out <- filter(out,m==paste0(block_vars, collapse="."))
+  if(!is.null(block_vars)) out <- filter(out,`Block Term`==paste0(block_vars, collapse="."))
   
   out <- set_rownames_(out,NULL)
   
