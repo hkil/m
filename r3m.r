@@ -1070,7 +1070,7 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE
       com <- comb_facs(ems, block_vars)
       
       message("Jointly testing if the EMMs *across* multiple
-       categorical predictors (blocks) are equal to each other.")
+ categorical predictors (blocks) are equal to each other.")
       
       joint_tests(com)
       
