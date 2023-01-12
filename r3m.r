@@ -241,11 +241,14 @@ meta_tree <- function(data, ..., effect = TRUE, highest_level_name = NULL,
                       abb_names = FALSE, abb_length = 6, abb_except = NULL, 
                       num_names = FALSE, num_except = NULL, num_zero = FALSE, 
                       panel_label = TRUE, cex = 1, cex_main = 1, rev_order = TRUE, 
-                      rev_page = FALSE, reset = TRUE, index = NULL, cex_top = 1) 
+                      rev_page = FALSE, reset = TRUE, index = NULL, cex_top = 1, subset) 
 {
   
   data <- full_clean(data) %>%
     mutate(effect = row_number())
+  
+  s <- substitute(subset)
+  if(!missing(subset)) data <- filter(data, eval(s))
   
   dot_cols <- rlang::ensyms(...)
   dot_cols <- if(effect) append(dot_cols, rlang::sym("effect")) else dot_cols
