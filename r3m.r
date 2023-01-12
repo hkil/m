@@ -724,6 +724,7 @@ results_rma <- function(fit, digits = 3, robust = TRUE, blank_sign = "",
   
   res <- rbind(res, "|RANDOM|" = NA)
   
+  on.exit(Sys.setlocale("LC_ALL"))                                    
   Sys.setlocale(locale = "Greek")
   
   if(fit$withS){
@@ -1161,6 +1162,7 @@ R2_rma <- function(..., robust = TRUE, digits = 3,
   
   z <- function(nm) paste(intToUtf8(963),nm) 
   
+  on.exit(Sys.setlocale("LC_ALL"))               
   Sys.setlocale(locale = "Greek")
   
   f <- function(fit){
