@@ -1173,7 +1173,7 @@ R2_rma <- function(..., robust = TRUE, digits = 3,
       
       if(bad || !bad && is.na(mc$p_val)) { 
         robust <- FALSE
-        message("Note: Robust p-value unavailable,likely: \n1- Some moderators in <2 clusters OR/AND \n2- High # of coefficients vs. # of highest clusters.\np-value is model-based.\n")
+        message("Note: Robust QM unavailable,likely: \n1- Some moderators in <2 clusters OR/AND \n2- High # of coefficients vs. # of highest clusters.\n3-Some combination of variables in the interactive model are missing.\nQM results are model-based.\n")
       }
       
       if(!bad && mc$Fstat>tol_large) { message("Note: Robust estimation seems unfit for the model (use 'robust=FALSE').") } 
