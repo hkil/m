@@ -1343,7 +1343,7 @@ prob_rma <- function(post_rma_fit, target_effect = 0, condition = c("or larger",
   
   vv <- nms[!nms %in% c("Mean","Response","SE","Df","Lower","Upper","t",      
                         "p-value","Sig.",contr,"F","Df1","Df2",
-                        "Estimate","m","Block Contrast","(M)UTOS Term", none_names)]
+                        "Estimate","Term","Block Contrast","(M)UTOS Term", none_names)]
   
   Term <-sapply(seq_len(nrow(post_rma_fit)), 
                 function(i) paste0(as.vector(unlist(post_rma_fit[vv][i,])), collapse = " "))
@@ -1485,7 +1485,7 @@ sense_rma <- function(post_rma_fit = NULL, var_name, fit = NULL,
       
       vv <- nms[!nms %in% c("Mean","Response","SE","Df","Lower","Upper","t",      
                             "p-value","Sig.","Contrast","F","Df1","Df2",
-                            "Estimate","m","Block Contrast","(M)UTOS Term", none_names=none_names)]
+                            "Estimate","Term","Block Contrast","(M)UTOS Term", none_names=none_names)]
       
       Term <-sapply(seq_len(nrow(post_rma_fit)), 
                     function(i) paste0(as.vector(unlist(post_rma_fit[vv][i,])), collapse = " "))
