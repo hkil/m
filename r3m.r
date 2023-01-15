@@ -916,11 +916,11 @@ smooth_vi <- function(data, study, vi, digits = 8, fun = sd, ylab = "Studies", x
 
 # M=================================================================================================================================================
 
-post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL, horiz = TRUE, ci = TRUE, block_vars = NULL,
-                     adjust = "none", mutos = FALSE, mutos_contrast = FALSE, compare = FALSE, plot_pairwise = FALSE, p_value = TRUE,
+post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL,p_value = TRUE, ci = TRUE, block_vars = NULL,
+                     adjust = "none", mutos = FALSE, mutos_contrast = FALSE, compare = FALSE, plot_pairwise = FALSE,
                      reverse = FALSE, digits = 3, xlab = "Estimated Effect", shift_up = NULL, shift_down = NULL, 
                      drop_rows = NULL, mutos_name = "(M)UTOS Term", drop_cols = NULL, contrast_contrast = FALSE, 
-                     na.rm = TRUE, robust = FALSE, cluster, show0df = FALSE, sig = TRUE, contr,
+                     na.rm = TRUE, robust = FALSE, cluster, show0df = FALSE, sig = TRUE, contr, horiz = TRUE,
                      get_rows = NULL, get_cols = NULL, ...){
   
   if(!inherits(fit, "rma.mv")) stop("Model is not 'rma.mv()'.", call. = FALSE)
@@ -1084,7 +1084,7 @@ categorical predictors (blocks) are equal to each other.")
     }
   }
   
-  out <- as.data.frame(out, adjust = adjust) %>%
+  out <- as.data.frame(out, adjust = adjust, infer = infer, ...) %>%
     dplyr::rename(tidyselect::any_of(lookup)) %>% 
     dplyr::select(-tidyselect::any_of("note"))
   
@@ -1092,10 +1092,12 @@ categorical predictors (blocks) are equal to each other.")
   
   out <- set_rownames_(out,NULL)
   
+  if(p_value){
+    
   p.values <- as.numeric(out$"p-value")
   
   if(all(is.na(p.values))) { 
-    return(message("Error: No relavant data for the comparisons found."))
+    return(message("Error: Comparison(s) are non-estimable,\nlikely some combination of moderating or control variables are missing.\nTake those variables out of the model one by one and re-run."))
   }
   
   if(sig){
@@ -1106,7 +1108,7 @@ categorical predictors (blocks) are equal to each other.")
     
     out <- tibble::add_column(out, Sig. = Signif, .after = "p-value")
   }
-  
+}  
   if(na.rm) out <- na.omit(out)
   
   out <- roundi(out, digits = digits)
@@ -1124,7 +1126,7 @@ categorical predictors (blocks) are equal to each other.")
   
   class(out) <- "post_rma"
   return(out)
-}                  
+}                
 
 # M=================================================================================================================================================
 
