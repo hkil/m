@@ -1550,14 +1550,15 @@ con_rma <- function(post_rma_fit, method, type,
   
   con <- contrast(regrid(post_rma_fit$ems), method = method, type = type, infer = infer, ...)
   
-  out <- as.data.frame(con, adjust = adjust) %>% 
+  out <- as.data.frame(con, adjust = adjust, infer=infer, ...) %>% 
     dplyr::rename(tidyselect::any_of(lookup)) %>% 
-    dplyr::select(-tidyselect::any_of("note"))
+   dplyr::select(-tidyselect::any_of("note"))
   
+  if(p_value){
   p.values <- as.numeric(out$"p-value")
   
   if(all(is.na(p.values))) { 
-    return(message("Error: No relavant data for the comparisons found."))
+  return(message("Error: Comparison(s) are non-estimable,\nlikely some combination of moderating or control variables are missing.\nTake variables out of model one by one and re-run."))
   }
   
   if(sig){
@@ -1568,7 +1569,7 @@ con_rma <- function(post_rma_fit, method, type,
     
     out <- tibble::add_column(out, Sig. = Signif, .after = "p-value")
   }
-  
+}  
   if(na.rm) out <- na.omit(out)
   
   out <- roundi(out, digits = digits)
