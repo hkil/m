@@ -1001,17 +1001,17 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL,p_value = TRU
   
   ems <- suppressWarnings(suppressMessages(try(if(is.null(cont_var)){
     
-    emmeans(object = fit, specs = specs, infer = infer, adjust = adjust, contr = contr, ...)
+    emmeans(object = fit, specs = specs, infer = infer, adjust = adjust, contr = contr, data = data_., ...)
     
   } else {
     
     if(!is_contr){ 
       
-      emtrends(object = fit, specs = specs, var = cont_var, infer = infer, adjust = adjust, ...)
+      emtrends(object = fit, specs = specs, var = cont_var, infer = infer, adjust = adjust, data = data_., ...)
       
     } else {
       
-      emtrends(object = fit, specs = specs, var = cont_var, infer = infer, adjust = adjust, contr = contr, ...)
+      emtrends(object = fit, specs = specs, var = cont_var, infer = infer, adjust = adjust, contr = contr, data = data_., ...)
       
     }
     
