@@ -60,38 +60,44 @@ get_vars_ <- function(gls_fit, as_fml = TRUE){
 
 # H===============================================================================================================================
 
-get_data_ <- function (object) 
-{
-  if ("data" %in% names(object)) {
-    data <- object$data
-  }
-  else {
-    dat_name <- object$call$data
-    envir_names <- sys.frames()
-    ind <- sapply(envir_names, function(e) exists(as.character(dat_name), 
-                                                  envir = e))
-    e <- envir_names[[min(which(ind))]]
-    data <- eval(dat_name, envir = e)
-  }
-  if (is.null(data)) 
-    return(data)
-  naAct <- object[["na.action"]]
-  if (!is.null(naAct)) {
-    data <- if (inherits(naAct, "omit")) {
-      data[-naAct, ]
+get_data_ <- function(fit){
+  
+  f <- function (object) 
+  {
+    if ("data" %in% names(object)) {
+      data <- object$data
     }
-    else if (inherits(naAct, "exclude")) {
-      data
+    else {
+      dat_name <- object$call$data
+      envir_names <- sys.frames()
+      ind <- sapply(envir_names, function(e) exists(as.character(dat_name), 
+                                                    envir = e))
+      e <- envir_names[[min(which(ind))]]
+      data <- eval(dat_name, envir = e)
     }
-    else eval(object$call$na.action)(data)
-  }
-  subset <- object$call$subset
-  if (!is.null(subset)) {
-    subset <- eval(asOneSidedFormula(subset)[[2]], data)
-    data <- data[subset, ]
-  }
-  data
-}                 
+    if (is.null(data)) 
+      return(data)
+    naAct <- object[["na.action"]]
+    if (!is.null(naAct)) {
+      data <- if (inherits(naAct, "omit")) {
+        data[-naAct, ]
+      }
+      else if (inherits(naAct, "exclude")) {
+        data
+      }
+      else eval(object$call$na.action)(data)
+    }
+    subset <- object$call$subset
+    if (!is.null(subset)) {
+      subset <- eval(asOneSidedFormula(subset)[[2]], data)
+      data <- data[subset, ]
+    }
+    data
+  }                 
+  
+  data_ <- try(f(fit), silent = TRUE)
+  if(!inherits(data_, "try-error")) data_ else recover_data(fit) 
+}
 
 # H=============================================================================================================================== 
 
