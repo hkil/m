@@ -1552,7 +1552,7 @@ con_rma <- function(post_rma_fit, method, type,
   
   lookup <- c(Contrast="contrast",Estimate="estimate","Mean"="emmean","Response"="response",t="t.ratio",
               Df="df","p-value"="p.value",Lower="lower.CL",Upper="upper.CL",
-              Df1="df1", Df2="df2","F"="F.ratio",m="model term")
+              Df1="df1", Df2="df2","F"="F.ratio",Term="model term")
   
   con <- contrast(regrid(post_rma_fit$ems), method = method, type = type, infer = infer, ...)
   
