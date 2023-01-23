@@ -253,8 +253,12 @@ meta_tree <- function(data, ..., effect = TRUE, highest_level_name = NULL,
   data <- full_clean(data) %>%
     mutate(effect = row_number())
   
-  s <- substitute(subset)
-  if(!missing(subset)) data <- filter(data, eval(s))
+  
+  if(!missing(subset)) {
+    
+    s <- substitute(subset)
+    data <- filter(data, eval(s))
+  }
   
   dot_cols <- rlang::ensyms(...)
   dot_cols <- if(effect) append(dot_cols, rlang::sym("effect")) else dot_cols
