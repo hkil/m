@@ -261,6 +261,7 @@ meta_tree <- function(data, ..., effect = TRUE, highest_level_name = NULL,
   }
   
   dot_cols <- rlang::ensyms(...)
+  if(length(dot_cols)==1) effect <- TRUE
   dot_cols <- if(effect) append(dot_cols, rlang::sym("effect")) else dot_cols
   str_cols <- purrr::map_chr(dot_cols, rlang::as_string)
   
