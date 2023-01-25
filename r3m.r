@@ -1598,11 +1598,22 @@ con_rma <- function(post_rma_fit, method, type,
 #M================================================================================================================================================
                                 
 contrast_rma <- function(post_rma_fit, con_list, ...)
-  {
+{
   
-con_indx <- lapply(con_list, contr_rma, post_rma_fit = post_rma_fit)
+  con_methods <- c("pairwise","revpairwise","tukey","consec",
+                   "poly","trt.vs.ctrl","trt.vs.ctrlk","trt.vs.ctrl1",
+                   "dunnett","mean_chg","eff","del.eff","identity")
   
-con_rma(post_rma_fit, con_indx, ...)
+  if(is.character(con_list) & !con_list %in% con_methods) 
+    stop("If not a list, 'con_list' can be one of: ", toString(dQuote(con_methods)),
+         ".", call. = FALSE)
+  
+  con_indx <- if(is.list(con_list)) {
+    lapply(con_list, contr_rma, post_rma_fit = post_rma_fit)
+  } else { con_list }
+  
+  
+  con_rma(post_rma_fit, con_indx, ...)
   
 }
 
