@@ -972,6 +972,8 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL,p_value = TRU
   
   fit <- rma2gls(fit)
   
+  if(!is.null(specs) & !is.character(specs) & !is_formula(specs, scoped=TRUE)) stop("The 'specs' must be either a character or a formula containing '~'.", call.=FALSE)
+            
   specs_org <- specs
   if(is.null(specs)) specs <- as.formula(bquote(~.(terms(fit)[[3]])))
   
