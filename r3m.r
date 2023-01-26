@@ -1554,7 +1554,15 @@ con_rma <- function(post_rma_fit, method, type,
                     na.rm = TRUE, sig = TRUE, ...){
   
   if(!inherits(post_rma_fit, "post_rma")) stop("post_rma_fit is not 'post_rma()'.", call. = FALSE)
+ 
+  con_methods <- c("pairwise","revpairwise","tukey","consec",
+                   "poly","trt.vs.ctrl","trt.vs.ctrlk","trt.vs.ctrl1",
+                   "dunnett","mean_chg","eff","del.eff","identity")
   
+  if(is.character(method) && !method %in% con_methods) 
+    stop("If not a list, 'con_list' can be one of: ", toString(dQuote(con_methods)),
+         ".", call. = FALSE)
+
   infer <- c(ci, p_value)
   
   lookup <- c(Contrast="contrast",Estimate="estimate","Mean"="emmean","Response"="response",t="t.ratio",
@@ -1600,21 +1608,11 @@ con_rma <- function(post_rma_fit, method, type,
 contrast_rma <- function(post_rma_fit, con_list, ...)
 {
   
-  con_methods <- c("pairwise","revpairwise","tukey","consec",
-                   "poly","trt.vs.ctrl","trt.vs.ctrlk","trt.vs.ctrl1",
-                   "dunnett","mean_chg","eff","del.eff","identity")
-  
-  if(is.character(con_list) && !con_list %in% con_methods) 
-    stop("If not a list, 'con_list' can be one of: ", toString(dQuote(con_methods)),
-         ".", call. = FALSE)
-  
   con_indx <- if(is.list(con_list)) {
     lapply(con_list, contr_rma, post_rma_fit = post_rma_fit)
   } else { con_list }
   
-  
   con_rma(post_rma_fit, con_indx, ...)
-  
 }
 
 # M======================================================================================================================================================  
