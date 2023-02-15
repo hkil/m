@@ -949,7 +949,7 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL,p_value = TRU
     if(inherits(fit, "rma.mv")){
     
     fixed_eff <- is.null(fit$random)
-    cr <- if(!fixed_eff) is_crossed2(fit) else FALSE
+    cr <- if(!fixed_eff) is_crossed(fit) else FALSE
     
     if(any(cr) || fixed_eff) { 
       
