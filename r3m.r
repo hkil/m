@@ -944,7 +944,9 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL,p_value = TRU
   
   data_. <- get_data_(fit)
   
-  if(robust & inherits(fit, "rma.mv")) { 
+  if(robust) { 
+    
+    if(inherits(fit, "rma.mv")){
     
     fixed_eff <- is.null(fit$random)
     cr <- if(!fixed_eff) is_crossed2(fit) else FALSE
@@ -961,7 +963,9 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL,p_value = TRU
       robust <- FALSE
       message("Robust tests unavailable (likely having <2 clusters for some moderators).\nResults are model-based.")
     }
+    
   } else {
+    
     if(missing(cluster)) cluster <- 1:nrow(data_.)
     vcov_. <- try(as.matrix(vcovCR(fit, type = "CR2", cluster = cluster)), silent=TRUE)
     
@@ -971,6 +975,7 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL,p_value = TRU
     }
     
   }
+}    
   
   fml <- fixed_form_rma(fit)
   lm_fit <- lm(fml, data = data_.)
