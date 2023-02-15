@@ -1633,17 +1633,26 @@ contrast_rma <- function(post_rma_fit, con_list, ...)
 
 # M======================================================================================================================================================  
 
-plot_rma <- function(fit, formula, ylab, CIs = TRUE, CIarg = list(lwd = .5, alpha = 1), ...){
+plot_rma <- function(fit, formula, ylab, CIs = TRUE, CIarg = list(lwd = .5, alpha = 1), cov.reduce = NULL, ...){
   
   if(!inherits(fit, c("post_rma", "rma.mv", "rma.uni"))) stop("fit is not 'post_rma()','rma.mv()' or 'rma.uni()'.", call. = FALSE)
   
   is_post_rma <- inherits(fit, "post_rma")
   
+  if(is_post_rma & "cont_var" %in% names(as.list(fit$call))) { 
+    
+  is_post_rma <- FALSE
+  fit <- fit$rma.mv_fit
+  if(is.null(cov.reduce)) cov.reduce <- FALSE
+  }
+  
+  if(is.null(cov.reduce)) cov.reduce <- TRUE
+  
   if(missing(ylab)) ylab <- paste0("Effect Size (",as.character(fixed_form_rma(if(is_post_rma) fit$rma.mv_fit else fit))[2],")")
   
   fit <- if(!is_post_rma) rma2gls(fit) else fit
   
-  emmip(object=if(is_post_rma) regrid(fit$ems) else fit, formula=formula, ylab=ylab, CIs=CIs, CIarg=CIarg, ...)
+  emmip(object=if(is_post_rma) regrid(fit$ems) else fit, formula=formula, ylab=ylab, CIs=CIs, CIarg=CIarg, cov.reduce=cov.reduce, ...)
   
 }                                                 
                                 
