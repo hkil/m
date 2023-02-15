@@ -158,6 +158,7 @@ get_error_rho <- function(fit){
 
 is_crossed <- function(obj){
   
+  if(!inherits(obj, "rma.mv")) return(FALSE)
   mod_struct <- clubSandwich:::parse_structure(obj)
   highest_cluster <- names(mod_struct$level_dat)[which.min(mod_struct$level_dat)]
   cluster <- mod_struct$cluster_dat[[highest_cluster]]
@@ -934,17 +935,19 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL,p_value = TRU
                      na.rm = TRUE, robust = FALSE, cluster, show0df = FALSE, sig = TRUE, contr, horiz = TRUE,
                      get_rows = NULL, get_cols = NULL, ...){
   
-  if(!inherits(fit, "rma.mv")) stop("Model is not 'rma.mv()'.", call. = FALSE)
+  if(!inherits(fit, c("rma.uni", "rma.mv"))) stop("Model is not 'rma()/rma.mv()'.", call. = FALSE)
   
   dot_args <- list(...)
   dot_args_nm <- names(dot_args)
   
   cl <- match.call()
   
-  if(robust) { 
+  data_. <- get_data_(fit)
+  
+  if(robust & inherits(fit, "rma.mv")) { 
     
     fixed_eff <- is.null(fit$random)
-    cr <- if(!fixed_eff) is_crossed(fit) else FALSE
+    cr <- if(!fixed_eff) is_crossed2(fit) else FALSE
     
     if(any(cr) || fixed_eff) { 
       
@@ -958,9 +961,17 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL,p_value = TRU
       robust <- FALSE
       message("Robust tests unavailable (likely having <2 clusters for some moderators).\nResults are model-based.")
     }
+  } else {
+    if(missing(cluster)) cluster <- 1:nrow(data_.)
+    vcov_. <- try(as.matrix(vcovCR(fit, type = "CR2", cluster = cluster)), silent=TRUE)
+    
+    if(inherits(vcov_., "try-error")) { 
+      robust <- FALSE
+      message("Robust tests unavailable. Results are model-based.")
+    }
+    
   }
   
-  data_. <- get_data_(fit)
   fml <- fixed_form_rma(fit)
   lm_fit <- lm(fml, data = data_.)
   lm_fit$call$data <- data_.
@@ -973,7 +984,7 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL,p_value = TRU
   fit <- rma2gls(fit)
   
   if(!is.null(specs) & !is.character(specs) & !is_formula(specs, scoped=TRUE)) stop("The 'specs' must be either a character or a formula containing '~'.", call.=FALSE)
-            
+  
   specs_org <- specs
   if(is.null(specs)) specs <- as.formula(bquote(~.(terms(fit)[[3]])))
   
@@ -1107,21 +1118,21 @@ categorical predictors (blocks) are equal to each other.")
   
   if(p_value){
     
-  p.values <- as.numeric(out$"p-value")
-  
-  if(all(is.na(p.values))) { 
-    return(message("Error: Comparison(s) are non-estimable,\nlikely some combination of moderating or control variables are missing.\nTake those variables out of the model one by one and re-run."))
-  }
-  
-  if(sig){
-    Signif <- symnum(p.values, corr = FALSE, 
-                     na = FALSE, cutpoints = 
-                       c(0, 0.001, 0.01, 0.05, 0.1, 1), 
-                     symbols = c("***", "**", "*", ".", " "))
+    p.values <- as.numeric(out$"p-value")
     
-    out <- tibble::add_column(out, Sig. = Signif, .after = "p-value")
-  }
-}  
+    if(all(is.na(p.values))) { 
+      return(message("Error: Comparison(s) are non-estimable,\nlikely some combination of moderating or control variables are missing.\nTake those variables out of the model one by one and re-run."))
+    }
+    
+    if(sig){
+      Signif <- symnum(p.values, corr = FALSE, 
+                       na = FALSE, cutpoints = 
+                         c(0, 0.001, 0.01, 0.05, 0.1, 1), 
+                       symbols = c("***", "**", "*", ".", " "))
+      
+      out <- tibble::add_column(out, Sig. = Signif, .after = "p-value")
+    }
+  }  
   if(na.rm) out <- na.omit(out)
   
   out <- roundi(out, digits = digits)
@@ -1619,7 +1630,7 @@ contrast_rma <- function(post_rma_fit, con_list, ...)
 
 plot_rma <- function(fit, formula, ylab, CIs = TRUE, CIarg = list(lwd = .5, alpha = 1), ...){
   
-  if(!inherits(fit, c("post_rma", "rma.mv"))) stop("fit is not 'post_rma()' or 'rma.mv()'.", call. = FALSE)
+  if(!inherits(fit, c("post_rma", "rma.mv", "rma.uni"))) stop("fit is not 'post_rma()','rma.mv()' or 'rma.uni()'.", call. = FALSE)
   
   is_post_rma <- inherits(fit, "post_rma")
   
