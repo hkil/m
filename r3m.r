@@ -1095,7 +1095,7 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL,p_value = TRU
         
       } else { 
         
-        cbind("(M)UTOS Test"= as.character(specs)[2],as.data.frame(emmeans::test(ems, joint=TRUE)))
+       cbind("(M)UTOS Test"= if(is.character(specs)) specs else as.character(specs)[2],as.data.frame(emmeans::test(ems, joint=TRUE)))
         
       }
       
