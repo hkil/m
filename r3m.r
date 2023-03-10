@@ -1077,7 +1077,7 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL,p_value = TRU
     
     if(mutos_contrast) {  
       
-      message("Testing contrasts among EMMs against zero.")
+      message("Testing if EMMs for levels of each categorical moderator are equal to each other.")
       
       fit_used <- if(is.null(specs_org)) fit else ems
       
@@ -1085,7 +1085,7 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL,p_value = TRU
       
     } else if (mutos){
       
-      message("Testing EMMs (rather than contrasts among them) against zero.")
+      message("Testing if EMMs for levels of each categorical moderator are equal to their null (e.g., 0).")
       
       if(is.null(specs_org)){
         
@@ -1103,8 +1103,8 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL,p_value = TRU
       
       com <- comb_facs(ems, block_vars)
       
-      message("Jointly testing if the EMMs *across* multiple
-categorical predictors (blocks) are equal to each other.")
+      message("Testing jointly if the EMMs *across* multiple
+categorical moderators (a block) are equal to each other.")
       
       joint_tests(com)
       
