@@ -1345,11 +1345,11 @@ contr_rma <- function(post_rma_fit, contr_index){
   
   post_rma_fit <- post_rma_fit$table
   
-  all_emms <- rep(0, nrow(post_rma_fit))
+  ind <- rep(0, nrow(post_rma_fit))
   
-  all_emms[abs(contr_index)] <- sign(contr_index)
+  ind[abs(contr_index)] <- sign(contr_index)
   
-  return(all_emms)
+  return(ind)
 }                
 
 #===================================================================================================================================================
