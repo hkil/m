@@ -60,6 +60,80 @@ get_vars_ <- function(gls_fit, as_fml = TRUE){
 
 # H===============================================================================================================================
 
+is_qdrg <- function(rma_fit){ is.null(rma_fit$call$yi) }
+
+# H===============================================================================================================================
+
+rma2qdrg <- function(fit, data, df, sigma, tran., cov.reduce = mean){
+  
+  formula <- if(is.null(fit$formula.mods)) {~1} else {fit$formula.mods}
+  
+  b  <- coef(fit, type="beta")
+  vb <- vcov(fit, type="beta")
+  
+  names(b) <- sub("intrcpt", "(Intercept)", names(b))
+  rownames(vb) <- colnames(vb) <- sub("intrcpt", "(Intercept)", rownames(vb))
+  
+  res <- emmeans::qdrg(formula=formula, data=data, coef=b, vcov=vb, df=df, sigma=sigma,
+                       cov.reduce = cov.reduce)
+  res@misc$tran <- tran.
+  res
+}
+
+# H===============================================================================================================================
+
+tran_detect <- function(rma_fit){
+  
+  if (is.element(rma_fit$measure, 
+                 c("RR","OR","PETO","IRR","ROM",
+                   "D2OR","D2ORL","D2ORN","CVR",
+                   "VR","PLN","IRLN","SDLN","MNLN",
+                   "CVLN","ROMC","CVRC","VRC","REH"))) {
+    "log"
+  } else
+    
+    if (is.element(rma_fit$measure, "PLO")) {
+      "logit"
+    } else
+      
+      
+      if (is.element(rma_fit$measure, "PAS")) {
+        emmeans::make.tran("asin.sqrt", 1)
+        
+      } else
+        
+        if (is.element(rma_fit$measure, "IRS")) {
+          "sqrt"
+          
+        } else
+          
+          if (is.element(rma_fit$measure, c("ZCOR","ZPCOR"))) {
+            
+            r2z_tran
+            
+          } else FALSE
+  
+}
+
+# H===============================================================================================================================
+
+sigma_detect <- function(rma_fit){
+  
+  if (!inherits(rma_fit, c("rma.mv"))) {
+    sqrt(rma_fit$tau2)
+  } else {
+    0
+  }
+} 
+
+# H===============================================================================================================================
+
+df_detect <- function(rma_fit){
+if(is.na(rma_fit$ddf[1])) Inf else min(rma_fit$ddf, na.rm = TRUE)
+}                 
+                 
+# H===============================================================================================================================
+
 get_data_ <- function(fit){
   
   f <- function (object) 
