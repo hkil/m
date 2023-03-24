@@ -609,6 +609,20 @@ random_left <- function(random_fml) {
 
 rma2gls <- function(fit){
   
+  fit <- if(!is_qdrg(fit)){ fit } else {
+  
+  cl <- fit$call
+    
+  cl[[1]] <- quote(escalc)
+  
+  escalc_ <- suppressWarnings(eval(cl))
+  
+  form_ <- if(fit$int.only) { yi~1 } else { as.formula(paste0("yi", paste(as.character(fit$formula.mods),collapse = "")))}
+  
+  rma(form_, vi=vi, data=escalc_, test = fit$test)
+  
+  }
+  
   data_. <- get_data_(fit)
   form_. <- fixed_form_rma(fit)
   
@@ -627,7 +641,7 @@ rma2gls <- function(fit){
   fit2$varBeta <- fit$vb
   
   return(fit2)
-} 
+}  
 
 # H================================================================================================================================================
 
@@ -1004,11 +1018,12 @@ smooth_vi <- function(data, study, vi, digits = 8, fun = sd, ylab = "Studies", x
 # M=================================================================================================================================================
 
 post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL,p_value = TRUE, ci = TRUE, block_vars = NULL,
-                     adjust = "none", mutos = FALSE, mutos_contrast = FALSE, compare = FALSE, plot_pairwise = FALSE,
-                     reverse = FALSE, digits = 3, xlab = "Estimated Effect", shift_up = NULL, shift_down = NULL, 
-                     drop_rows = NULL, mutos_name = "(M)UTOS Term", drop_cols = NULL, contrast_contrast = FALSE, 
-                     na.rm = TRUE, robust = FALSE, cluster, show0df = FALSE, sig = TRUE, contr, horiz = TRUE,
-                     get_rows = NULL, get_cols = NULL, ...){
+                      adjust = "none", mutos = FALSE, mutos_contrast = FALSE, compare = FALSE, plot_pairwise = FALSE,
+                      reverse = FALSE, digits = 3, xlab = "Estimated Effect", shift_up = NULL, shift_down = NULL, 
+                      drop_rows = NULL, mutos_name = "(M)UTOS Term", drop_cols = NULL, contrast_contrasts = FALSE, 
+                      na.rm = TRUE, robust = FALSE, cluster, show0df = FALSE, sig = TRUE, contr, horiz = TRUE,
+                      get_rows = NULL, get_cols = NULL, df = NULL, tran = NULL, sigma=NULL, ...)
+  {
   
   if(!inherits(fit, c("rma.uni", "rma.mv"))) stop("Model is not 'rma()/rma.mv()'.", call. = FALSE)
   
@@ -1019,110 +1034,117 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL,p_value = TRU
   
   data_. <- get_data_(fit)
   
+  infer <- c(ci, p_value)
+  
   if(robust) { 
     
     if(inherits(fit, "rma.mv")){
-    
-    fixed_eff <- is.null(fit$random)
-    cr <- if(!fixed_eff) is_crossed(fit) else FALSE
-    
-    if(any(cr) || fixed_eff) { 
       
-      robust <- FALSE
-      message("Robust estimation not available for models with", if(any(cr))" crossed random-" else " only fixed-", "effects.")
+      fixed_eff <- is.null(fit$random)
+      cr <- if(!fixed_eff) is_crossed(fit) else FALSE
+      
+      if(any(cr) || fixed_eff) { 
+        
+        robust <- FALSE
+        message("Robust estimation not available for models with", if(any(cr))" crossed random-" else " only fixed-", "effects.")
+      }
+      
+      vcov_. <- try(as.matrix(vcovCR(fit, type = "CR2", cluster = cluster)), silent=TRUE)
+      
+      if(inherits(vcov_., "try-error")) { 
+        robust <- FALSE
+        message("Robust tests unavailable (likely having <2 clusters for some moderators).\nResults are model-based.")
+      }
+      
+    } else {
+      
+      if(missing(cluster)) { cluster <- 1:nrow(data_.) ;
+      message("The missing 'cluster=' was set to corrospond to each row.")}
+      
+      vcov_. <- try(as.matrix(vcovCR(fit, type = "CR2", cluster = cluster)), silent=TRUE)
+      
+      if(inherits(vcov_., "try-error")) { 
+        robust <- FALSE
+        message("Robust tests unavailable. Results are model-based.")
+      }
     }
-    
-    vcov_. <- try(as.matrix(vcovCR(fit, type = "CR2", cluster = cluster)), silent=TRUE)
-    
-    if(inherits(vcov_., "try-error")) { 
-      robust <- FALSE
-      message("Robust tests unavailable (likely having <2 clusters for some moderators).\nResults are model-based.")
-    }
-    
-  } else {
-    
-    if(missing(cluster)) cluster <- 1:nrow(data_.)
-    vcov_. <- try(as.matrix(vcovCR(fit, type = "CR2", cluster = cluster)), silent=TRUE)
-    
-    if(inherits(vcov_., "try-error")) { 
-      robust <- FALSE
-      message("Robust tests unavailable. Results are model-based.")
-    }
-    
-  }
-}    
-  
-  fml <- fixed_form_rma(fit)
-  lm_fit <- lm(fml, data = data_.)
-  lm_fit$call$data <- data_.
-  lm_fit$call$formula <- fml
-  
-  is_singular <- anyNA(coef(lm_fit))
+  }    
   
   rma.mv_fit <- fit
   
+  type. <- if('type' %in% dot_args_nm) dot_args$type else FALSE
+  
+  df. <- if(is.null(df)) {
+    
+    df_detect(rma.mv_fit)
+    
+  } else df
+  
+  tran. <- if(is.null(tran)) {
+    
+    tran_detect(rma.mv_fit)
+    
+  } else { tran }
+  
+  
+  sigma. <- if (is.null(sigma)) {
+    
+    sigma_detect(rma.mv_fit)
+    
+  } else {
+    
+    sigma
+    
+  }
+  
+  lookup <- c(Contrast="contrast",Estimate="estimate",Mean="emmean",Response="response",t="t.ratio",
+              Df="df","p-value"="p.value",Lower="lower.CL",Upper="upper.CL",
+              Df1="df1", Df2="df2","F"="F.ratio",Term="model term",
+              Lower="asymp.LCL", Upper="asymp.UCL", z="z.ratio")
+  
+  if(!is.null(block_vars)) names(lookup)[13] <- "Block Term"
+  
   fit <- rma2gls(fit)
   
-  if(!is.null(specs) & !is.character(specs) & !is_formula(specs, scoped=TRUE)) stop("The 'specs' must be either a character or a formula containing '~'.", call.=FALSE)
-  
+  fit_org <- fit  
   specs_org <- specs
-  if(is.null(specs)) specs <- as.formula(bquote(~.(terms(fit)[[3]])))
+  
+  if(!is.null(specs) & !is.character(specs) & !is_formula(specs, scoped=TRUE)) {stop("The 'specs' must be either a character or a formula containing '~'.", call.=FALSE)}
+ 
+  if(is.null(specs)) {specs <- as.formula(bquote(~.(terms(fit)[[3]])))}
   
   if(robust) { 
     
     rownames(vcov_.)[rownames(vcov_.) %in% "intrcpt"] <- "(Intercept)"
     colnames(vcov_.)[colnames(vcov_.) %in% "intrcpt"] <- "(Intercept)"
     
-    fit$varBeta <- vcov_.
-  }
+    fit$varBeta <- vcov_. 
+    }
   
-  
-  fit_org <- fit
-  
-  if(is_singular) { 
-    
-    lm_coef <- lm_fit$coefficients
-    gls_coef <- fit$coefficients
-    
-    fit$coefficients <- replace(lm_coef, !is.na(lm_coef), gls_coef)
-    
-    fit <- suppressMessages(emmeans::ref_grid(fit))
-    fit@nbasis <- suppressMessages(emmeans::ref_grid(lm_fit)@nbasis)
-  }
-  
-  infer <- c(ci, p_value)
-  
-  lookup <- c(Contrast="contrast",Estimate="estimate","Mean"="emmean","Response"="response",t="t.ratio",
-              Df="df","p-value"="p.value",Lower="lower.CL",Upper="upper.CL",
-              Df1="df1", Df2="df2","F"="F.ratio",Term="model term")
-  
-  if(!is.null(block_vars)) names(lookup)[13] <- "Block Term"
-  
-  tran. <- if('tran' %in% dot_args_nm) dot_args$tran else FALSE           
-  type. <- if('type' %in% dot_args_nm) dot_args$type else FALSE
-  
+
   is_contr <- !missing(contr)            
   
   ems <- suppressWarnings(suppressMessages(try(if(is.null(cont_var)){
     
-    emmeans(object = fit, specs = specs, infer = infer, adjust = adjust, contr = contr, data = data_., ...)
-    
+    if(!isFALSE(tran.)) emmeans(object = fit, specs = specs, infer = infer, adjust = adjust, contr = contr, data = data_., tran = tran., sigma = sigma., df = df., ...)
+    else emmeans(object = fit, specs = specs, infer = infer, adjust = adjust, contr = contr, data = data_., sigma = sigma., df = df., ...)
   } else {
     
     if(!is_contr){ 
       
-      emtrends(object = fit, specs = specs, var = cont_var, infer = infer, adjust = adjust, data = data_., ...)
+      emtrends(object = fit, specs = specs, var = cont_var, infer = infer, adjust = adjust, data = data_., tran = tran., sigma = sigma., df = df., ...)
       
     } else {
       
-      emtrends(object = fit, specs = specs, var = cont_var, infer = infer, adjust = adjust, contr = contr, data = data_., ...)
+      emtrends(object = fit, specs = specs, var = cont_var, infer = infer, adjust = adjust, contr = contr, data = data_., tran = tran., sigma = sigma., df = df., ...)
       
     }
     
   }, silent = TRUE)))
   
-  
+
   if(inherits(ems,"try-error")) return(message("Error: Wrong specification OR no relavant data for the comparisons found."))
+  
   
   con_methods <- c("pairwise","revpairwise","tukey","consec",
                    "poly","trt.vs.ctrl","trt.vs.ctrlk","trt.vs.ctrl1",
@@ -1132,18 +1154,18 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL,p_value = TRU
   
   if(!is.null(cont_var) & is_pair) names(lookup)[2] <- paste0(cont_var,".dif")
   
-  out <- if(is_pair){
+out <- if(is_pair){
     
     methd <- as.character(specs[2])
     
-    ems <- ems[[if(!contrast_contrast) 1 else 2]]
+    ems <- ems[[if(!contrast_contrasts) 1 else 2]]
     
     if(plot_pairwise) print(plot(ems, by = by, comparisons = compare, horizontal = horiz, adjust = adjust, xlab = xlab)) 
     
     pp <- if(isFALSE(tran.)) contrast(ems, method = methd, each="simple", infer=infer, reverse=reverse, adjust=adjust,...) 
-    else contrast(regrid(ems), method = methd, each="simple", infer=infer, reverse=reverse, adjust=adjust,...)
+    else contrast(ems, method = methd, each="simple", infer=infer, reverse=reverse, adjust=adjust,tran = tran.,...)
     
-    if(!is_contr) pp else contrast(pp, contr, ...)
+    if(!is_contr) pp else if(isFALSE(tran.)) contrast(pp, contr, tran = tran.,...) else contrast(pp, contr, ...)
     
   }
   
@@ -1151,15 +1173,15 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL,p_value = TRU
     
     if(mutos_contrast) {  
       
-      message("Testing if EMMs for levels of each categorical moderator are equal to each other.")
+      message("Testing jointly if EMMs for levels of each categorical moderator are equal to each other.")
       
-      fit_used <- if(is.null(specs_org)) fit else ems
+      fit_used <- if(is.null(specs_org)) ref_grid(fit, tran = tran., sigma = sigma., df = df., ...) else ems
       
-      joint_tests(fit_used, by = by, adjust = adjust, show0df = show0df, ...)
+      joint_tests(fit_used, by = by, adjust = adjust, show0df = show0df, tran = tran., ...)
       
     } else if (mutos){
       
-      message("Testing if EMMs for levels of each categorical moderator are equal to their null (e.g., 0).")
+      message("Testing jointly if EMMs for levels of each categorical moderator are equal to their null (e.g., 0).")
       
       if(is.null(specs_org)){
         
@@ -1169,8 +1191,9 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL,p_value = TRU
         
       } else { 
         
-       cbind("(M)UTOS Test"= if(is.character(specs)) specs else as.character(specs)[2],as.data.frame(emmeans::test(ems, joint=TRUE)))
-        
+       zz <- cbind(mod=if(is.character(specs)) specs else as.character(specs)[2],as.data.frame(emmeans::test(ems, joint=TRUE)))
+       names(zz)[1] <- mutos_name
+       zz
       }
       
     } else if(!is.null(block_vars)){ 
@@ -1178,7 +1201,7 @@ post_rma <- function(fit, specs = NULL, cont_var = NULL, by = NULL,p_value = TRU
       com <- comb_facs(ems, block_vars)
       
       message("Testing jointly if the EMMs *across* multiple
-categorical moderators (a block) are equal to each other.")
+categorical moderators (a block of them) are equal to each other.")
       
       joint_tests(com)
       
@@ -1188,7 +1211,7 @@ categorical moderators (a block) are equal to each other.")
     }
   }
   
-  out <- as.data.frame(out, adjust = adjust, infer = infer, ...) %>%
+  out <- as.data.frame(out, adjust = adjust, infer = infer, tran = tran., ...) %>%
     dplyr::rename(tidyselect::any_of(lookup)) %>% 
     dplyr::select(-tidyselect::any_of("note"))
   
@@ -1213,6 +1236,7 @@ categorical moderators (a block) are equal to each other.")
       out <- tibble::add_column(out, Sig. = Signif, .after = "p-value")
     }
   }  
+  
   if(na.rm) out <- na.omit(out)
   
   out <- roundi(out, digits = digits)
@@ -1226,7 +1250,7 @@ categorical moderators (a block) are equal to each other.")
   if(!is.null(get_cols)) out <- dplyr::select(out, tidyselect::all_of(get_cols))
   
   out <- list(table = out, specs = specs, call = cl, fit = fit, rma.mv_fit = rma.mv_fit, ems = ems,
-              tran. = tran., type. = type.)
+              tran. = tran., type. = type., df. = df., sigma. = sigma.)
   
   class(out) <- "post_rma"
   return(out)
@@ -1493,7 +1517,7 @@ prob_rma <- function(post_rma_fit, target_effect = 0, condition = c("or larger",
 sense_rma <- function(post_rma_fit = NULL, var_name, fit = NULL, 
                       r = (3:7)*.1, cluster = NULL, clean_names = NULL,
                       regression = NULL, label_lines = TRUE, none_names=NULL,
-                      cex_labels = .55, plot = TRUE, digits = 3, ...){
+                      cex_labels = .55, plot_coef = TRUE, plot_hetro = TRUE, digits = 3, ...){
   
   
   if(is.null(fit) & is.null(post_rma_fit)) stop("Provide either 'fit=' or 'post_rma_fit='.", call. = TRUE)
@@ -1554,7 +1578,7 @@ sense_rma <- function(post_rma_fit = NULL, var_name, fit = NULL,
   
   total_hetros <- sapply(model_list, function(i) sqrt(sum(i$sigma2)))
   
-  if(plot){
+  if(plot_coef & plot_hetro){
     
     graphics.off()
     org.par <- par(no.readonly = TRUE)
@@ -1567,7 +1591,8 @@ sense_rma <- function(post_rma_fit = NULL, var_name, fit = NULL,
   output <- if(regression){
     
     fixed_eff_list <- lapply(model_list, function(i) setNames(coef(summary(i))$estimate, rownames(fit$b)))
-    if(plot){    
+   
+     if(plot_coef){    
       
       matplot(t(as.data.frame(fixed_eff_list)), type = "l", xaxt = "n", ylab = "Estimates", ...)
       
@@ -1600,7 +1625,7 @@ sense_rma <- function(post_rma_fit = NULL, var_name, fit = NULL,
         if(!is.null(post_rma_fit$Estimate)) "Estimate" else "Response"
       
       post_rma_list <- lapply(model_list, function(i) 
-        setNames(as.numeric(post_rma(i, specs, tran = tran., type = type.)$table[[ave_col]]),Term))
+        setNames(as.numeric(post_rma2(i, specs, tran = tran., type = type.)$table[[ave_col]]),Term))
       
     } else {
       
@@ -1608,7 +1633,7 @@ sense_rma <- function(post_rma_fit = NULL, var_name, fit = NULL,
       
     }
     
-    if(plot){    
+    if(plot_coef){    
       
       matplot(t(as.data.frame(post_rma_list)), type = 'l', xaxt = "n", ylab = "Mean Effect", xlab = NA,...)
       
@@ -1625,7 +1650,7 @@ sense_rma <- function(post_rma_fit = NULL, var_name, fit = NULL,
     
   }
   
-  if(plot){
+  if(plot_hetro){
     
     rng <- range(total_hetros)
     mrng <- mean(rng)
@@ -1635,7 +1660,7 @@ sense_rma <- function(post_rma_fit = NULL, var_name, fit = NULL,
   out <- rbind(output, Total_variation_in_SD = total_hetros)
   out <- cbind(out, sd = sapply(1:nrow(out), function(i) sd(out[i,])))
   roundi(rownames_to_column(out, "Term"), digits = digits)
-}                                              
+}                                               
 
 #M================================================================================================================================================
 
@@ -1645,43 +1670,38 @@ con_rma <- function(post_rma_fit, method, type,
                     na.rm = TRUE, sig = TRUE, ...){
   
   if(!inherits(post_rma_fit, "post_rma")) stop("post_rma_fit is not 'post_rma()'.", call. = FALSE)
- 
-  con_methods <- c("pairwise","revpairwise","tukey","consec",
-                   "poly","trt.vs.ctrl","trt.vs.ctrlk","trt.vs.ctrl1",
-                   "dunnett","mean_chg","eff","del.eff","identity")
   
-  if(is.character(method) && !method %in% con_methods) 
-    stop("If not a list, 'con_list' can be one of: ", toString(dQuote(con_methods)),
-         ".", call. = FALSE)
-
   infer <- c(ci, p_value)
   
   lookup <- c(Contrast="contrast",Estimate="estimate","Mean"="emmean","Response"="response",t="t.ratio",
               Df="df","p-value"="p.value",Lower="lower.CL",Upper="upper.CL",
               Df1="df1", Df2="df2","F"="F.ratio",Term="model term")
+
+  tran. <- post_rma_fit$tran.
   
-  con <- contrast(regrid(post_rma_fit$ems), method = method, type = type, infer = infer, ...)
+  con <- if(!isFALSE(tran.)) contrast(post_rma_fit$ems, method = method, type = type, infer = infer, tran = tran., ...)
+  else contrast(post_rma_fit$ems, method = method, infer = infer, ...)
   
   out <- as.data.frame(con, adjust = adjust, infer=infer, ...) %>% 
     dplyr::rename(tidyselect::any_of(lookup)) %>% 
-   dplyr::select(-tidyselect::any_of("note"))
+    dplyr::select(-tidyselect::any_of("note"))
   
   if(p_value){
-  p.values <- as.numeric(out$"p-value")
-  
-  if(all(is.na(p.values))) { 
-  return(message("Error: Comparison(s) are non-estimable,\nlikely some combination of moderating or control variables are missing.\nTake variables out of model one by one and re-run."))
-  }
-  
-  if(sig){
-    Signif <- symnum(p.values, corr = FALSE, 
-                     na = FALSE, cutpoints = 
-                       c(0, 0.001, 0.01, 0.05, 0.1, 1), 
-                     symbols = c("***", "**", "*", ".", " "))
+    p.values <- as.numeric(out$"p-value")
     
-    out <- tibble::add_column(out, Sig. = Signif, .after = "p-value")
-  }
-}  
+    if(all(is.na(p.values))) { 
+      return(message("Error: Comparison(s) are non-estimable,\nlikely some combination of moderating or control variables are missing.\nTake variables out of model one by one and re-run."))
+    }
+    
+    if(sig){
+      Signif <- symnum(p.values, corr = FALSE, 
+                       na = FALSE, cutpoints = 
+                         c(0, 0.001, 0.01, 0.05, 0.1, 1), 
+                       symbols = c("***", "**", "*", ".", " "))
+      
+      out <- tibble::add_column(out, Sig. = Signif, .after = "p-value")
+    }
+  }  
   if(na.rm) out <- na.omit(out)
   
   out <- roundi(out, digits = digits)
@@ -1692,12 +1712,20 @@ con_rma <- function(post_rma_fit, method, type,
   class(out) <- "contrast_rma"
   
   return(out)
-}   
+}      
 
 #M================================================================================================================================================
                                 
 contrast_rma <- function(post_rma_fit, con_list, ...)
 {
+  
+  con_methods <- c("pairwise","revpairwise","tukey","consec",
+                   "poly","trt.vs.ctrl","trt.vs.ctrlk","trt.vs.ctrl1",
+                   "dunnett","mean_chg","eff","del.eff","identity")
+  
+  if(is.character(con_list) && !con_list %in% con_methods) 
+    stop("If not a list, 'con_list' can be one of: ", toString(dQuote(con_methods)),
+         ".", call. = FALSE)
   
   con_indx <- if(is.list(con_list)) {
     lapply(con_list, contr_rma, post_rma_fit = post_rma_fit)
@@ -1708,30 +1736,56 @@ contrast_rma <- function(post_rma_fit, con_list, ...)
 
 # M======================================================================================================================================================  
 
-plot_rma <- function(fit, formula, ylab, CIs = TRUE, CIarg = list(lwd = .5, alpha = 1), cov.reduce = NULL, ...){
+plot_rma <- function(fit, formula, ylab, CIs = TRUE, CIarg = list(lwd = .5, alpha = 1), cov.reduce = NULL, tran = NULL, sigma = NULL, df = NULL, ...){
   
   if(!inherits(fit, c("post_rma", "rma.mv", "rma.uni"))) stop("fit is not 'post_rma()','rma.mv()' or 'rma.uni()'.", call. = FALSE)
   
   is_post_rma <- inherits(fit, "post_rma")
   
-  if(is_post_rma & "cont_var" %in% names(as.list(fit$call))) { 
+  df. <- if(is.null(df)) {
+    if(!is_post_rma) df_detect(fit) else fit$df.
+  } else df
+  
+  
+  tran. <- if(is.null(tran)) {
     
-  is_post_rma <- FALSE
-  fit <- fit$rma.mv_fit
-  if(is.null(cov.reduce)) cov.reduce <- FALSE
+    if(!is_post_rma) tran_detect(fit) else fit$tran.
+    
+  } else { tran }
+  
+  
+  sigma. <-  if (is.null(sigma)) {
+
+    if(!is_post_rma) sigma_detect(fit) else fit$sigma.
+  
+  } else {
+    
+    sigma
+    
   }
   
-  if(is.null(cov.reduce)) cov.reduce <- TRUE
+  if(is_post_rma & "cont_var" %in% names(as.list(fit$call))) { 
+    
+    is_post_rma <- FALSE
+    fit <- fit$rma.mv_fit
+    cov.reduce <- if(is.null(cov.reduce)) quantile else cov.reduce
+  }
+  
+  if(is.null(cov.reduce)) cov.reduce <- mean
   
   if(missing(ylab)) ylab <- paste0("Effect Size (",as.character(fixed_form_rma(if(is_post_rma) fit$rma.mv_fit else fit))[2],")")
   
-  fit <- if(!is_post_rma) rma2gls(fit) else fit
+  fit <- if(!is_post_rma) { 
+    
+   ref_grid(rma2gls(fit), cov.reduce = cov.reduce, df = df., sigma = sigma., tran = tran., ...)
+   
+  } else fit
   
-  emmip(object=if(is_post_rma) regrid(fit$ems) else fit, formula=formula, ylab=ylab, CIs=CIs, CIarg=CIarg, cov.reduce=cov.reduce, ...)
+  emmip(object=if(is_post_rma) fit$ems else fit, formula=formula, ylab=ylab, CIs=CIs, CIarg=CIarg, cov.reduce=cov.reduce, tran = tran., ...)
   
-}                                                 
+}                
                                 
-#M================================================================================================================================================
+# M===============================================================================================================================================
 
 r2z_tran <- list(
   linkfun = function(mu) atanh(mu),
