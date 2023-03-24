@@ -64,24 +64,6 @@ is_qdrg <- function(rma_fit){ is.null(rma_fit$call$yi) }
 
 # H===============================================================================================================================
 
-rma2qdrg <- function(fit, data, df, sigma, tran., cov.reduce = mean){
-  
-  formula <- if(is.null(fit$formula.mods)) {~1} else {fit$formula.mods}
-  
-  b  <- coef(fit, type="beta")
-  vb <- vcov(fit, type="beta")
-  
-  names(b) <- sub("intrcpt", "(Intercept)", names(b))
-  rownames(vb) <- colnames(vb) <- sub("intrcpt", "(Intercept)", rownames(vb))
-  
-  res <- emmeans::qdrg(formula=formula, data=data, coef=b, vcov=vb, df=df, sigma=sigma,
-                       cov.reduce = cov.reduce)
-  res@misc$tran <- tran.
-  res
-}
-
-# H===============================================================================================================================
-
 tran_detect <- function(rma_fit){
   
   if (is.element(rma_fit$measure, 
@@ -327,7 +309,6 @@ meta_tree <- function(data, ..., effect = TRUE, highest_level_name = NULL,
   
   data <- full_clean(data) %>%
     mutate(effect = row_number())
-  
   
   if(!missing(subset)) {
     
@@ -1744,7 +1725,7 @@ plot_rma <- function(fit, formula, ylab, CIs = TRUE, CIarg = list(lwd = .5, alph
   
   df. <- if(is.null(df)) {
     if(!is_post_rma) df_detect(fit) else fit$df.
-  } else df
+  } else { df }
   
   
   tran. <- if(is.null(tran)) {
