@@ -1606,7 +1606,7 @@ sense_rma <- function(post_rma_fit = NULL, var_name, fit = NULL,
         if(!is.null(post_rma_fit$Estimate)) "Estimate" else "Response"
       
       post_rma_list <- lapply(model_list, function(i) 
-        setNames(as.numeric(post_rma2(i, specs, tran = tran., type = type.)$table[[ave_col]]),Term))
+        setNames(as.numeric(post_rma(i, specs, tran = tran., type = type.)$table[[ave_col]]),Term))
       
     } else {
       
