@@ -1146,7 +1146,7 @@ out <- if(is_pair){
     pp <- if(isFALSE(tran.)) contrast(ems, method = methd, each="simple", infer=infer, reverse=reverse, adjust=adjust,...) 
     else contrast(ems, method = methd, each="simple", infer=infer, reverse=reverse, adjust=adjust,tran = tran.,...)
     
-    if(!is_contr) pp else if(isFALSE(tran.)) contrast(pp, contr, tran = tran.,...) else contrast(pp, contr, ...)
+    if(!is_contr) pp else if(!isFALSE(tran.)) contrast(pp, contr, tran = tran.,...) else contrast(pp, contr, ...)
     
   }
   
