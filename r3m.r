@@ -1,4 +1,4 @@
-# functions for 'formetafor'
+# 'formetafor' R package
 
 # H===============================================================================================================================
 
@@ -209,18 +209,6 @@ get_error_rho <- function(fit){
   } else 0
   
 }                    
-
-# H===============================================================================================================================                    
-
-is_crossed <- function(obj){
-  
-  if(!inherits(obj, "rma.mv")) return(FALSE)
-  mod_struct <- clubSandwich:::parse_structure(obj)
-  highest_cluster <- names(mod_struct$level_dat)[which.min(mod_struct$level_dat)]
-  cluster <- mod_struct$cluster_dat[[highest_cluster]]
-  out <- !clubSandwich:::test_nested(cluster, fac = mod_struct$cluster_dat)
-  out[names(out) %in% obj$s.names]
-}
 
 # H===============================================================================================================================
 
@@ -600,7 +588,7 @@ rma2gls <- function(fit){
   
   form_ <- if(fit$int.only) { yi~1 } else { as.formula(paste0("yi", paste(as.character(fit$formula.mods),collapse = "")))}
   
-  rma(form_, vi=vi, data=escalc_, test = fit$test)
+  rma(form_, vi=vi, data=escalc_, test = fit$test, method = fit$method)
   
   }
   
