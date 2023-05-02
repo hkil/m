@@ -600,7 +600,7 @@ rma2gls <- function(fit){
   
   form_ <- if(fit$int.only) { yi~1 } else { as.formula(paste0("yi", paste(as.character(fit$formula.mods),collapse = "")))}
   
-  rma(form_, vi=vi, data=escalc_, test = fit$test)
+  rma(form_, vi=vi, data=escalc_, test = fit$test, method = fit$method)
   
   }
   
